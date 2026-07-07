@@ -6,6 +6,10 @@ This is financial methodology and visualization tooling, not investment advice. 
 
 The app fetches live Ornn GPU index history and Coinbase BTC/USD candles by default. Synthetic fixture data is available from the sidebar and as a fallback if live fetches fail.
 
+## Live app
+
+https://bipp-appgit-ch4gsg26dv9hmumykniewu.streamlit.app/
+
 ## Run locally
 
 ```powershell
@@ -28,3 +32,4 @@ py -3 -m streamlit run app.py
 - Do not publish derived BIPP values unless Ornn permission scope is preserved.
 - Do not describe BIPP as direct intelligence output.
 - Label the metric as compute infrastructure purchasing power.
+
