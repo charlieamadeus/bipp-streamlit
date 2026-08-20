@@ -106,6 +106,49 @@ def control(key: str, options: list[str], help_text: str) -> None:
 
 # -------------------------------------------------------------------- cards
 
+# Symbols this page needs from the package. Streamlit reruns the entry script
+# but keeps imported modules in sys.modules, so a deploy can land a new
+# app_v4.py against a cached bipp.* from before a function existed. That
+# surfaced as a redacted AttributeError with the whole page blank below the
+# title, which tells a reader nothing and tells the owner nothing either.
+# Checking up front turns it into one sentence naming the fix.
+REQUIRED = {
+    "bipp.ccir": (ccir, ["basket_band", "price_band", "best_rate", "build_basket",
+                         "attach_btc", "select_surface", "INDICATIVE_BELOW"]),
+    "bipp.btc": (btc_history, ["debt_in_btc", "debt_share_series", "debt_coverage",
+                               "supply_at", "parse_issue_date", "split_contingent",
+                               "SUPPLY_FALLBACK_DATE"]),
+    "bipp.ccir_pages": (ccir_pages, ["CHIPS", "OWN_KEYS", "fetch_credit",
+                                     "fetch_hardware", "frontier_models"]),
+}
+
+
+def check_deployment() -> list[str]:
+    """Names the page expects but the loaded modules do not have."""
+    missing = []
+    for module_name, (module, names) in REQUIRED.items():
+        for name in names:
+            if not hasattr(module, name):
+                missing.append(f"{module_name}.{name}")
+    return missing
+
+
+def _band(compute):
+    """Run an optional dispersion lookup, or give up quietly.
+
+    The band is an adornment on a number that is correct without it. It has no
+    business taking the page down, and it did: a deployed container ran a new
+    app_v4 against a cached bipp.ccir from before basket_band existed, and the
+    AttributeError blanked everything below the title. Streamlit reruns the
+    entry script but keeps imported modules in sys.modules, so that mismatch is
+    reachable whenever a deploy only half-lands.
+    """
+    try:
+        return compute()
+    except Exception:  # noqa: BLE001
+        return None
+
+
 def _two_figures(value: float) -> str:
     """16,979 -> "17,000". The panel's quartiles span nearly two to one, so five
     significant figures assert a precision the data cannot carry."""
@@ -127,7 +170,7 @@ def card_rent(panel, series, latest_btc) -> None:
     choice = remember("rent", options)
     if choice == "The 50/30/20 basket":
         hours, foot = series["compute_per_btc"].iloc[-1], "three chips, blended"
-        band = ccir.basket_band(ccir.select_surface(panel, **SURFACE), BASKET)
+        band = _band(lambda: ccir.basket_band(ccir.select_surface(panel, **SURFACE), BASKET))
     else:
         rate, market, sources, series_id = next(
             (r, m, n, sid) for label, r, m, n, sid in priced if label == choice)
@@ -137,7 +180,7 @@ def card_rent(panel, series, latest_btc) -> None:
         foot = (f"${rate:.2f} an hour, {sources} sources, indicative"
                 if sources < ccir.INDICATIVE_BELOW
                 else f"${rate:.2f} an hour, {market.lower()}")
-        band = ccir.price_band(panel, series_id)
+        band = _band(lambda: ccir.price_band(panel, series_id))
     # The panel's own middle half, beside the headline. CCIR publishes p25 and
     # p75 next to every price because the headline alone hides how far providers
     # disagree; on the basket that is roughly 15,000 to 21,000 hours.
@@ -306,6 +349,17 @@ def main() -> None:
                        initial_sidebar_state="collapsed")
     theme.apply(st)
     st.title("What one Bitcoin buys")
+
+    stale = check_deployment()
+    if stale:
+        st.error(
+            "This deployment is inconsistent: the page was updated but the "
+            "supporting modules were not reloaded, so "
+            f"{len(stale)} function(s) it needs are missing ({', '.join(stale[:3])}"
+            f"{', ...' if len(stale) > 3 else ''}). Reboot the app from Manage app "
+            "to force a fresh import. Nothing is wrong with the data."
+        )
+        st.stop()
     st.markdown(
         '<p class="standfirst">Bitcoin has a hard limit: 21 million coins, ever. '
         '<b>Computing power has none.</b> The world keeps building more chips, and it is '

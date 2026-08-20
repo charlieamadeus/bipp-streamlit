@@ -40,3 +40,25 @@ def test_app_imports_resolve_within_the_package(path):
             for alias in node.names:
                 assert (ROOT / "bipp" / f"{alias.name}.py").exists(), \
                     f"{path.name} imports bipp.{alias.name}, which does not exist"
+
+
+def test_deployment_check_passes_against_the_real_package():
+    """If this fails, the app names a symbol bipp/ does not export."""
+    import app_v4
+    assert app_v4.check_deployment() == []
+
+
+def test_deployment_check_names_what_is_missing():
+    import app_v4
+    module, names = app_v4.REQUIRED["bipp.ccir"]
+
+    class Hollow:
+        pass
+
+    app_v4.REQUIRED["bipp.ccir"] = (Hollow(), names)
+    try:
+        missing = app_v4.check_deployment()
+        assert missing, "a module with none of the required names must report as stale"
+        assert all(m.startswith("bipp.ccir.") for m in missing)
+    finally:
+        app_v4.REQUIRED["bipp.ccir"] = (module, names)
