@@ -124,3 +124,76 @@ def test_split_contingent_without_an_instrument_column_keeps_every_row():
     credit = pd.DataFrame({"issuer": ["A"], "issued": ["2024-01-01"], "size_musd": [400.0]})
     drawn, contingent = btc.split_contingent(credit)
     assert len(drawn) == 1 and contingent.empty
+
+
+# Real chain observations read from mempool.space on 2026-08-20. supply_at is a
+# model, so it is pinned against measured heights rather than against itself.
+OBSERVED_HEIGHTS = {
+    "2023-01-01": 769_786,
+    "2023-09-01": 805_651,
+    "2024-04-20": 839_998,
+    "2025-03-01": 885_783,
+    "2026-01-01": 930_340,
+    "2026-08-01": 960_481,
+}
+
+
+def test_supply_at_tracks_observed_chain_heights():
+    for date, height in OBSERVED_HEIGHTS.items():
+        actual = btc.circulating_supply(height)
+        error = abs(btc.supply_at(date) - actual)
+        assert error / actual < 0.0005, f"{date}: off by {error:,.0f} BTC"
+
+
+def test_supply_at_is_monotonic():
+    dates = ["2023-01-01", "2024-01-01", "2025-01-01", "2026-01-01", "2026-08-20"]
+    values = [btc.supply_at(d) for d in dates]
+    assert values == sorted(values)
+    assert all(a != b for a, b in zip(values, values[1:]))
+
+
+def test_supply_at_never_reaches_terminal_supply():
+    # The fallback used to be TERMINAL_SUPPLY, which silently moved every
+    # percentage on the borrow card by 4.6 percent when a fetch failed.
+    assert btc.supply_at(btc.SUPPLY_FALLBACK_DATE) < btc.TERMINAL_SUPPLY
+    assert btc.supply_at("2026-08-20") > 20_000_000
+
+
+def test_supply_at_accepts_naive_and_aware_timestamps():
+    naive = btc.supply_at(pd.Timestamp("2025-06-01"))
+    aware = btc.supply_at(pd.Timestamp("2025-06-01", tz="UTC"))
+    assert naive == aware
+
+
+def test_cumulative_share_freezes_each_deal_at_issue():
+    # The property the chart depends on: a deal's contribution is fixed the day
+    # it is signed. Adding a later deal must not move any earlier point.
+    history = pd.Series(
+        [20_000.0, 40_000.0, 80_000.0],
+        index=pd.to_datetime(["2024-01-01", "2025-01-01", "2026-01-01"]),
+    )
+    two = pd.DataFrame({
+        "issuer": ["A", "B"], "instrument": ["loan", "loan"],
+        "size_musd": [1_000.0, 1_000.0], "issued": ["2024-01-01", "2025-01-01"],
+    })
+    three = pd.concat([two, pd.DataFrame({
+        "issuer": ["C"], "instrument": ["loan"],
+        "size_musd": [5_000.0], "issued": ["2026-01-01"],
+    })], ignore_index=True)
+
+    a = btc.debt_in_btc(two, history, since="2024-01-01")
+    b = btc.debt_in_btc(three, history, since="2024-01-01")
+    assert a["cumulative_share"].iloc[0] == pytest.approx(b["cumulative_share"].iloc[0])
+    assert a["cumulative_share"].iloc[1] == pytest.approx(b["cumulative_share"].iloc[1])
+    assert b["cumulative_share"].iloc[2] > b["cumulative_share"].iloc[1]
+
+
+def test_share_at_issue_is_debt_over_market_cap_on_the_day():
+    history = pd.Series([50_000.0], index=pd.to_datetime(["2025-06-01"]))
+    frame = pd.DataFrame({
+        "issuer": ["A"], "instrument": ["loan"],
+        "size_musd": [1_000.0], "issued": ["2025-06-01"],
+    })
+    row = btc.debt_in_btc(frame, history, since="2025-01-01").iloc[0]
+    market_cap = 50_000.0 * btc.supply_at("2025-06-01")
+    assert row["share_at_issue"] == pytest.approx(1_000.0 * 1e6 / market_cap)

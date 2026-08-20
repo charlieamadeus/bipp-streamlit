@@ -55,18 +55,6 @@ def load_ornn() -> pd.DataFrame | None:
 
 
 @st.cache_data(ttl=3600, show_spinner=False)
-def load_supply() -> float:
-    from urllib.request import Request, urlopen
-    try:
-        request = Request("https://mempool.space/api/blocks/tip/height",
-                          headers={"User-Agent": "bipp-streamlit/4.0"})
-        with urlopen(request, timeout=20) as response:
-            return btc_history.circulating_supply(int(response.read().decode().strip()))
-    except Exception:  # noqa: BLE001
-        return float(btc_history.TERMINAL_SUPPLY)
-
-
-@st.cache_data(ttl=3600, show_spinner=False)
 def load_btc_window(start: str, end: str) -> pd.DataFrame:
     return fetch_coinbase_btc_usd(start, end)
 
@@ -173,28 +161,31 @@ def card_produce(tokens, latest_btc) -> None:
             "frontier lab. This is what output costs, not what it is worth.")
 
 
-def card_borrow(credit, stack, supply) -> None:
+def card_borrow(credit, stack) -> None:
     if stack.empty:
-        st.markdown(fact("n/a", "Of all Bitcoin", "table unavailable"), unsafe_allow_html=True)
+        st.markdown(fact("n/a", "Of Bitcoin's market cap", "table unavailable"),
+                    unsafe_allow_html=True)
         return
     views = ["Everything borrowed", "Secured only", "Contingent guarantees"]
     choice = remember("borrow", views)
     if choice == "Contingent guarantees":
         _, contingent = btc_history.split_contingent(credit)
         subset = btc_history.debt_in_btc(contingent, load_btc_long(), exclude_contingent=False)
-        amount = subset["btc_at_issue"].sum() if not subset.empty else 0.0
+        share = subset["share_at_issue"].sum() if not subset.empty else 0.0
         foot = "promised, not drawn"
     elif choice == "Secured only":
         secured = stack[stack["seniority"] == "secured"]
-        amount, foot = secured["btc_at_issue"].sum(), f"{len(secured)} loans with collateral"
+        share = secured["share_at_issue"].sum()
+        foot = f"{len(secured)} loans with collateral"
     else:
-        amount = stack["cumulative_btc"].iloc[-1]
-        foot = f"{amount / 1e6:.2f}M BTC, {len(stack)} deals"
-    st.markdown(fact(f"{amount / supply * 100:,.1f}%", "Of all Bitcoin", foot),
+        share = stack["cumulative_share"].iloc[-1]
+        foot = f"{stack['cumulative_btc'].iloc[-1] / 1e6:.2f}M BTC, {len(stack)} deals"
+    st.markdown(fact(f"{share * 100:,.1f}%", "Of Bitcoin's market cap", foot),
                 unsafe_allow_html=True)
     control("borrow", views,
-            "Money raised against AI computing since 2023, converted at the Bitcoin price "
-            "the day each deal was signed, against every Bitcoin mined so far.")
+            "Money raised against AI computing since 2023. Each deal is measured against "
+            "Bitcoin's whole market capitalisation on the day it was signed, and those shares "
+            "are added up, so a deal's contribution never changes once it is struck.")
 
 
 # ------------------------------------------------------------------- charts
@@ -228,8 +219,8 @@ def chart_power(series, ornn) -> go.Figure:
     return figure
 
 
-def chart_stack(stack, supply) -> go.Figure:
-    share = stack["cumulative_btc"] / supply * 100
+def chart_stack(stack) -> go.Figure:
+    share = stack["cumulative_share"] * 100
     figure = go.Figure()
     figure.add_trace(go.Scatter(
         x=stack["issued_on"], y=share, mode="lines", showlegend=False,
@@ -281,7 +272,6 @@ def main() -> None:
 
     latest_btc = float(series["btc_usd"].iloc[-1])
     hardware, tokens, credit = load_hardware(), load_tokens(), load_credit()
-    supply = load_supply()
     stack = btc_history.debt_in_btc(credit, load_btc_long()) if not credit.empty else pd.DataFrame()
 
     slots = st.columns(4, gap="medium")
@@ -296,7 +286,7 @@ def main() -> None:
             card_produce(tokens, latest_btc)
     with slots[3]:
         with st.container(border=True):
-            card_borrow(credit, stack, supply)
+            card_borrow(credit, stack)
 
     # -------------------------------------------------------- purchasing power
     st.subheader("Is it buying more, or less")
@@ -329,18 +319,18 @@ def main() -> None:
         st.subheader("What the buildout borrowed, measured in Bitcoin")
         st.markdown(
             '<p class="dek">Data centres are built with debt. Every loan and bond raised '
-            'against AI computing since 2023, converted at the exchange rate the day it was '
-            'signed, as a share of every Bitcoin in existence.</p>',
+            'against AI computing since 2023, each one measured against the entire market '
+            'capitalisation of Bitcoin on the day it was signed, then added up.</p>',
             unsafe_allow_html=True,
         )
-        st.plotly_chart(theme.chart(chart_stack(stack, supply), 320),
+        st.plotly_chart(theme.chart(chart_stack(stack), 320),
                         use_container_width=True, config=PLOT_CONFIG)
 
         recent = stack[stack["issued_on"] >= stack["issued_on"].max() - pd.Timedelta(days=90)]
-        share = stack["cumulative_btc"].iloc[-1] / supply * 100
+        share = stack["cumulative_share"].iloc[-1] * 100
         aside = (f'Priced at signing, so the line moves only when someone borrows, never when '
                  f'Bitcoin does. The last 90 days added '
-                 f'{recent["btc_at_issue"].sum() / supply * 100:.1f} points across '
+                 f'{recent["share_at_issue"].sum() * 100:.1f} points across '
                  f'{len(recent)} deals.')
 
         _, contingent = btc_history.split_contingent(credit)
@@ -348,12 +338,13 @@ def main() -> None:
                                              exclude_contingent=False)
         if not guaranteed.empty:
             aside += (f' Excluded: a contingent guarantee worth another '
-                      f'{guaranteed["btc_at_issue"].sum() / supply * 100:.1f}% on its own, '
+                      f'{guaranteed["share_at_issue"].sum() * 100:.1f}% on its own, '
                       f'NVIDIA standing behind the leases under OpenAI. A promise to pay is '
                       f'not money drawn.')
         st.markdown(
             f'<div class="readout">The AI buildout has borrowed the equivalent of '
-            f'<b>{share:.1f}% of every Bitcoin</b> that will ever be mined.'
+            f"<b>{share:.1f}% of Bitcoin's market capitalisation</b>, each deal "
+            f'measured on the day it was signed.'
             f'<span class="aside">{aside}</span></div>',
             unsafe_allow_html=True,
         )

@@ -49,6 +49,10 @@ def price_at(history: pd.Series, when) -> float:
 
 
 TERMINAL_SUPPLY = 21_000_000
+# Last-resort denominator when the chain tip is unreachable. Circulating, not
+# terminal: a network failure must not silently reprice every percentage on the
+# page by the 4.6 percent gap between the two.
+SUPPLY_FALLBACK_DATE = "2026-08-20"
 HALVING_INTERVAL = 210_000
 INITIAL_REWARD = 50.0
 
@@ -76,6 +80,31 @@ def circulating_supply(block_height: int) -> float:
         reward /= 2
         start += HALVING_INTERVAL
     return supply
+
+
+# Height is near-linear in time, so a date maps to a supply without a network
+# call or a per-date lookup. Anchored on two real chain observations at the ends
+# of the window this app covers, both read from mempool.space on 2026-08-20:
+# 2023-01-01 was height 769,786 and 2026-08-01 was height 960,481.
+# Checked against four interior probes (2023-09-01, 2024-04-20, 2025-03-01,
+# 2026-01-01); worst supply error 6,012 BTC, 0.03 percent of supply.
+HEIGHT_ANCHOR_DATE = "2023-01-01"
+HEIGHT_ANCHOR = 769_786
+BLOCKS_PER_DAY = 145.79
+
+
+def supply_at(when) -> float:
+    """Circulating supply on a given date.
+
+    Dividing a historical series by today's supply measures every past point
+    against coins that did not exist yet. Supply grew 4.1 percent across this
+    app's window, so the error is small but it is in one direction.
+    """
+    when = pd.Timestamp(when)
+    if when.tz is None:
+        when = when.tz_localize("UTC")
+    days = (when - pd.Timestamp(HEIGHT_ANCHOR_DATE, tz="UTC")).days
+    return circulating_supply(max(0, int(HEIGHT_ANCHOR + BLOCKS_PER_DAY * days)))
 
 
 def split_contingent(credit: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
@@ -117,6 +146,15 @@ def debt_in_btc(credit: pd.DataFrame, history: pd.Series,
         lambda row: row["size_musd"] * 1e6 / price_at(history, row["issued_on"]), axis=1
     )
     working["cumulative_btc"] = working["btc_at_issue"].cumsum()
+
+    # Each deal's share of Bitcoin's whole market capitalisation on the day it
+    # was signed, then accumulated. Freezing the share at issue is the point:
+    # dividing the running total by one supply figure instead would re-rate every
+    # past deal every time a block is mined, so the chart's history would keep
+    # changing shape after the fact.
+    working["supply_at_issue"] = working["issued_on"].map(supply_at)
+    working["share_at_issue"] = working["btc_at_issue"] / working["supply_at_issue"]
+    working["cumulative_share"] = working["share_at_issue"].cumsum()
     return working.reset_index(drop=True)
 
 
