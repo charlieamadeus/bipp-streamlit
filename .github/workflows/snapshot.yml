@@ -9,8 +9,12 @@ name: snapshot
 
 on:
   schedule:
-    - cron: "0 7 * * *"    # 07:00 UTC, 03:00 America/New_York (EDT)
-    - cron: "0 19 * * *"   # 19:00 UTC, 15:00 America/New_York (EDT)
+    # CCIR stamps each page "as of <date> BY 07:30 ET" and collects early
+    # morning US time, so anything before that gets yesterday. 13:30 UTC is
+    # 09:30 EDT and 08:30 EST, safely past the publish in either half of the
+    # year; 21:00 UTC is the catch-up if the morning run missed or failed.
+    - cron: "30 13 * * *"
+    - cron: "0 21 * * *"
   workflow_dispatch:
 
 permissions:
