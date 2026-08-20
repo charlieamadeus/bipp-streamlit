@@ -170,6 +170,31 @@ FLAGSHIPS: list[tuple[str, str]] = [
 ]
 
 
+# One curated list drives both hardware cards, so the two menus read the same
+# way, in the same order, under the same names. Ordered by capability: the
+# current frontier part first, down to what somebody has in a desktop.
+#
+# `rent` is the rental panel's gpu_model; `own` is the resale panel's model
+# string. Either may be None, because the two surfaces do not cover the same
+# market. CCIR's resale page prices used ENTERPRISE cards, because that page
+# exists to value collateral, and a gaming card is not collateral for a data
+# centre loan. So a 5090 can be rented on this page and not bought on it, and a
+# B200 is too new to have a second-hand market at all.
+CHIPS: list[tuple[str, str | None, str | None]] = [
+    ("B200",      "B200",  None),
+    ("H200",      "H200",  "H200 141GB"),
+    ("H100",      "H100",  "H100 80GB SXM5"),
+    ("A100",      "A100",  "A100 80GB SXM4"),
+    ("L40S",      "L40S",  "L40S 48GB"),
+    ("RTX A6000", "A6000", "RTX A6000 48GB"),
+    ("RTX 5090",  "5090",  None),
+    ("RTX 3090",  "3090",  None),
+]
+
+RENT_KEYS = {label: rent for label, rent, _ in CHIPS if rent}
+OWN_KEYS = {label: own for label, _, own in CHIPS if own}
+
+
 def frontier_models(tokens: pd.DataFrame) -> pd.DataFrame:
     """The curated flagship list, in FLAGSHIPS order.
 

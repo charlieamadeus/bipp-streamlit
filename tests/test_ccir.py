@@ -227,12 +227,49 @@ def test_ladder_falls_through_for_a_consumer_card():
     assert rate == 0.20 and market == "Marketplace"
 
 
-def test_ladder_returns_none_rather_than_averaging_an_ambiguous_chip():
+def _panel_with_a_twin_series(price, n_sources):
+    """Two series sharing one gpu_model on one rung, as A100 really does."""
     panel = make_ladder_panel()
     twin = panel[panel["gpu_model"] == "3090"].copy()
-    twin["series_id"] = "CRI-T3-3090-PCIe-ALL-OD-ALL"
+    twin["series_id"] = "CRI-T3-3090-40GB-ALL-ALL-OD-ALL"
     twin["form_factor"] = "ALL"          # same rung, two series
-    assert ccir.best_rate(pd.concat([panel, twin]), "3090") is None
+    twin["price_headline"] = price
+    twin["n_sources"] = n_sources
+    return panel, twin
+
+
+def test_ladder_picks_the_deepest_panel_rather_than_averaging():
+    # Changed deliberately from "return None". CCIR reuses one gpu_model across
+    # capacity variants (A100 80GB and A100 40GB are both "A100"), so refusing
+    # on collision dropped a major chip off the page entirely. Panel depth is
+    # CCIR's own trust signal, so the deeper series wins.
+    panel, twin = _panel_with_a_twin_series(price=99.0, n_sources=1)
+    original = ccir.best_rate(panel, "3090")
+    combined = ccir.best_rate(pd.concat([panel, twin]), "3090")
+    assert combined is not None
+    assert combined[0] == original[0], "picked the shallow twin"
+    assert combined[1] == original[1]
+
+
+def test_ladder_never_averages_two_series():
+    # The invariant the old test was really protecting: whatever is returned is
+    # one series' own price, never a blend of two.
+    panel, twin = _panel_with_a_twin_series(price=99.0, n_sources=999)
+    price, series_id, _ = ccir.best_rate(pd.concat([panel, twin]), "3090")
+    assert price == 99.0, "should be the deep twin's own price"
+    assert series_id == "CRI-T3-3090-40GB-ALL-ALL-OD-ALL"
+
+
+def test_chip_series_still_refuses_an_ambiguous_surface():
+    # best_rate got a tie-break; the basket path must not. A silent pick there
+    # would put an unannounced variant inside a weighted composite.
+    panel, twin = _panel_with_a_twin_series(price=99.0, n_sources=999)
+    both = pd.concat([panel, twin])
+    surface = ccir.select_surface(both, operator_tier="T3", form_factor="ALL",
+                                  interruptibility="ALL", commitment_term="OnDemand",
+                                  region="ALL")
+    with pytest.raises(ValueError, match="ambiguous"):
+        ccir.chip_series(surface, "3090")
 
 
 def test_ladder_returns_none_for_an_unknown_chip():

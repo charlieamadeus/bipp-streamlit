@@ -98,41 +98,52 @@ def control(key: str, options: list[str], help_text: str) -> None:
 # -------------------------------------------------------------------- cards
 
 def card_rent(panel, series, latest_btc) -> None:
-    # Every chip that prices anywhere on the ladder, not just the default
-    # surface: that is what puts a 3090 and a 4090 beside a B300.
-    priceable = ccir.priceable_chips(panel)
-    options = ["The 50/30/20 basket"] + [chip for chip, _, _ in priceable]
+    # Curated list, same order as the card beside it. Anything CCIR cannot
+    # price today simply drops out rather than showing a dead option.
+    priced = []
+    for label, rent, _ in ccir_pages.CHIPS:
+        answer = ccir.best_rate(panel, rent) if rent else None
+        if answer:
+            priced.append((label, answer[0], answer[2]))
+    options = ["The 50/30/20 basket"] + [label for label, _, _ in priced]
     choice = remember("rent", options)
     if choice == "The 50/30/20 basket":
         hours, foot = series["compute_per_btc"].iloc[-1], "three chips, blended"
     else:
-        rate, market = next((r, m) for c, r, m in priceable if c == choice)
+        rate, market = next((r, m) for label, r, m in priced if label == choice)
         hours, foot = latest_btc / rate, f"${rate:.2f} an hour, {market.lower()}"
     st.markdown(fact(f"{hours:,.0f}", "GPU-hours per Bitcoin", foot), unsafe_allow_html=True)
     control("rent", options,
-            "Hours of one chip that a Bitcoin rents. Datacentre parts price on the "
-            "neocloud SXM market; consumer cards like the 3090 and 4090 are only "
-            "listed by marketplaces, so those are used where nothing better exists.")
+            "Hours of one chip that a Bitcoin rents. Data centre parts price on the "
+            "neocloud SXM market; consumer cards are only listed by marketplaces, so "
+            "those are used where nothing better exists. Same chips as the card beside "
+            "this one wherever both markets carry them.")
 
 
 def card_own(hardware, latest_btc) -> None:
     if hardware.empty:
         st.markdown(fact("n/a", "Cards per Bitcoin", "table unavailable"), unsafe_allow_html=True)
         return
-    by_age = hardware.sort_values("age_years")
-    models = by_age["model"].tolist()
-    default = next((i for i, m in enumerate(models) if m.startswith("H100 80GB SXM")), 0)
-    choice = remember("own", models, default)
-    row = by_age[by_age["model"] == choice].iloc[0]
+    available = set(hardware["model"].astype(str))
+    options = [label for label, _, own in ccir_pages.CHIPS if own and own in available]
+    if not options:
+        st.markdown(fact("n/a", "Cards per Bitcoin", "no curated chip priced"),
+                    unsafe_allow_html=True)
+        return
+    default = options.index("H100") if "H100" in options else 0
+    choice = remember("own", options, default)
+    row = hardware[hardware["model"].astype(str) == ccir_pages.OWN_KEYS[choice]].iloc[0]
     st.markdown(
         fact(f"{latest_btc / float(row['executed_median_usd']):,.1f}", "Cards per Bitcoin",
              f"${row['executed_median_usd']:,.0f} used, {row['age_years']:.1f} years old"),
         unsafe_allow_html=True,
     )
-    control("own", models,
-            "Whole chips a Bitcoin buys outright, at prices actually transacted on the "
-            "secondary market. Datacentre parts only: nobody publishes a "
-            "secondary-market median for consumer cards, so no 3090 or 4090 here.")
+    control("own", options,
+            "Whole chips a Bitcoin buys outright, at prices actually transacted second "
+            "hand. Fewer choices than renting, and deliberately: this table values used "
+            "data centre hardware as loan collateral, so it carries no consumer cards. "
+            "A 5090 can be rented here and not bought here for that reason, and a B200 "
+            "is too new to have a second-hand price at all.")
 
 
 def card_produce(tokens, latest_btc) -> None:

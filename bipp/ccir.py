@@ -260,16 +260,43 @@ def best_rate(panel: pd.DataFrame, chip: str, commitment_term: str = "OnDemand",
     silently averaging two series.
     """
     for tier, form_factor, label in RATE_LADDER:
-        try:
-            subset = select_surface(panel, operator_tier=tier, form_factor=form_factor,
-                                    interruptibility="ALL", commitment_term=commitment_term,
-                                    region=region)
-            series = chip_series(subset, chip)
-        except ValueError:
+        subset = select_surface(panel, operator_tier=tier, form_factor=form_factor,
+                                interruptibility="ALL", commitment_term=commitment_term,
+                                region=region)
+        matches = subset[subset["gpu_model"] == chip]
+        if matches.empty:
             continue
-        series = series.sort_values("as_of_date")
-        return float(series["price_headline"].iloc[-1]), series["series_id"].iloc[0], label
+        chosen = _deepest_panel(matches)
+        chosen = chosen.sort_values("as_of_date")
+        return float(chosen["price_headline"].iloc[-1]), chosen["series_id"].iloc[0], label
     return None
+
+
+def _deepest_panel(matches: pd.DataFrame) -> pd.DataFrame:
+    """Pick one series when a chip name maps to several on the same surface.
+
+    CCIR's `gpu_model` is not unique per series: an A100 80GB and an A100 40GB
+    both carry `gpu_model == "A100"` and are separated only inside the series
+    identifier (`CRI-T2-A100-SXM-...` against `CRI-T2-A100-40GB-SXM-...`). So a
+    surface that looks unambiguous by chip name can still hold two series, and
+    A100 fell out of the priceable list entirely because of it.
+
+    The tie-break is panel depth, which is CCIR's own trust signal: it publishes
+    every populated cell whatever its depth and says n is what tells you how
+    much to believe a cell. Deepest wins; series_id breaks a tie so the choice
+    is stable between runs. Averaging the two instead would be the blending
+    mistake the surface selector exists to prevent.
+
+    `chip_series` stays strict and still raises on ambiguity, because the basket
+    must never silently pick a variant.
+    """
+    ids = matches["series_id"].unique()
+    if len(ids) == 1:
+        return matches
+    depth = (matches.groupby("series_id")["n_sources"].max()
+             .sort_values(ascending=False).reset_index())
+    best = depth[depth["n_sources"] == depth["n_sources"].iloc[0]]["series_id"].min()
+    return matches[matches["series_id"] == best]
 
 
 def priceable_chips(panel: pd.DataFrame, commitment_term: str = "OnDemand",
