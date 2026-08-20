@@ -215,7 +215,7 @@ def make_ladder_panel() -> pd.DataFrame:
 
 def test_ladder_prefers_the_cleanest_rung():
     panel = make_ladder_panel()
-    rate, series_id, market = ccir.best_rate(panel, "H100")
+    rate, series_id, market, _ = ccir.best_rate(panel, "H100")
     assert rate == 3.57 and market == "Neocloud SXM"
     assert series_id == "CRI-T2-H100-SXM-ALL-OD-ALL"
 
@@ -223,7 +223,7 @@ def test_ladder_prefers_the_cleanest_rung():
 def test_ladder_falls_through_for_a_consumer_card():
     """A 3090 has no SXM form factor and no neocloud tier. Without the ladder
     it would show nothing at all."""
-    rate, _, market = ccir.best_rate(make_ladder_panel(), "3090")
+    rate, _, market, _ = ccir.best_rate(make_ladder_panel(), "3090")
     assert rate == 0.20 and market == "Marketplace"
 
 
@@ -255,7 +255,7 @@ def test_ladder_never_averages_two_series():
     # The invariant the old test was really protecting: whatever is returned is
     # one series' own price, never a blend of two.
     panel, twin = _panel_with_a_twin_series(price=99.0, n_sources=999)
-    price, series_id, _ = ccir.best_rate(pd.concat([panel, twin]), "3090")
+    price, series_id, _, _ = ccir.best_rate(pd.concat([panel, twin]), "3090")
     assert price == 99.0, "should be the deep twin's own price"
     assert series_id == "CRI-T3-3090-40GB-ALL-ALL-OD-ALL"
 
@@ -280,3 +280,22 @@ def test_priceable_chips_is_cheapest_first():
     found = ccir.priceable_chips(make_ladder_panel())
     assert [chip for chip, _, _ in found] == ["3090", "H100"]
     assert found[0][1] < found[1][1]
+
+
+def test_best_rate_reports_panel_depth():
+    """The fourth element exists so a caller can mark a thin cell as indicative
+    without a second lookup. CCIR publishes every populated cell whatever its
+    depth, so the number showing a price is not the whole story."""
+    panel = make_ladder_panel()
+    answer = ccir.best_rate(panel, "H100")
+    assert len(answer) == 4
+    depth = answer[3]
+    assert isinstance(depth, int)
+    expected = int(panel[panel["series_id"] == answer[1]]
+                   .sort_values("as_of_date")["n_sources"].iloc[-1])
+    assert depth == expected
+
+
+def test_indicative_threshold_matches_ccir_guidance():
+    # CCIR's methodology says cells below five sources read as indicative.
+    assert ccir.INDICATIVE_BELOW == 5

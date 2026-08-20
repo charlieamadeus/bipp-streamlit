@@ -81,7 +81,10 @@ CSS = f"""<style>
   .foot {{
     font-family: 'JetBrains Mono', ui-monospace, monospace;
     font-size: 0.7rem; color: var(--faint); margin-top: 0.3rem;
-    min-height: 2.1em; line-height: 1.5;
+    /* Two lines reserved on every card, so a longer footer wraps into space
+       that is already there instead of pushing that one card's dropdown down.
+       2.1em held 1.4 lines, which was enough until the thin-panel note. */
+    min-height: 3.2em; line-height: 1.5;
   }}
   [data-testid="stVerticalBlockBorderWrapper"] {{
     background: var(--raised); border: 1px solid var(--rule) !important;

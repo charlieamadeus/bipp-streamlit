@@ -181,12 +181,15 @@ FLAGSHIPS: list[tuple[str, str]] = [
 # centre loan. So a 5090 can be rented on this page and not bought on it, and
 # Blackwell parts are too new to have a second-hand market at all.
 #
-# GH200 is left out on purpose: 4 sources over 15 days with a 25.6% worst daily
-# move, against B300's 10 sources over 31. It is a thin cell, not a bad chip.
+# GH200 is in on Charlie's call, over a flag that its cell is thin: 4 sources
+# over 15 days with a 25.6% worst daily move, against B300's 10 over 31. Rather
+# than drop it or show it as if it were as solid as the rest, the card marks any
+# cell under five sources as indicative, which is CCIR's own reading of depth.
 CHIPS: list[tuple[str, str | None, str | None]] = [
     ("B300",      "B300",  None),
     ("B200",      "B200",  None),
     ("H200",      "H200",  "H200 141GB"),
+    ("GH200",     "GH200", None),
     ("H100",      "H100",  "H100 80GB SXM5"),
     ("A100",      "A100",  "A100 80GB SXM4"),
     ("L40S",      "L40S",  "L40S 48GB"),

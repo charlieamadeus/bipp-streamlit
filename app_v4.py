@@ -104,14 +104,20 @@ def card_rent(panel, series, latest_btc) -> None:
     for label, rent, _ in ccir_pages.CHIPS:
         answer = ccir.best_rate(panel, rent) if rent else None
         if answer:
-            priced.append((label, answer[0], answer[2]))
-    options = ["The 50/30/20 basket"] + [label for label, _, _ in priced]
+            priced.append((label, answer[0], answer[2], answer[3]))
+    options = ["The 50/30/20 basket"] + [label for label, _, _, _ in priced]
     choice = remember("rent", options)
     if choice == "The 50/30/20 basket":
         hours, foot = series["compute_per_btc"].iloc[-1], "three chips, blended"
     else:
-        rate, market = next((r, m) for label, r, m in priced if label == choice)
-        hours, foot = latest_btc / rate, f"${rate:.2f} an hour, {market.lower()}"
+        rate, market, sources = next(
+            (r, m, n) for label, r, m, n in priced if label == choice)
+        hours = latest_btc / rate
+        # A thin cell says so on the card. Showing a 4-source price identically
+        # to a 10-source one is the part that would mislead.
+        foot = (f"${rate:.2f} an hour, {sources} sources, indicative"
+                if sources < ccir.INDICATIVE_BELOW
+                else f"${rate:.2f} an hour, {market.lower()}")
     st.markdown(fact(f"{hours:,.0f}", "GPU-hours per Bitcoin", foot), unsafe_allow_html=True)
     control("rent", options,
             "Hours of one chip that a Bitcoin rents. Data centre parts price on the "

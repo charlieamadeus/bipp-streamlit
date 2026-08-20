@@ -38,6 +38,11 @@ SURFACE_DIMENSIONS = [
 
 TIER_LABELS = {"T1": "Hyperscaler", "T2": "Neocloud", "T3": "Marketplace"}
 
+# CCIR publishes every populated cell whatever its depth, and says cells below
+# five sources "should be read as indicative". Anything showing a price from a
+# cell this thin should say so rather than let it look as firm as a deep one.
+INDICATIVE_BELOW = 5
+
 
 def _fetch_csv(url: str) -> pd.DataFrame:
     request = Request(url, headers={"User-Agent": "bipp-streamlit/2.0 (research)"})
@@ -252,12 +257,16 @@ RATE_LADDER = [
 
 
 def best_rate(panel: pd.DataFrame, chip: str, commitment_term: str = "OnDemand",
-              region: str = "ALL") -> tuple[float, str, str] | None:
+              region: str = "ALL") -> tuple[float, str, str, int] | None:
     """Latest price for one chip, taking the first rung that resolves cleanly.
 
-    Returns (usd_per_gpu_hour, series_id, market_label), or None when no rung
-    gives exactly one series. Ambiguity is treated as no answer rather than
-    silently averaging two series.
+    Returns (usd_per_gpu_hour, series_id, market_label, n_sources), or None when
+    no rung carries the chip at all.
+
+    n_sources rides along because CCIR publishes every populated cell whatever
+    its depth and says depth is the trust signal, calling anything under five
+    sources indicative. A caller showing a price should be able to say so
+    without a second lookup.
     """
     for tier, form_factor, label in RATE_LADDER:
         subset = select_surface(panel, operator_tier=tier, form_factor=form_factor,
@@ -268,7 +277,8 @@ def best_rate(panel: pd.DataFrame, chip: str, commitment_term: str = "OnDemand",
             continue
         chosen = _deepest_panel(matches)
         chosen = chosen.sort_values("as_of_date")
-        return float(chosen["price_headline"].iloc[-1]), chosen["series_id"].iloc[0], label
+        return (float(chosen["price_headline"].iloc[-1]), chosen["series_id"].iloc[0],
+                label, int(chosen["n_sources"].iloc[-1]))
     return None
 
 
