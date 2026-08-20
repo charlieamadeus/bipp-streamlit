@@ -178,9 +178,13 @@ FLAGSHIPS: list[tuple[str, str]] = [
 # string. Either may be None, because the two surfaces do not cover the same
 # market. CCIR's resale page prices used ENTERPRISE cards, because that page
 # exists to value collateral, and a gaming card is not collateral for a data
-# centre loan. So a 5090 can be rented on this page and not bought on it, and a
-# B200 is too new to have a second-hand market at all.
+# centre loan. So a 5090 can be rented on this page and not bought on it, and
+# Blackwell parts are too new to have a second-hand market at all.
+#
+# GH200 is left out on purpose: 4 sources over 15 days with a 25.6% worst daily
+# move, against B300's 10 sources over 31. It is a thin cell, not a bad chip.
 CHIPS: list[tuple[str, str | None, str | None]] = [
+    ("B300",      "B300",  None),
     ("B200",      "B200",  None),
     ("H200",      "H200",  "H200 141GB"),
     ("H100",      "H100",  "H100 80GB SXM5"),
