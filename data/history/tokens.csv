@@ -83,11 +83,11 @@ Claude Haiku 4.5,1.0,0.1,5.0,,none in record,first_party_posted,,,2026-08-20 00:
 Claude Mythos 5,10.0,1.0,50.0,,none in record,first_party_posted,,,2026-08-20 00:00:00+00:00,AN  Anthropic model table
 Claude Opus 5,5.0,0.5,25.0,,none in record,first_party_posted,,,2026-08-20 00:00:00+00:00,AN  Anthropic model table
 Claude Sonnet 5,2.0,0.2,10.0,,none in record,first_party_posted,,,2026-08-20 00:00:00+00:00,AN  Anthropic model table
-DeepSeek V3.1,0.41,,1.32,,,cross_provider_median,4,$0.95 – $4.50,2026-08-20 00:00:00+00:00,XI  Xiaomi overseas price list
-DeepSeek V4-Flash,0.14,,0.28,,,cross_provider_median,5,$0.18 – $1.32,2026-08-20 00:00:00+00:00,XI  Xiaomi overseas price list
-DeepSeek V4-Flash-0731,0.14,,0.28,,,cross_provider_median,4,$0.18 – $0.28,2026-08-20 00:00:00+00:00,XI  Xiaomi overseas price list
-DeepSeek V4-Pro,1.32,,3.2,,,cross_provider_median,5,$2.55 – $3.96,2026-08-20 00:00:00+00:00,XI  Xiaomi overseas price list
-DeepSeek-V3.2,0.27,,0.4,,,cross_provider_median,3,$0.38 – $4.50,2026-08-20 00:00:00+00:00,XI  Xiaomi overseas price list
+DeepSeek V3.1,0.41,,1.32,,,cross_provider_median,4.0,$0.95 – $4.50,2026-08-20 00:00:00+00:00,XI  Xiaomi overseas price list
+DeepSeek V4-Flash,0.14,,0.28,,,cross_provider_median,5.0,$0.18 – $1.32,2026-08-20 00:00:00+00:00,XI  Xiaomi overseas price list
+DeepSeek V4-Flash-0731,0.14,,0.28,,,cross_provider_median,4.0,$0.18 – $0.28,2026-08-20 00:00:00+00:00,XI  Xiaomi overseas price list
+DeepSeek V4-Pro,1.32,,3.2,,,cross_provider_median,5.0,$2.55 – $3.96,2026-08-20 00:00:00+00:00,XI  Xiaomi overseas price list
+DeepSeek-V3.2,0.27,,0.4,,,cross_provider_median,3.0,$0.38 – $4.50,2026-08-20 00:00:00+00:00,XI  Xiaomi overseas price list
 GLM-4-32B-0414-128K,0.1,,0.1,,none in record,first_party_posted,,,2026-08-20 00:00:00+00:00,ZA  Z.AI model table
 GLM-4.5-Air,0.2,0.03,1.1,,none in record,first_party_posted,,,2026-08-20 00:00:00+00:00,ZA  Z.AI model table
 GLM-4.5-AirX,1.1,0.22,4.5,,none in record,first_party_posted,,,2026-08-20 00:00:00+00:00,ZA  Z.AI model table
@@ -95,21 +95,21 @@ GLM-4.5-X,2.2,0.45,8.9,,none in record,first_party_posted,,,2026-08-20 00:00:00+
 GLM-4.6V,0.3,0.05,0.9,,none in record,first_party_posted,,,2026-08-20 00:00:00+00:00,ZA  Z.AI model table
 GLM-4.6V-FlashX,0.04,0.0,0.4,,none in record,first_party_posted,,,2026-08-20 00:00:00+00:00,ZA  Z.AI model table
 GLM-4.7-FlashX,0.07,0.01,0.4,,none in record,first_party_posted,,,2026-08-20 00:00:00+00:00,ZA  Z.AI model table
-GLM-5,1.0,,3.2,,,cross_provider_median,4,$2.08 – $3.20,2026-08-20 00:00:00+00:00,XI  Xiaomi overseas price list
+GLM-5,1.0,,3.2,,,cross_provider_median,4.0,$2.08 – $3.20,2026-08-20 00:00:00+00:00,XI  Xiaomi overseas price list
 GLM-5-Turbo,1.2,0.24,4.0,,none in record,first_party_posted,,,2026-08-20 00:00:00+00:00,ZA  Z.AI model table
 GLM-5.3,1.4,0.26,4.4,,none in record,first_party_posted,,,2026-08-20 00:00:00+00:00,ZA  Z.AI model table
 GLM-5V-Turbo,1.2,0.24,4.0,,none in record,first_party_posted,,,2026-08-20 00:00:00+00:00,ZA  Z.AI model table
 GLM-OCR,0.03,,0.03,,none in record,first_party_posted,,,2026-08-20 00:00:00+00:00,ZA  Z.AI model table
 Inkling,1.0,0.17,4.05,,none in record,first_party_posted,,,2026-08-20 00:00:00+00:00,TM  Thinking Machines serverless inference
 Inkling-Small,0.3,0.06,1.2,,none in record,first_party_posted,,,2026-08-20 00:00:00+00:00,TM  Thinking Machines serverless inference
-Kimi K2 Instruct,0.57,,2.3,,,cross_provider_median,3,$2.00 – $2.50,2026-08-20 00:00:00+00:00,XI  Xiaomi overseas price list
-MiniMax M2.5,0.3,,1.2,,,cross_provider_median,4,$1.15 – $1.20,2026-08-20 00:00:00+00:00,XI  Xiaomi overseas price list
-MiniMax M3,0.3,,1.2,,,cross_provider_median,5,$0.96 – $1.20,2026-08-20 00:00:00+00:00,XI  Xiaomi overseas price list
-MiniMax-M2,0.3,,1.2,,,cross_provider_median,4,$1.02 – $1.20,2026-08-20 00:00:00+00:00,XI  Xiaomi overseas price list
-MiniMax-M2.7,0.3,,1.2,,,cross_provider_median,4,$1.00 – $2.40,2026-08-20 00:00:00+00:00,XI  Xiaomi overseas price list
+Kimi K2 Instruct,0.57,,2.3,,,cross_provider_median,3.0,$2.00 – $2.50,2026-08-20 00:00:00+00:00,XI  Xiaomi overseas price list
+MiniMax M2.5,0.3,,1.2,,,cross_provider_median,4.0,$1.15 – $1.20,2026-08-20 00:00:00+00:00,XI  Xiaomi overseas price list
+MiniMax M3,0.3,,1.2,,,cross_provider_median,5.0,$0.96 – $1.20,2026-08-20 00:00:00+00:00,XI  Xiaomi overseas price list
+MiniMax-M2,0.3,,1.2,,,cross_provider_median,4.0,$1.02 – $1.20,2026-08-20 00:00:00+00:00,XI  Xiaomi overseas price list
+MiniMax-M2.7,0.3,,1.2,,,cross_provider_median,4.0,$1.00 – $2.40,2026-08-20 00:00:00+00:00,XI  Xiaomi overseas price list
 MiniMax-M2.7-highspeed,0.6,0.06,2.4,,none in record,first_party_posted,,,2026-08-20 00:00:00+00:00,MM  MiniMax standard tier
 MiniMax-M3,0.3,0.06,1.2,,none in record,first_party_posted,,,2026-08-20 00:00:00+00:00,MM  MiniMax standard tier
-Qwen3 Coder 480B A35B Instruct,0.4,,1.6,,,cross_provider_median,3,$1.55 – $1.80,2026-08-20 00:00:00+00:00,XI  Xiaomi overseas price list
+Qwen3 Coder 480B A35B Instruct,0.4,,1.6,,,cross_provider_median,3.0,$1.55 – $1.80,2026-08-20 00:00:00+00:00,XI  Xiaomi overseas price list
 deepseek-v4-flash,0.44,0.01,1.32,,2026-08-17 (371%),first_party_posted,,,2026-08-20 00:00:00+00:00,DS  DeepSeek standard price
 deepseek-v4-pro,1.32,0.04,3.96,,2026-08-17 (355%),first_party_posted,,,2026-08-20 00:00:00+00:00,DS  DeepSeek standard price
 gemini-2.5-computer-use-preview-10-2025,1.25,,10.0,,none in record,first_party_posted,,,2026-08-20 00:00:00+00:00,GO  Google standard tier
@@ -121,7 +121,7 @@ gemini-3.5-flash-lite,0.3,0.03,2.5,,none in record,first_party_posted,,,2026-08-
 gemini-3.7-flash,0.75,0.07,3.75,,none in record,first_party_posted,,,2026-08-20 00:00:00+00:00,GO  Google standard tier
 gemini-robotics-er-2,2.0,0.2,10.0,,none in record,first_party_posted,,,2026-08-20 00:00:00+00:00,GO  Google standard tier
 gemini-robotics-er-2-streaming,2.0,,10.0,,none in record,first_party_posted,,,2026-08-20 00:00:00+00:00,GO  Google standard tier
-gemma-4-31B-it,0.26,,0.65,,,cross_provider_median,4,$0.38 – $1.15,2026-08-20 00:00:00+00:00,XI  Xiaomi overseas price list
+gemma-4-31B-it,0.26,,0.65,,,cross_provider_median,4.0,$0.38 – $1.15,2026-08-20 00:00:00+00:00,XI  Xiaomi overseas price list
 gpt-3.5-turbo-instruct,1.5,,2.0,,none in record,first_party_posted,,,2026-08-20 00:00:00+00:00,OA  OpenAI standard tier
 gpt-4-turbo-2024-04-09,10.0,,30.0,,none in record,first_party_posted,,,2026-08-20 00:00:00+00:00,OA  OpenAI standard tier
 gpt-4o,2.5,1.25,10.0,,none in record,first_party_posted,,,2026-08-20 00:00:00+00:00,OA  OpenAI standard tier
@@ -133,7 +133,7 @@ gpt-5.5-pro,30.0,,180.0,,none in record,first_party_posted,,,2026-08-20 00:00:00
 gpt-5.6-luna,0.2,0.02,1.2,,2026-07-30 (-80%),first_party_posted,,,2026-08-20 00:00:00+00:00,OA  OpenAI standard tier
 gpt-5.6-sol,5.0,0.5,30.0,,none in record,first_party_posted,,,2026-08-20 00:00:00+00:00,OA  OpenAI standard tier
 gpt-5.6-terra,2.0,0.2,12.0,,2026-07-30 (-20%),first_party_posted,,,2026-08-20 00:00:00+00:00,OA  OpenAI standard tier
-gpt-oss-120b,0.1,,0.42,,,cross_provider_median,4,$0.17 – $0.60,2026-08-20 00:00:00+00:00,XI  Xiaomi overseas price list
+gpt-oss-120b,0.1,,0.42,,,cross_provider_median,4.0,$0.17 – $0.60,2026-08-20 00:00:00+00:00,XI  Xiaomi overseas price list
 grok-4.20-0309-non-reasoning,1.25,0.2,2.5,,none in record,first_party_posted,,,2026-08-20 00:00:00+00:00,XA  xAI model catalogue
 grok-4.20-0309-reasoning,1.25,0.2,2.5,,none in record,first_party_posted,,,2026-08-20 00:00:00+00:00,XA  xAI model catalogue
 grok-4.20-multi-agent-0309,1.25,0.2,2.5,,none in record,first_party_posted,,,2026-08-20 00:00:00+00:00,XA  xAI model catalogue
@@ -141,7 +141,7 @@ grok-4.6,2.0,0.5,6.0,,none in record,first_party_posted,,,2026-08-20 00:00:00+00
 grok-build-0.1,1.0,0.2,2.0,,none in record,first_party_posted,,,2026-08-20 00:00:00+00:00,XA  xAI model catalogue
 kimi-k2.7-code,0.95,0.19,4.0,,none in record,first_party_posted,,,2026-08-20 00:00:00+00:00,MS  Moonshot per-model pages
 kimi-k2.7-code-highspeed,1.9,0.38,8.0,,none in record,first_party_posted,,,2026-08-20 00:00:00+00:00,MS  Moonshot per-model pages
-kimi-k3,3.0,,15.0,,,cross_provider_median,4,$14.25 – $15.00,2026-08-20 00:00:00+00:00,XI  Xiaomi overseas price list
+kimi-k3,3.0,,15.0,,,cross_provider_median,4.0,$14.25 – $15.00,2026-08-20 00:00:00+00:00,XI  Xiaomi overseas price list
 kimi-k3,3.0,0.3,15.0,,none in record,first_party_posted,,,2026-08-20 00:00:00+00:00,MS  Moonshot per-model pages
 mimo-v2.5,0.14,0.0,0.28,,none in record,first_party_posted,,,2026-08-20 00:00:00+00:00,XI  Xiaomi overseas price list
 mimo-v2.5-pro,0.43,0.0,0.87,,none in record,first_party_posted,,,2026-08-20 00:00:00+00:00,XI  Xiaomi overseas price list
@@ -154,6 +154,6 @@ o4-mini,1.1,0.28,4.4,,none in record,first_party_posted,,,2026-08-20 00:00:00+00
 qwen-plus-latest,0.4,,1.2,,none in record,first_party_posted,,,2026-08-20 00:00:00+00:00,AL  Alibaba international storefront
 qwen-turbo,0.05,,0.2,,none in record,first_party_posted,,,2026-08-20 00:00:00+00:00,AL  Alibaba international storefront
 qwen3.7-max,2.5,,7.5,,none in record,first_party_posted,,,2026-08-20 00:00:00+00:00,AL  Alibaba international storefront
-qwen3.7-max Currently equivalent to qwen3.7-max-2026-05-20 context caching discount,2.5,,7.5,,,cross_provider_median,3,$3.75 – $7.50,2026-08-20 00:00:00+00:00,XI  Xiaomi overseas price list
+qwen3.7-max Currently equivalent to qwen3.7-max-2026-05-20 context caching discount,2.5,,7.5,,,cross_provider_median,3.0,$3.75 – $7.50,2026-08-20 00:00:00+00:00,XI  Xiaomi overseas price list
 qwen3.7-max-preview,2.5,,7.5,,none in record,first_party_posted,,,2026-08-20 00:00:00+00:00,AL  Alibaba international storefront
 qwen3.7-plus,0.4,,1.6,,none in record,first_party_posted,,,2026-08-20 00:00:00+00:00,AL  Alibaba international storefront
