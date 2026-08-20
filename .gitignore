@@ -5,3 +5,5 @@
 .env
 data/raw/
 data/processed/
+data/ccir_cache/
+*.html

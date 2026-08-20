@@ -1,0 +1,62 @@
+# Capture CCIR's published rates into our own history and commit them.
+#
+# CCIR retains about 30 days of rental history and publishes residuals, token
+# prices and debt with no history at all. A day this does not run is a day that
+# eventually cannot be recovered, so it runs twice: once early, once late. The
+# store dedupes on (series_id, as_of_date), so a second run that sees the same
+# data is free and writes nothing.
+name: snapshot
+
+on:
+  schedule:
+    - cron: "0 7 * * *"    # 07:00 UTC, 03:00 America/New_York (EDT)
+    - cron: "0 19 * * *"   # 19:00 UTC, 15:00 America/New_York (EDT)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: snapshot
+  cancel-in-progress: false
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: pip install "pandas>=2.2"
+
+      # Capture the exit code rather than letting a failure abort the job. A
+      # partial pull is still worth committing: three good series should not be
+      # lost because the fourth page changed its markup.
+      - name: Pull
+        id: pull
+        run: |
+          set +e
+          python scripts/snapshot.py | tee snapshot.log
+          status=${PIPESTATUS[0]}
+          echo "status=$status" >> "$GITHUB_OUTPUT"
+
+      - name: Commit
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/history
+          if git diff --cached --quiet; then
+            echo "nothing new today"
+            exit 0
+          fi
+          git commit -m "snapshot $(date -u +%F)"
+          git pull --rebase --autostash origin main
+          git push
+
+      - name: Report
+        run: |
+          cat snapshot.log >> "$GITHUB_STEP_SUMMARY"
+          exit "${{ steps.pull.outputs.status || 0 }}"
