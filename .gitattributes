@@ -1,0 +1,7 @@
+# Keep the snapshot CSVs LF in the repo so a daily append is a small delta
+# rather than a whole-file rewrite. The job runs on Linux, this machine is
+# Windows, and pandas follows the host.
+*.csv text eol=lf
+*.py   text
+*.md   text
+*.png  binary
