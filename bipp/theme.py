@@ -138,10 +138,14 @@ def apply(st) -> None:
     st.markdown(FONTS + CSS, unsafe_allow_html=True)
 
 
-def chart(figure, height: int):
-    """Shared chart styling: no modebar, no chart-junk, palette text colours."""
+def chart(figure, height: int, right: int = 4):
+    """Shared chart styling: no modebar, no chart-junk, palette text colours.
+
+    `right` widens the right margin for charts that label their last point
+    outside the plot area; at the default 4px such a label is clipped.
+    """
     figure.update_layout(
-        height=height, margin=dict(l=4, r=4, t=6, b=4),
+        height=height, margin=dict(l=4, r=right, t=6, b=4),
         paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
         font=dict(size=12, color=INK_DIM, family="Inter, sans-serif"),
         hovermode="x unified",

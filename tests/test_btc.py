@@ -197,3 +197,62 @@ def test_share_at_issue_is_debt_over_market_cap_on_the_day():
     row = btc.debt_in_btc(frame, history, since="2025-01-01").iloc[0]
     market_cap = 50_000.0 * btc.supply_at("2025-06-01")
     assert row["share_at_issue"] == pytest.approx(1_000.0 * 1e6 / market_cap)
+
+
+def _two_deal_stack():
+    history = pd.Series(
+        [25_000.0] * 200 + [50_000.0] * 200,
+        index=pd.date_range("2025-01-01", periods=400, freq="D"),
+    )
+    frame = pd.DataFrame({
+        "issuer": ["A", "B"], "instrument": ["loan", "loan"],
+        "size_musd": [1_000.0, 1_000.0],
+        "issued": ["2025-01-10", "2025-08-01"],
+    })
+    return btc.debt_in_btc(frame, history, since="2025-01-01"), history
+
+
+def test_debt_share_series_committed_line_only_steps_on_a_deal():
+    stack, history = _two_deal_stack()
+    series = btc.debt_share_series(stack, history, end="2025-12-31")
+    quiet = series[(series["date"] > "2025-02-01") & (series["date"] < "2025-07-01")]
+    assert quiet["committed"].nunique() == 1, "committed moved with no deal signed"
+    assert series["committed"].iloc[-1] > quiet["committed"].iloc[0]
+
+
+def test_debt_share_series_marked_line_moves_when_bitcoin_does():
+    stack, history = _two_deal_stack()
+    series = btc.debt_share_series(stack, history, end="2025-12-31")
+    quiet = series[(series["date"] > "2025-02-01") & (series["date"] < "2025-07-01")]
+    assert quiet["marked"].nunique() > 1, "marked ignored a doubling of the price"
+
+
+def test_debt_share_series_lines_agree_on_the_signing_day():
+    # Same price, same supply, so the two readings are the same number. They
+    # separate from the next day on, and not only when the price moves: supply
+    # keeps growing, so market cap grows even at a flat price.
+    stack, history = _two_deal_stack()
+    series = btc.debt_share_series(stack, history, end="2025-02-01")
+    first = series.iloc[0]
+    assert first["committed"] == pytest.approx(first["marked"], rel=1e-9)
+
+    later = series.iloc[-1]
+    assert later["marked"] < later["committed"], "flat price, growing supply should dilute"
+    assert later["marked"] == pytest.approx(later["committed"], rel=0.01)
+
+
+def test_debt_share_series_is_empty_for_an_empty_stack():
+    assert btc.debt_share_series(pd.DataFrame(), pd.Series(dtype=float)).empty
+
+
+def test_debt_share_series_runs_to_the_last_priced_day_not_the_last_deal():
+    stack, history = _two_deal_stack()          # last deal 2025-08-01
+    series = btc.debt_share_series(stack, history)
+    assert series["date"].iloc[-1] == history.index.max()
+    assert series["date"].iloc[-1] > stack["issued_on"].max()
+
+
+def test_debt_share_series_honours_an_explicit_end():
+    stack, history = _two_deal_stack()
+    series = btc.debt_share_series(stack, history, end="2025-03-01")
+    assert series["date"].iloc[-1] == pd.Timestamp("2025-03-01")

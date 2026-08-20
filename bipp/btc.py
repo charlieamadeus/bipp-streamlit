@@ -158,6 +158,56 @@ def debt_in_btc(credit: pd.DataFrame, history: pd.Series,
     return working.reset_index(drop=True)
 
 
+def debt_share_series(stack: pd.DataFrame, history: pd.Series,
+                      end: str | pd.Timestamp | None = None) -> pd.DataFrame:
+    """Two daily readings of the same pile of debt.
+
+    `committed` is each deal's share of Bitcoin's market capitalisation on the
+    day it was signed, accumulated. It moves only when someone borrows.
+
+    `marked` is every dollar borrowed so far against Bitcoin's market
+    capitalisation on the day being read. It moves when Bitcoin moves.
+
+    The gap between them is the whole point: it is whether Bitcoin has outgrown
+    the borrowing since the borrowing happened, or the other way round. Neither
+    line alone can say that.
+
+    Caveat carried deliberately: `marked` treats debt as outstanding once
+    issued. Two of the tracker's instruments have matured and a third of them
+    carry no parseable maturity, so netting redemptions is not yet possible and
+    would barely move the line today. It will matter as maturities land.
+    """
+    if stack.empty:
+        return pd.DataFrame()
+    # Default to the last day priced, not the last day borrowed. Ending on the
+    # final deal would make "marked to Bitcoin today" mean "marked to Bitcoin on
+    # whatever day someone last signed something", which drifts further from
+    # true the longer nobody borrows.
+    last_deal = pd.Timestamp(stack["issued_on"].max())
+    if end is not None:
+        end = pd.Timestamp(end)          # an explicit end is honoured as given
+    elif len(history):
+        # Never stop short of the last deal, in case prices lag the tracker.
+        end = max(pd.Timestamp(history.index.max()), last_deal)
+    else:
+        end = last_deal
+    days = pd.date_range(stack["issued_on"].min(), end, freq="D")
+    if len(days) == 0:
+        return pd.DataFrame()
+
+    by_day = stack.groupby("issued_on").agg(
+        share=("share_at_issue", "sum"), usd=("size_musd", "sum"))
+    committed = by_day["share"].cumsum().reindex(days, method="ffill").fillna(0.0)
+    borrowed = (by_day["usd"] * 1e6).cumsum().reindex(days, method="ffill").fillna(0.0)
+    market_cap = pd.Series([price_at(history, d) * supply_at(d) for d in days], index=days)
+
+    return pd.DataFrame({
+        "date": days,
+        "committed": committed.to_numpy(),
+        "marked": (borrowed / market_cap).to_numpy(),
+    }).reset_index(drop=True)
+
+
 def decompose(compute_per_btc: pd.Series, btc_usd: pd.Series,
               compute_price: pd.Series) -> dict[str, float]:
     """Split a move in purchasing power into its money and compute halves.

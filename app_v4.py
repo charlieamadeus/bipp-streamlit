@@ -219,21 +219,39 @@ def chart_power(series, ornn) -> go.Figure:
     return figure
 
 
-def chart_stack(stack) -> go.Figure:
-    share = stack["cumulative_share"] * 100
+def _day(ts) -> str:
+    """'30 June 2026'. Built by hand because %-d is glibc-only and %#d is
+    Windows-only, so either literal breaks on the other platform."""
+    return f"{ts.day} {ts:%B %Y}"
+
+
+def chart_stack(shares) -> go.Figure:
+    """Two readings of one pile of debt. The gap is the message, so both lines
+    carry a legend entry and an end label rather than relying on colour alone."""
+    committed = shares["committed"] * 100
+    marked = shares["marked"] * 100
     figure = go.Figure()
     figure.add_trace(go.Scatter(
-        x=stack["issued_on"], y=share, mode="lines", showlegend=False,
+        x=shares["date"], y=committed, mode="lines", name="Committed at signing",
         line=dict(width=2.2, color=POWER, shape="hv"),
-        fill="tozeroy", fillcolor="rgba(57,135,229,0.09)", name="Share of all Bitcoin",
+        fill="tozeroy", fillcolor="rgba(57,135,229,0.09)",
     ))
     figure.add_trace(go.Scatter(
-        x=[stack["issued_on"].iloc[-1]], y=[share.iloc[-1]], mode="markers+text",
-        marker=dict(size=7, color=POWER), text=[f"{share.iloc[-1]:.1f}%  "],
-        textposition="middle left",
-        textfont=dict(color=POWER, size=12, family="JetBrains Mono, monospace"),
-        showlegend=False, hoverinfo="skip",
+        x=shares["date"], y=marked, mode="lines", name="Marked to Bitcoin today",
+        line=dict(width=1.8, color=MONEY),
     ))
+    for series, colour in ((committed, POWER), (marked, MONEY)):
+        figure.add_trace(go.Scatter(
+            x=[shares["date"].iloc[-1]], y=[series.iloc[-1]], mode="markers+text",
+            marker=dict(size=7, color=colour), text=[f"  {series.iloc[-1]:.1f}%"],
+            textposition="middle right",
+            textfont=dict(color=colour, size=12, family="JetBrains Mono, monospace"),
+            showlegend=False, hoverinfo="skip",
+            # Without this the label is clipped to the plot area and vanishes.
+            # chart_power gets away without it only because it sets no explicit
+            # x range, so plotly auto-pads instead.
+            cliponaxis=False,
+        ))
     figure.update_yaxes(ticksuffix="%")
     return figure
 
@@ -319,32 +337,47 @@ def main() -> None:
         st.subheader("What the buildout borrowed, measured in Bitcoin")
         st.markdown(
             '<p class="dek">Data centres are built with debt. Every loan and bond raised '
-            'against AI computing since 2023, each one measured against the entire market '
-            'capitalisation of Bitcoin on the day it was signed, then added up.</p>',
+            'against AI computing since 2023, read two ways. Blue is what each deal was '
+            'worth against the whole of Bitcoin on the day it was signed, added up and then '
+            'left alone. Orange is all of it measured against Bitcoin today.</p>',
             unsafe_allow_html=True,
         )
-        st.plotly_chart(theme.chart(chart_stack(stack), 320),
+        shares = btc_history.debt_share_series(stack, load_btc_long())
+        st.plotly_chart(theme.chart(chart_stack(shares), 340, right=62),
                         use_container_width=True, config=PLOT_CONFIG)
 
-        recent = stack[stack["issued_on"] >= stack["issued_on"].max() - pd.Timedelta(days=90)]
-        share = stack["cumulative_share"].iloc[-1] * 100
-        aside = (f'Priced at signing, so the line moves only when someone borrows, never when '
-                 f'Bitcoin does. The last 90 days added '
-                 f'{recent["share_at_issue"].sum() * 100:.1f} points across '
-                 f'{len(recent)} deals.')
+        committed = shares["committed"].iloc[-1] * 100
+        marked = shares["marked"].iloc[-1] * 100
+        gap = marked - committed
+        ahead = "the borrowing" if gap > 0 else "Bitcoin"
+
+        # The widest the two readings have ever been apart, and the last time
+        # they swapped places. Both are computed, never written down, because
+        # the answer changes every time Bitcoin moves.
+        spread = (shares["marked"] - shares["committed"]) * 100
+        peak_at = spread.abs().idxmax()
+        crossings = spread[(spread.shift() * spread) < 0]
+        headline = (f'Signed at the time, the buildout borrowed '
+                    f"<b>{committed:.1f}% of Bitcoin</b>. Against Bitcoin today the same "
+                    f"debt is <b>{marked:.1f}%</b>.")
+
+        aside = (f'The gap is {abs(gap):.1f} points, and it says {ahead} has grown faster since '
+                 f'the money was raised. Widest it has ever been: {abs(spread[peak_at]):.1f} '
+                 f'points on {_day(shares["date"].iloc[peak_at])}.')
+        if len(crossings):
+            aside += (f' The two readings last swapped places in '
+                      f'{shares["date"].iloc[crossings.index[-1]]:%B %Y}.')
 
         _, contingent = btc_history.split_contingent(credit)
         guaranteed = btc_history.debt_in_btc(contingent, load_btc_long(),
                                              exclude_contingent=False)
         if not guaranteed.empty:
-            aside += (f' Excluded: a contingent guarantee worth another '
+            aside += (f' Neither line counts the contingent guarantee worth another '
                       f'{guaranteed["share_at_issue"].sum() * 100:.1f}% on its own, '
                       f'NVIDIA standing behind the leases under OpenAI. A promise to pay is '
                       f'not money drawn.')
         st.markdown(
-            f'<div class="readout">The AI buildout has borrowed the equivalent of '
-            f"<b>{share:.1f}% of Bitcoin's market capitalisation</b>, each deal "
-            f'measured on the day it was signed.'
+            f'<div class="readout">{headline}'
             f'<span class="aside">{aside}</span></div>',
             unsafe_allow_html=True,
         )
