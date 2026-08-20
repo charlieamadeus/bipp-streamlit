@@ -318,3 +318,38 @@ def test_debt_coverage_names_a_reason_for_every_exclusion():
     cov = btc.debt_coverage(credit, since="2023-01-01")
     reasons = {r for r, (n, _) in cov["excluded"].items() if n}
     assert reasons == {"no date in the cell", "issued before 2023-01-01"}
+
+
+def test_split_contingent_keeps_a_loan_that_merely_mentions_a_backstop():
+    """The defect this replaces: a $300M Crusoe credit facility described as
+    "Goldman Sachs loan, AMD backstop" was classified as an unfunded promise
+    and removed from borrowing entirely."""
+    credit = pd.DataFrame({
+        "issuer": ["Crusoe", "NVIDIA"],
+        "instrument": ["Goldman Sachs loan, AMD backstop", "Residual value guaranties"],
+        "type": ["Credit facility", "Other"],
+        "size_musd": [300.0, 105_000.0],
+        "issued": ["2026-02-19", "2026-08-17"],
+    })
+    drawn, contingent = btc.split_contingent(credit)
+    assert list(drawn["issuer"]) == ["Crusoe"]
+    assert list(contingent["issuer"]) == ["NVIDIA"]
+
+
+@pytest.mark.parametrize("debt_type", ["Bond", "Convertible", "Credit facility", "Lease"])
+def test_a_typed_debt_instrument_is_never_contingent(debt_type):
+    credit = pd.DataFrame({
+        "issuer": ["X"], "instrument": ["notes with a parent guarantee"],
+        "type": [debt_type], "size_musd": [100.0], "issued": ["2025-01-01"],
+    })
+    drawn, contingent = btc.split_contingent(credit)
+    assert len(drawn) == 1 and contingent.empty
+
+
+def test_split_contingent_falls_back_to_language_without_a_type_column():
+    credit = pd.DataFrame({
+        "issuer": ["X"], "instrument": ["Residual value guaranties"],
+        "size_musd": [100.0], "issued": ["2025-01-01"],
+    })
+    _, contingent = btc.split_contingent(credit)
+    assert len(contingent) == 1

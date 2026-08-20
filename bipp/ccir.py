@@ -159,6 +159,44 @@ def chip_series(panel: pd.DataFrame, chip: str) -> pd.DataFrame:
                    "promotion_status", "n_sources", "series_id"]].reset_index(drop=True)
 
 
+def price_band(panel: pd.DataFrame, series_id: str) -> tuple[float, float] | None:
+    """Latest interquartile range for one series, as (p25, p75).
+
+    CCIR publishes p25 and p75 beside every headline precisely because the
+    headline alone hides how far providers disagree. A page quoting the headline
+    to five figures while the quartiles span nearly two to one is claiming
+    precision the panel does not carry.
+    """
+    rows = panel[panel["series_id"] == series_id].sort_values("as_of_date")
+    if rows.empty:
+        return None
+    latest = rows.iloc[-1]
+    p25, p75 = latest.get("price_p25"), latest.get("price_p75")
+    if pd.isna(p25) or pd.isna(p75):
+        return None
+    return float(p25), float(p75)
+
+
+def basket_band(surface: pd.DataFrame, weights: dict[str, float]) -> tuple[float, float] | None:
+    """The basket priced at every component's p25, and at every component's p75.
+
+    Not a confidence interval: it assumes the components move together, which
+    is the widest honest reading rather than a distributional claim. It bounds
+    what the same basket would cost across the panel's middle half.
+    """
+    low = high = 0.0
+    for chip, weight in weights.items():
+        try:
+            series = chip_series(surface, chip).sort_values("as_of_date").iloc[-1]
+        except ValueError:
+            return None
+        if pd.isna(series.get("price_p25")) or pd.isna(series.get("price_p75")):
+            return None
+        low += float(series["price_p25"]) * weight
+        high += float(series["price_p75"]) * weight
+    return low, high
+
+
 def build_basket(panel: pd.DataFrame, weights: dict[str, float]) -> pd.DataFrame:
     """Weighted composite across chips on one surface. Inner join on date."""
     frames = []

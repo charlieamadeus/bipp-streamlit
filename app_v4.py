@@ -14,6 +14,8 @@ from __future__ import annotations
 
 from datetime import timedelta
 
+import math
+
 import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
@@ -24,8 +26,15 @@ from bipp.pipeline import fetch_coinbase_btc_usd, fetch_live_dataset
 from bipp.theme import MONEY, PLOT_CONFIG, POWER, fact
 
 BASKET = {"H100": 0.5, "H200": 0.3, "B200": 0.2}
-SURFACE = dict(operator_tier="T2", form_factor="SXM",
-               interruptibility="ALL", commitment_term="OnDemand", region="ALL")
+SURFACE = dict(operator_tier="T2", form_factor="SXM", interruptibility="GTD",
+               commitment_term="OnDemand", region="ALL")
+# interruptibility="GTD", not "ALL". The page says "on demand", and pooling
+# interruptible capacity into that is a different product: spot GPUs can be
+# evicted, and they price about a third cheaper. CCIR uses guaranteed as its
+# own on-demand anchor on /term. The pooled surface also carried much of the
+# apparent panel dispersion: the guaranteed basket band is $3.86-$5.50 against
+# the pooled $2.82-$5.16, so most of that width was the spot mix, not provider
+# disagreement about the same product.
 
 
 # --------------------------------------------------------------------- data
@@ -97,6 +106,15 @@ def control(key: str, options: list[str], help_text: str) -> None:
 
 # -------------------------------------------------------------------- cards
 
+def _two_figures(value: float) -> str:
+    """16,979 -> "17,000". The panel's quartiles span nearly two to one, so five
+    significant figures assert a precision the data cannot carry."""
+    if value <= 0:
+        return "0"
+    step = 10 ** (math.floor(math.log10(value)) - 1)
+    return f"{round(value / step) * step:,.0f}"
+
+
 def card_rent(panel, series, latest_btc) -> None:
     # Curated list, same order as the card beside it. Anything CCIR cannot
     # price today simply drops out rather than showing a dead option.
@@ -104,21 +122,29 @@ def card_rent(panel, series, latest_btc) -> None:
     for label, rent, _ in ccir_pages.CHIPS:
         answer = ccir.best_rate(panel, rent) if rent else None
         if answer:
-            priced.append((label, answer[0], answer[2], answer[3]))
-    options = ["The 50/30/20 basket"] + [label for label, _, _, _ in priced]
+            priced.append((label, answer[0], answer[2], answer[3], answer[1]))
+    options = ["The 50/30/20 basket"] + [label for label, _, _, _, _ in priced]
     choice = remember("rent", options)
     if choice == "The 50/30/20 basket":
         hours, foot = series["compute_per_btc"].iloc[-1], "three chips, blended"
+        band = ccir.basket_band(ccir.select_surface(panel, **SURFACE), BASKET)
     else:
-        rate, market, sources = next(
-            (r, m, n) for label, r, m, n in priced if label == choice)
+        rate, market, sources, series_id = next(
+            (r, m, n, sid) for label, r, m, n, sid in priced if label == choice)
         hours = latest_btc / rate
         # A thin cell says so on the card. Showing a 4-source price identically
         # to a 10-source one is the part that would mislead.
         foot = (f"${rate:.2f} an hour, {sources} sources, indicative"
                 if sources < ccir.INDICATIVE_BELOW
                 else f"${rate:.2f} an hour, {market.lower()}")
-    st.markdown(fact(f"{hours:,.0f}", "GPU-hours per Bitcoin", foot), unsafe_allow_html=True)
+        band = ccir.price_band(panel, series_id)
+    # The panel's own middle half, beside the headline. CCIR publishes p25 and
+    # p75 next to every price because the headline alone hides how far providers
+    # disagree; on the basket that is roughly 15,000 to 21,000 hours.
+    if band:
+        foot += f" · {_two_figures(latest_btc / band[1])} to {_two_figures(latest_btc / band[0])} across the panel"
+    st.markdown(fact(_two_figures(hours), "GPU-hours per Bitcoin", foot),
+                unsafe_allow_html=True)
     control("rent", options,
             "Hours of one chip that a Bitcoin rents. Data centre parts price on the "
             "neocloud SXM market; consumer cards are only listed by marketplaces, so "
@@ -472,7 +498,12 @@ fixed quantity of money buys is one way of watching that race.
 
 SOURCES = """
 **Compute rates** are CCIR (ccir.io) advertised prices, US dollars per chip per
-hour, neocloud SXM on demand, published each morning. The record here runs
+hour, neocloud SXM, guaranteed on demand, published each morning. Guaranteed
+rather than pooled with interruptible capacity: spot GPUs can be evicted and
+price about a third cheaper, so blending them would make the number depend on
+the spot share of the panel. The headline is shown to two significant figures
+with the panel's own interquartile range beside it, because providers disagree
+by roughly forty percent about the same product on the same day. The record here runs
 {first} to {last}. It begins three weeks after Bitcoin's 2026-06-30 low, which is
 why the marketplace index is drawn alongside: it reaches back to 2026-05-19 and
 can see either side of that low.

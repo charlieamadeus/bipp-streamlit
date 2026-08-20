@@ -299,3 +299,23 @@ def test_best_rate_reports_panel_depth():
 def test_indicative_threshold_matches_ccir_guidance():
     # CCIR's methodology says cells below five sources read as indicative.
     assert ccir.INDICATIVE_BELOW == 5
+
+
+def test_basket_band_brackets_the_headline():
+    """The p25-weighted basket must be cheaper than the headline, and the
+    p75-weighted dearer. If not, the band is not a band."""
+    panel = make_ladder_panel()
+    surface = ccir.select_surface(panel, operator_tier="T2", form_factor="SXM",
+                                  interruptibility="ALL", commitment_term="OnDemand",
+                                  region="ALL")
+    weights = {"H100": 1.0}
+    band = ccir.basket_band(surface, weights)
+    if band is None:
+        pytest.skip("fixture carries no quartiles")
+    low, high = band
+    headline = ccir.chip_series(surface, "H100").sort_values("as_of_date").iloc[-1]["price_headline"]
+    assert low <= headline <= high
+
+
+def test_price_band_returns_none_for_an_unknown_series():
+    assert ccir.price_band(make_ladder_panel(), "CRI-NOPE-000") is None

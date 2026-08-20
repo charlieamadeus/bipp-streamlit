@@ -64,7 +64,21 @@ INITIAL_REWARD = 50.0
 # day's BTC it is 1.63M BTC-equivalent, which is 41% of everything the tracker
 # records since 2023. Summing it into "borrowed" overstates the stack by that
 # much, so it is separated rather than counted.
+# A row is contingent only when the instrument ITSELF is a guarantee, never
+# because a debt instrument happens to mention one. The old pattern matched any
+# occurrence of "guarant|backstop" in the prose and so threw out a $300M Crusoe
+# credit facility for saying "Goldman Sachs loan, AMD backstop" -- a drawn loan
+# that merely carries support, classified as an unfunded promise.
+#
+# CCIR types every row, and its debt types are unambiguous: a Bond, Convertible,
+# Credit facility or Lease is money raised whatever its support package. Only
+# rows it leaves as Other can be a bare guarantee, and among those the language
+# test decides. On the current ledger that is one row of seven: NVIDIA's
+# residual value guaranties. The other six are a Magnetar loan, SAFEs and
+# promissory notes, an early debt raise, a private-credit facility and a planned
+# leveraged loan, all correctly kept as drawn.
 CONTINGENT_PATTERN = r"guarant|backstop"
+DEBT_TYPES = frozenset({"bond", "convertible", "credit facility", "lease"})
 
 
 def circulating_supply(block_height: int) -> float:
@@ -118,7 +132,15 @@ def split_contingent(credit: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
     """
     if credit.empty or "instrument" not in credit.columns:
         return credit, credit.iloc[0:0]
-    flag = credit["instrument"].astype(str).str.contains(CONTINGENT_PATTERN, case=False, na=False)
+    names_a_guarantee = credit["instrument"].astype(str).str.contains(
+        CONTINGENT_PATTERN, case=False, na=False)
+    if "type" in credit.columns:
+        is_debt = credit["type"].astype(str).str.strip().str.lower().isin(DEBT_TYPES)
+    else:
+        # No type column: fall back to language alone rather than guess, and
+        # accept that a supported loan may be misfiled. Reported, not silent.
+        is_debt = pd.Series(False, index=credit.index)
+    flag = names_a_guarantee & ~is_debt
     return credit[~flag].copy(), credit[flag].copy()
 
 
