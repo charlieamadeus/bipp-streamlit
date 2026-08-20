@@ -12,6 +12,8 @@ import datetime as dt
 import json
 from urllib.request import Request, urlopen
 
+import re
+
 import pandas as pd
 
 CANDLES_URL = "https://api.exchange.coinbase.com/products/BTC-USD/candles"
@@ -120,6 +122,98 @@ def split_contingent(credit: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
     return credit[~flag].copy(), credit[flag].copy()
 
 
+# CCIR's `issued` column is prose, not a date field. Real values include
+# "Reported 2025-10-16", "Priced 2025-10-16; JV announced 2025-10-21",
+# "Finalized ~2026-06-08 (press; no filing)" and "-". Handing that to
+# pd.to_datetime(errors="coerce") and dropping the failures silently removed 20
+# non-contingent rows worth $156.9B, which was more than half the tracker, and
+# removed them non-randomly: press-reported private credit fails, filed deals
+# parse. The selection rule was effectively "did pandas understand the prose".
+_ISO_DAY = re.compile(r"(\d{4})-(\d{2})-(\d{2})")
+_ISO_MONTH = re.compile(r"(\d{4})-(\d{2})(?!\d)")
+_YEAR = re.compile(r"(?<!\d)(20\d{2})(?!\d)")
+
+
+def parse_issue_date(text) -> tuple[pd.Timestamp, str]:
+    """Pull an issue date out of CCIR's free-text `issued` cell.
+
+    Returns (timestamp, precision) where precision is 'day', 'month', 'year' or
+    'none'. The FIRST date in the cell wins: CCIR writes these in event order,
+    so "Priced 2025-10-16; JV announced 2025-10-21" leads with the pricing date,
+    which is the one an issuance series wants.
+
+    Precision is returned rather than hidden because a row dated only to a year
+    is placed on 1 January, and a chart should be able to say so.
+    """
+    if text is None or (isinstance(text, float) and pd.isna(text)):
+        return pd.NaT, "none"
+    raw = str(text).strip()
+    if not raw or raw in {"-", "--", "—", "–"}:
+        return pd.NaT, "none"
+
+    m = _ISO_DAY.search(raw)
+    if m:
+        try:
+            return pd.Timestamp(int(m.group(1)), int(m.group(2)), int(m.group(3))), "day"
+        except ValueError:
+            pass
+    m = _ISO_MONTH.search(raw)
+    if m:
+        try:
+            return pd.Timestamp(int(m.group(1)), int(m.group(2)), 1), "month"
+        except ValueError:
+            pass
+    # A bare year has to be caught before pd.to_datetime, which parses "2024"
+    # happily and would report it as a day-precision date on 1 January.
+    if _YEAR.fullmatch(raw):
+        return pd.Timestamp(int(raw), 1, 1), "year"
+    direct = pd.to_datetime(raw, errors="coerce", format="mixed")
+    if not pd.isna(direct):
+        return pd.Timestamp(direct), "day"
+    m = _YEAR.search(raw)
+    if m:
+        return pd.Timestamp(int(m.group(1)), 1, 1), "year"
+    return pd.NaT, "none"
+
+
+def debt_coverage(credit: pd.DataFrame, since: str = "2023-01-01",
+                  exclude_contingent: bool = True) -> dict:
+    """What the debt chart shows against what the tracker holds.
+
+    Exists so the page can state its own coverage instead of implying it plots
+    everything. Every excluded row is counted and reasoned, never dropped.
+    """
+    if credit.empty:
+        return {"rows_total": 0, "rows_shown": 0, "usd_total": 0.0, "usd_shown": 0.0,
+                "excluded": {}, "precision": {}}
+    working = credit.copy()
+    contingent_rows = 0, 0.0
+    if exclude_contingent:
+        drawn, contingent = split_contingent(working)
+        contingent_rows = (len(contingent), float(contingent["size_musd"].sum()))
+        working = drawn
+
+    dated = working["issued"].map(parse_issue_date)
+    working = working.assign(issued_on=[d for d, _ in dated],
+                             date_precision=[p for _, p in dated])
+    undated = working[working["issued_on"].isna()]
+    old = working[(~working["issued_on"].isna()) & (working["issued_on"] < pd.Timestamp(since))]
+    shown = working[(~working["issued_on"].isna()) & (working["issued_on"] >= pd.Timestamp(since))]
+
+    return {
+        "rows_total": len(credit),
+        "rows_shown": len(shown),
+        "usd_total": float(credit["size_musd"].sum()),
+        "usd_shown": float(shown["size_musd"].sum()),
+        "excluded": {
+            "no date in the cell": (len(undated), float(undated["size_musd"].sum())),
+            f"issued before {since}": (len(old), float(old["size_musd"].sum())),
+            "contingent, not drawn": contingent_rows,
+        },
+        "precision": shown["date_precision"].value_counts().to_dict(),
+    }
+
+
 def debt_in_btc(credit: pd.DataFrame, history: pd.Series,
                 since: str = "2023-01-01", exclude_contingent: bool = True) -> pd.DataFrame:
     """Each borrowing converted to BTC at the price on the day it was struck.
@@ -136,7 +230,9 @@ def debt_in_btc(credit: pd.DataFrame, history: pd.Series,
         working, _ = split_contingent(working)
     if working.empty:
         return pd.DataFrame()
-    working["issued_on"] = pd.to_datetime(working["issued"], errors="coerce", format="mixed")
+    dated = working["issued"].map(parse_issue_date)
+    working["issued_on"] = [d for d, _ in dated]
+    working["date_precision"] = [p for _, p in dated]
     working = working.dropna(subset=["issued_on", "size_musd"])
     working = working[working["issued_on"] >= pd.Timestamp(since)].sort_values("issued_on")
     if working.empty:

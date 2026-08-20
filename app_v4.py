@@ -353,7 +353,7 @@ def main() -> None:
     if not stack.empty:
         st.subheader("What the buildout borrowed, measured in Bitcoin")
         st.markdown(
-            '<p class="dek">Data centres are built with debt. Every loan and bond raised '
+            '<p class="dek">Data centres are built with debt. The borrowing CCIR records '
             'against AI computing since 2023, read two ways. Blue is what each deal was '
             'worth against the whole of Bitcoin on the day it was signed, added up and then '
             'left alone. Orange is all of it measured against Bitcoin today.</p>',
@@ -366,7 +366,11 @@ def main() -> None:
         committed = shares["committed"].iloc[-1] * 100
         marked = shares["marked"].iloc[-1] * 100
         gap = marked - committed
-        ahead = "the borrowing" if gap > 0 else "Bitcoin"
+        # Deliberately not "the borrowing grew faster". Debt growth moves both
+        # lines, so the gap cannot attribute itself. What it measures is where
+        # Bitcoin's market cap sits now against the deal-size-weighted level
+        # that prevailed when the money was raised.
+        below = "below" if gap > 0 else "above"
 
         # The widest the two readings have ever been apart, and the last time
         # they swapped places. Both are computed, never written down, because
@@ -378,21 +382,29 @@ def main() -> None:
                     f"<b>{committed:.1f}% of Bitcoin</b>. Against Bitcoin today the same "
                     f"debt is <b>{marked:.1f}%</b>.")
 
-        aside = (f'The gap is {abs(gap):.1f} points, and it says {ahead} has grown faster since '
-                 f'the money was raised. Widest it has ever been: {abs(spread[peak_at]):.1f} '
-                 f'points on {_day(shares["date"].iloc[peak_at])}.')
+        aside = (f"The gap is {abs(gap):.1f} points. It says Bitcoin's market cap today sits "
+                 f'{below} the deal-weighted level that prevailed when this money was raised. '
+                 f'Borrowing moves both lines, so the gap on its own does not say which grew '
+                 f'faster. Widest it has been: {abs(spread[peak_at]):.1f} points on '
+                 f'{_day(shares["date"].iloc[peak_at])}.')
         if len(crossings):
             aside += (f' The two readings last swapped places in '
                       f'{shares["date"].iloc[crossings.index[-1]]:%B %Y}.')
 
-        _, contingent = btc_history.split_contingent(credit)
-        guaranteed = btc_history.debt_in_btc(contingent, load_btc_long(),
-                                             exclude_contingent=False)
-        if not guaranteed.empty:
-            aside += (f' Neither line counts the contingent guarantee worth another '
-                      f'{guaranteed["share_at_issue"].sum() * 100:.1f}% on its own, '
-                      f'NVIDIA standing behind the leases under OpenAI. A promise to pay is '
-                      f'not money drawn.')
+        # Coverage stated on the page, not assumed. Silently dropping rows that
+        # failed to parse once cut this chart to 53% of the tracker while the
+        # text claimed it showed everything.
+        cov = btc_history.debt_coverage(credit)
+        aside += (f' Covers {cov["rows_shown"]} of the {cov["rows_total"]} rows CCIR records '
+                  f'and ${cov["usd_shown"] / 1000:,.0f}B of ${cov["usd_total"] / 1000:,.0f}B.')
+        parts = [f'${usd / 1000:,.1f}B {reason}' for reason, (n, usd) in cov["excluded"].items()
+                 if n]
+        if parts:
+            aside += ' Left out: ' + '; '.join(parts) + '.'
+        vague = sum(v for k, v in cov["precision"].items() if k != "day")
+        if vague:
+            aside += (f' {vague} included rows carry only a month or a year for their issue '
+                      f'date, so their step lands on the first of that period.')
         st.markdown(
             f'<div class="readout">{headline}'
             f'<span class="aside">{aside}</span></div>',
@@ -472,12 +484,22 @@ under ten sales in 90 days.
 intelligence. Only four of 63 tracked models have changed price since the record
 began on 2026-07-03, so there is a level here but no trend yet.
 
-**Borrowing** is CCIR's compute-debt tracker. Eight rows name an incremental
-tranche or an upsized facility, $8.1B in total; whether those sit on top of the
-parent loan or inside it cannot be told from the table, so the stack may be
-overstated by up to about 2%. No duplicated issuer-and-instrument pair appears
-anywhere in the 175 rows. Notional is face value, not market value, and the
-tracker mixes debt secured on chips with debt secured on buildings.
+**Borrowing** is CCIR's compute-debt tracker, and the chart states its own
+coverage rather than implying it shows everything. Three rows name an
+incremental tranche or an upsized facility, $4.1B in total, about 1.2% of the
+plotted stack; whether those sit on top of the parent loan or inside it cannot
+be told from the table. No duplicated issuer-and-instrument pair appears in the
+175 rows.
+
+Two limits are larger than that. Notional is the amount at close, not the drawn
+balance: nothing here models drawdown, amortisation, repayment or refinancing,
+so this is issuance, not debt outstanding. And "borrowing against AI computing"
+covers instruments that are not economically alike, from GPU-collateralised
+facilities to campus securitisations, corporate convertibles and unsecured
+notes. Read the total as a financing footprint, not as compute-backed debt.
+
+An earlier version of this note claimed eight rows and $8.1B. That figure did
+not survive being measured and has been replaced by the one above.
 
 Compute data: CCIR (ccir.io). Bitcoin price: Coinbase. Supply: computed from
 block height. Not investment advice.

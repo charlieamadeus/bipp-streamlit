@@ -38,18 +38,31 @@ def _fetch_html(url: str) -> str:
         return response.read().decode("utf-8", errors="replace")
 
 
+# A tag's attributes can hold ">" inside a quoted value, and CCIR's table cells
+# carry title="..." tooltips whose prose is full of them: ">90% of annualized
+# base rent", ">$40B of additional contracted revenue", ">100% of the underlying
+# GPU capex". A naive <td[^>]*> ends the tag at the first of those, so the rest
+# of the tooltip plus a stray '"> ' bleeds into the cell text and whatever number
+# the tooltip mentions first becomes the cell's value. Aligned Data Centers read
+# $90M against a real $1.183B that way, and Nebius $40M against $775M.
+#
+# Consuming quoted runs atomically fixes it. Everything that matches a tag in
+# this module goes through _ATTRS.
+_ATTRS = r'''(?:[^<>"']|"[^"]*"|'[^']*')*'''
+
+
 def _strip(markup: str) -> str:
-    return html.unescape(re.sub(r"<[^>]+>", " ", markup)).replace("\xa0", " ").strip()
+    return html.unescape(re.sub(rf"<{_ATTRS}>", " ", markup)).replace("\xa0", " ").strip()
 
 
 def _tables(page: str) -> list[tuple[list[str], list[list[str]]]]:
     """Return (header, rows) for every table on the page."""
     out = []
     for block in re.findall(r"<table.*?</table>", page, re.S):
-        header = [_strip(c) for c in re.findall(r"<th[^>]*>(.*?)</th>", block, re.S)]
+        header = [_strip(c) for c in re.findall(rf"<th{_ATTRS}>(.*?)</th>", block, re.S)]
         rows = []
-        for tr in re.findall(r"<tr[^>]*>(.*?)</tr>", block, re.S):
-            cells = [_strip(c) for c in re.findall(r"<td[^>]*>(.*?)</td>", tr, re.S)]
+        for tr in re.findall(rf"<tr{_ATTRS}>(.*?)</tr>", block, re.S):
+            cells = [_strip(c) for c in re.findall(rf"<td{_ATTRS}>(.*?)</td>", tr, re.S)]
             if cells:
                 rows.append(cells)
         if header and rows:
@@ -68,13 +81,13 @@ def _tables_with_headings(page: str) -> list[tuple[str, list[str], list[list[str
     out = []
     for match in re.finditer(r"<table.*?</table>", page, re.S):
         before = page[:match.start()]
-        headings = re.findall(r"<h3[^>]*>(.*?)</h3>", before, re.S)
+        headings = re.findall(rf"<h3{_ATTRS}>(.*?)</h3>", before, re.S)
         provider = _strip(headings[-1]) if headings else ""
         block = match.group()
-        header = [_strip(c) for c in re.findall(r"<th[^>]*>(.*?)</th>", block, re.S)]
+        header = [_strip(c) for c in re.findall(rf"<th{_ATTRS}>(.*?)</th>", block, re.S)]
         rows = []
-        for tr in re.findall(r"<tr[^>]*>(.*?)</tr>", block, re.S):
-            cells = [_strip(c) for c in re.findall(r"<td[^>]*>(.*?)</td>", tr, re.S)]
+        for tr in re.findall(rf"<tr{_ATTRS}>(.*?)</tr>", block, re.S):
+            cells = [_strip(c) for c in re.findall(rf"<td{_ATTRS}>(.*?)</td>", tr, re.S)]
             if cells:
                 rows.append(cells)
         if header and rows:

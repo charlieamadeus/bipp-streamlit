@@ -256,3 +256,65 @@ def test_debt_share_series_honours_an_explicit_end():
     stack, history = _two_deal_stack()
     series = btc.debt_share_series(stack, history, end="2025-03-01")
     assert series["date"].iloc[-1] == pd.Timestamp("2025-03-01")
+
+
+# CCIR writes the `issued` column as prose. These are real values from the
+# tracker; every one of them was silently dropped before parse_issue_date.
+REAL_ISSUED_CELLS = [
+    ("Reported 2025-10-16", "2025-10-16", "day"),
+    ("Priced 2025-10-16; JV announced 2025-10-21", "2025-10-16", "day"),
+    ("Finalized ~2026-06-08 (press; no filing)", "2026-06-08", "day"),
+    ("Closed; PR 2026-01-07 (funds provided ~Nov)", "2026-01-07", "day"),
+    ("Underwrite reported 2025-08-20; distribution ongoing", "2025-08-20", "day"),
+    ("Priced ~2026-04-16/17", "2026-04-16", "day"),
+    ("2026-07-28", "2026-07-28", "day"),
+    ("2025-09", "2025-09-01", "month"),
+    ("2024", "2024-01-01", "year"),
+    ("H2 2025", "2025-01-01", "year"),
+]
+
+
+@pytest.mark.parametrize("cell,expected,precision", REAL_ISSUED_CELLS)
+def test_parse_issue_date_reads_ccir_prose(cell, expected, precision):
+    got, got_precision = btc.parse_issue_date(cell)
+    assert str(got.date()) == expected
+    assert got_precision == precision
+
+
+@pytest.mark.parametrize("cell", ["", "-", "—", None, "Undisclosed", "TBD"])
+def test_parse_issue_date_reports_no_date_rather_than_guessing(cell):
+    got, precision = btc.parse_issue_date(cell)
+    assert pd.isna(got)
+    assert precision == "none"
+
+
+def test_parse_issue_date_takes_the_first_date_not_the_last():
+    # CCIR writes these in event order, so the pricing date leads. Taking the
+    # last would date a deal by whenever it was last written about.
+    got, _ = btc.parse_issue_date("Priced 2025-10-16; JV announced 2025-10-21")
+    assert str(got.date()) == "2025-10-16"
+
+
+def test_debt_coverage_accounts_for_every_row():
+    """No row may vanish. Shown plus excluded must equal the whole tracker."""
+    credit = pd.DataFrame({
+        "issuer": ["A", "B", "C", "D"],
+        "instrument": ["loan", "loan", "guarantee for X", "loan"],
+        "size_musd": [100.0, 200.0, 300.0, 400.0],
+        "issued": ["2025-01-01", "Undisclosed", "2025-06-01", "2019-01-01"],
+    })
+    cov = btc.debt_coverage(credit, since="2023-01-01")
+    excluded_rows = sum(n for n, _ in cov["excluded"].values())
+    excluded_usd = sum(usd for _, usd in cov["excluded"].values())
+    assert cov["rows_shown"] + excluded_rows == cov["rows_total"] == 4
+    assert cov["usd_shown"] + excluded_usd == pytest.approx(cov["usd_total"]) == pytest.approx(1000.0)
+
+
+def test_debt_coverage_names_a_reason_for_every_exclusion():
+    credit = pd.DataFrame({
+        "issuer": ["A", "B"], "instrument": ["loan", "loan"],
+        "size_musd": [100.0, 200.0], "issued": ["Undisclosed", "2019-01-01"],
+    })
+    cov = btc.debt_coverage(credit, since="2023-01-01")
+    reasons = {r for r, (n, _) in cov["excluded"].items() if n}
+    assert reasons == {"no date in the cell", "issued before 2023-01-01"}
