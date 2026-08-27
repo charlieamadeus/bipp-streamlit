@@ -1434,8 +1434,13 @@ Applied Digital Corporation   APLD,Other long-term debt: 2 SAFEs + 2 promissory 
 Applied Digital Corporation   APLD,Revolving Credit Facility  †,Credit facility,430.0,SOFR +2.25%,2026-05-29,2029-05-28,secured,confirmed,2026-08-27 00:00:00+00:00
 Applied Digital Corporation   APLD,Starion Ellendale Loan (ELN-01)  †,Credit facility,9.2,7.48%,2023-02-16,2028-02,secured,confirmed,2026-08-27 00:00:00+00:00
 Applied Digital Corporation   APLD,Starion Term Loan (Hosting)  †,Credit facility,4.7,6.50%,2022-07-25,2027-07-25,secured,confirmed,2026-08-27 00:00:00+00:00
+Applied Digital Corporation   APLD,Texas Capital Bank term loan  †,Credit facility,58.5,Undisclosed,2026-06-30,2031-06-30,secured,confirmed,2026-08-27 00:00:00+00:00
 "Bit Digital, Inc.   BTBT",4.00% Convertible Senior Notes due 2030  †,Convertible,150.0,4.00%,2025-10-02,2030-10-01,unsecured,confirmed,2026-08-27 00:00:00+00:00
 "Bit Digital, Inc.   BTBT",Galaxy Master Loan Agreement — initial draw  †,Credit facility,50.0,5.45%,2026-05-20,Master 1-yr auto-renew (from 3/27/26),other,confirmed,2026-08-27 00:00:00+00:00
+Bitdeer Technologies Group   BTDR,4.00% Convertible Senior Notes due 2031 (November series)  †,Convertible,400.0,4.00%,—,2031-11-15,unsecured,confirmed,2026-08-27 00:00:00+00:00
+Bitdeer Technologies Group   BTDR,4.875% Convertible Senior Notes due 2031 (July series)  †,Convertible,375.0,4.875%,—,2031-07-01,unsecured,confirmed,2026-08-27 00:00:00+00:00
+Bitdeer Technologies Group   BTDR,5.00% Convertible Senior Notes due 2032  †,Convertible,375.0,5.00%,—,2032-03-01,unsecured,confirmed,2026-08-27 00:00:00+00:00
+Bitdeer Technologies Group   BTDR,5.25% Convertible Senior Notes due 2029  †,Convertible,400.0,5.25%,—,2029-12-01,unsecured,confirmed,2026-08-27 00:00:00+00:00
 Cerebras Systems,Syndicated revolving credit facility  †,Credit facility,850.0,Variable (base/term rate + undis…,2026-04-15,~2031-04,secured,confirmed,2026-08-27 00:00:00+00:00
 ChronoScale Holdings Corporation   CHRN,B. Riley Secured Promissory Note  †,Credit facility,2.0,10.00%,2025-09,2026-09-14,secured,confirmed,2026-08-27 00:00:00+00:00
 ChronoScale Holdings Corporation   CHRN,Computing-equipment finance leases  †,Lease,58.3,Undisclosed,2026-05-31,2028,other,confirmed,2026-08-27 00:00:00+00:00
@@ -1507,6 +1512,7 @@ DataBank,$1.1B hyperscale master-trust securitization (green)  †,Bond,1100.0,U
 "Digital Realty Trust, Inc./L.P.   DLR",4.250% EUR notes due 2037  †,Bond,924.2,4.25%,2025-11,2037-11-20,unsecured,confirmed,2026-08-27 00:00:00+00:00
 "Digital Realty Trust, Inc./L.P.   DLR",4.450% USD notes due 2028  †,Bond,650.0,4.45%,2018-06,2028-07-15,unsecured,confirmed,2026-08-27 00:00:00+00:00
 "Digital Realty Trust, Inc./L.P.   DLR",5.550% USD notes due 2028  †,Bond,900.0,5.55%,2022-09,2028-01-15,unsecured,confirmed,2026-08-27 00:00:00+00:00
+"Digital Realty Trust, Inc./L.P.   DLR",Assumed construction loan — Carver JVs  †,Credit facility,725.6,Undisclosed,2026-06-30,2027-12-24,secured,confirmed,2026-08-27 00:00:00+00:00
 "Digital Realty Trust, Inc./L.P.   DLR",Euro Term Loan  †,Credit facility,433.2,EURIBOR + margin (spread not res…,2022-08-11,2026-08-11,unsecured,confirmed,2026-08-27 00:00:00+00:00
 "Digital Realty Trust, Inc./L.P.   DLR",Global Revolving Credit Facility (multicurrency)  †,Credit facility,4200.0,Benchmark + 85 bps grid + 20 bps…,2024-09-24,2029-01-24,unsecured,confirmed,2026-08-27 00:00:00+00:00
 "Digital Realty Trust, Inc./L.P.   DLR",Other unsecured loans,Credit facility,18.2,11.65–14.50%,—,Not stated,unsecured,confirmed,2026-08-27 00:00:00+00:00
