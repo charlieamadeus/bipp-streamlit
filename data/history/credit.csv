@@ -1422,3 +1422,186 @@ xAI,Apollo $3.5B capital solution → Valor Compute Infrastructure LP  †,Lease
 xAI,Apollo second tranche  †,Lease,3400.0,Undisclosed,"Reported 2026-02-09, ""near final"" — no Apollo close PR found (re-checked 2026-08-09: still none)",Undisclosed,other,press,2026-08-26 00:00:00+00:00
 xAI,Morgan Stanley-led secured debt package ($3B senior secured notes + $1B fixed-rate TL + $1B TLB)  †,Bond,5000.0,12.50%,2025-07-01,Not captured,secured,confirmed,2026-08-26 00:00:00+00:00
 xAI,Valor GPU SPV program (context)  †,Lease,20000.0,Undisclosed,Reported 2025-10-16,~5-yr lease horizon,other,press,2026-08-26 00:00:00+00:00
+Aligned Data Centers,"Term ABS notes, Class A-2-I + Class B — $1.183B securitization  †",Bond,1183.0,Undisclosed,2026-07-28,Undisclosed,secured,confirmed,2026-08-27 00:00:00+00:00
+Apollo / Blackstone-led private-credit SPV (Anthropic TPU lease),Private-credit facility — Anthropic TPU lease SPV  †,Other,35000.0,Undisclosed,Finalized ~2026-06-08 (press; no filing),Undisclosed,secured,press,2026-08-27 00:00:00+00:00
+Applied Digital Corporation   APLD,2.75% Convertible Senior Notes due 2030,Convertible,450.0,2.75%,2024-11-04,2030-06-01,unsecured,confirmed,2026-08-27 00:00:00+00:00
+Applied Digital Corporation   APLD,2025 Revolving Credit Facility  †,Credit facility,65.0,SOFR +2.75%,2025-11-10,—,secured,confirmed,2026-08-27 00:00:00+00:00
+Applied Digital Corporation   APLD,6.750% Senior Secured Notes due 2031  †,Bond,2150.0,6.75%,2026-03-10,2031-03-15,secured,confirmed,2026-08-27 00:00:00+00:00
+Applied Digital Corporation   APLD,7.000% Senior Secured Notes due 2031  †,Bond,1590.0,7.00%,2026-06-16,2031-06-15,secured,confirmed,2026-08-27 00:00:00+00:00
+Applied Digital Corporation   APLD,9.25% Senior Secured Notes due 2030  †,Bond,2350.0,9.25%,2025-11-20,2030-12-15,secured,confirmed,2026-08-27 00:00:00+00:00
+Applied Digital Corporation   APLD,Cornerstone Bank Loan (GPU-01)  †,Credit facility,10.7,8.59%,2024-02-28,2029-03,secured,confirmed,2026-08-27 00:00:00+00:00
+Applied Digital Corporation   APLD,Other long-term debt: 2 SAFEs + 2 promissory notes  †,Other,31.4,Undisclosed,FY2025–FY2026,Undisclosed,other,confirmed,2026-08-27 00:00:00+00:00
+Applied Digital Corporation   APLD,Revolving Credit Facility  †,Credit facility,430.0,SOFR +2.25%,2026-05-29,2029-05-28,secured,confirmed,2026-08-27 00:00:00+00:00
+Applied Digital Corporation   APLD,Starion Ellendale Loan (ELN-01)  †,Credit facility,9.2,7.48%,2023-02-16,2028-02,secured,confirmed,2026-08-27 00:00:00+00:00
+Applied Digital Corporation   APLD,Starion Term Loan (Hosting)  †,Credit facility,4.7,6.50%,2022-07-25,2027-07-25,secured,confirmed,2026-08-27 00:00:00+00:00
+"Bit Digital, Inc.   BTBT",4.00% Convertible Senior Notes due 2030  †,Convertible,150.0,4.00%,2025-10-02,2030-10-01,unsecured,confirmed,2026-08-27 00:00:00+00:00
+"Bit Digital, Inc.   BTBT",Galaxy Master Loan Agreement — initial draw  †,Credit facility,50.0,5.45%,2026-05-20,Master 1-yr auto-renew (from 3/27/26),other,confirmed,2026-08-27 00:00:00+00:00
+Cerebras Systems,Syndicated revolving credit facility  †,Credit facility,850.0,Variable (base/term rate + undis…,2026-04-15,~2031-04,secured,confirmed,2026-08-27 00:00:00+00:00
+ChronoScale Holdings Corporation   CHRN,B. Riley Secured Promissory Note  †,Credit facility,2.0,10.00%,2025-09,2026-09-14,secured,confirmed,2026-08-27 00:00:00+00:00
+ChronoScale Holdings Corporation   CHRN,Computing-equipment finance leases  †,Lease,58.3,Undisclosed,2026-05-31,2028,other,confirmed,2026-08-27 00:00:00+00:00
+ChronoScale Holdings Corporation   CHRN,Demand Grid Promissory Note (Applied Digital)  †,Credit facility,100.0,Short-term Applicable Federal Ra…,2026-06-26,Payable on demand,unsecured,confirmed,2026-08-27 00:00:00+00:00
+ChronoScale Holdings Corporation   CHRN,Parker Hannifin Promissory Note  †,Credit facility,1.88,0.00%,2023-12-31,2027-09-30,unsecured,confirmed,2026-08-27 00:00:00+00:00
+Cipher Mining Inc. (renamed Cipher Digital Inc.)   CIFR,0.00% Convertible Senior Notes due 2031,Convertible,1300.0,0.00%,2025-09-30,2031-10-01,unsecured,confirmed,2026-08-27 00:00:00+00:00
+Cipher Mining Inc. (renamed Cipher Digital Inc.)   CIFR,1.75% Convertible Senior Notes due 2030,Convertible,172.5,1.75%,2025-05-22,2030-05-15,unsecured,confirmed,2026-08-27 00:00:00+00:00
+Cipher Mining Inc. (renamed Cipher Digital Inc.)   CIFR,6.000% Senior Secured Notes due 2031 — Stingray  †,Bond,810.0,6.00%,2026-06-15,2031-06-15,secured,confirmed,2026-08-27 00:00:00+00:00
+Cipher Mining Inc. (renamed Cipher Digital Inc.)   CIFR,6.125% Senior Secured Notes due 2031 — Black Pearl  †,Bond,2000.0,6.125%,2026-02-11,2031-02-15,secured,confirmed,2026-08-27 00:00:00+00:00
+Cipher Mining Inc. (renamed Cipher Digital Inc.)   CIFR,7.125% Senior Secured Notes due 2030 — Barber Lake  †,Bond,1733.0,7.125%,2025-11-13,2030-11-15,secured,confirmed,2026-08-27 00:00:00+00:00
+Cipher Mining Inc. (renamed Cipher Digital Inc.)   CIFR,Coinbase overnight facility  †,Credit facility,25.0,Fed-funds-based,Pre-2025,Open / on demand,secured,confirmed,2026-08-27 00:00:00+00:00
+Cipher Mining Inc. (renamed Cipher Digital Inc.)   CIFR,Revolving Credit Facility (parent)  †,Credit facility,200.0,SOFR +1.75%,2026-03-23,2030-03-23,secured,confirmed,2026-08-27 00:00:00+00:00
+Cipher Mining Inc. (renamed Cipher Digital Inc.)   CIFR,Two Prime facility  †,Credit facility,100.0,Undisclosed,2025,Undisclosed,secured,confirmed,2026-08-27 00:00:00+00:00
+Cloud Capital (Realty Income JV),$520M master-trust ABS - Amazon-leased hyperscale data centers  †,Bond,520.0,Undisclosed,2026-07-29,Undisclosed,secured,confirmed,2026-08-27 00:00:00+00:00
+CloudHQ,$1.4B ABS - two Ashburn hyperscale data centers (first dual-AAA DC ABS)  †,Bond,1400.0,Undisclosed,"Priced ~2026-04 (closed ~end April, press)",2031,secured,press,2026-08-27 00:00:00+00:00
+Compass Datacenters,Series 2026-2 ABS notes — $413M in three tranches  †,Bond,413.0,Undisclosed,2026-07-27,Undisclosed,secured,press,2026-08-27 00:00:00+00:00
+"Core Scientific, Inc.   CORZ",0.00% Convertible Senior Notes due 2031,Convertible,625.0,0.00%,2024-12-05,2031-06-15,unsecured,confirmed,2026-08-27 00:00:00+00:00
+"Core Scientific, Inc.   CORZ",3.00% Convertible Senior Notes due 2029,Convertible,460.0,3.00%,2024-08-19,2029-09-01,unsecured,confirmed,2026-08-27 00:00:00+00:00
+"Core Scientific, Inc.   CORZ",7.750% Senior Secured Notes due 2031  †,Bond,3300.0,7.75%,2026-05-06,2031-05-15,secured,confirmed,2026-08-27 00:00:00+00:00
+"Core Scientific, Inc.   CORZ",Finance leases  †,Lease,0.9,Undisclosed,—,Various,other,confirmed,2026-08-27 00:00:00+00:00
+"CoreWeave, Inc.   CRWV",1.75% Convertible Senior Notes due 2031  †,Convertible,2588.0,1.75%,2025-12-11,2031-12-01,unsecured,confirmed,2026-08-27 00:00:00+00:00
+"CoreWeave, Inc.   CRWV",1.75% Convertible Senior Notes due 2032  †,Convertible,4000.0,1.75%,2026-04-14,2032-10-01,unsecured,confirmed,2026-08-27 00:00:00+00:00
+"CoreWeave, Inc.   CRWV",8.500% EUR Senior Notes due 2032  †,Bond,2300.0,8.50%,2026-06-18,2032-07-15,unsecured,confirmed,2026-08-27 00:00:00+00:00
+"CoreWeave, Inc.   CRWV",9.000% Senior Notes due 2031  †,Bond,1750.0,9.00%,2025-07-25,2031-02-01,unsecured,confirmed,2026-08-27 00:00:00+00:00
+"CoreWeave, Inc.   CRWV",9.250% Senior Notes due 2030  †,Bond,2000.0,9.25%,2025-05-27,2030-06-01,unsecured,confirmed,2026-08-27 00:00:00+00:00
+"CoreWeave, Inc.   CRWV",9.625% USD Senior Notes due 2032  †,Bond,1250.0,9.625%,2026-06-18,2032-07-15,unsecured,confirmed,2026-08-27 00:00:00+00:00
+"CoreWeave, Inc.   CRWV",9.750% Senior Notes due Oct 2031  †,Bond,2750.0,9.75%,2026-04-14,2031-10-01,unsecured,confirmed,2026-08-27 00:00:00+00:00
+"CoreWeave, Inc.   CRWV",DCSP financing obligation + finance lease (failed sale-leaseback)  †,Lease,235.0,13.00–15.00%,2024-10,~2038/39,secured,confirmed,2026-08-27 00:00:00+00:00
+"CoreWeave, Inc.   CRWV",DDTL 1.0  †,Credit facility,1438.0,SOFR +9.62%,2023-07-30,2028-03-28,secured,confirmed,2026-08-27 00:00:00+00:00
+"CoreWeave, Inc.   CRWV",DDTL 2.0  †,Credit facility,4425.0,SOFR +6.00–6.50%,2024-05-16,2030-08,secured,confirmed,2026-08-27 00:00:00+00:00
+"CoreWeave, Inc.   CRWV",DDTL 2.1 ($3.0B incremental tranche)  †,Credit facility,3000.0,SOFR +4.25%,2025-09-29,2031-03,secured,confirmed,2026-08-27 00:00:00+00:00
+"CoreWeave, Inc.   CRWV",DDTL 3.0  †,Credit facility,1700.0,SOFR +4.00%,2025-07-28,2030-08-21,secured,confirmed,2026-08-27 00:00:00+00:00
+"CoreWeave, Inc.   CRWV",DDTL 4.0  †,Credit facility,8500.0,SOFR +2.25%,2026-03-30,2032-03-31,secured,confirmed,2026-08-27 00:00:00+00:00
+"CoreWeave, Inc.   CRWV",DDTL 5.0  †,Credit facility,3100.0,SOFR +4.50%,2026-05-15,2031-11-15,secured,confirmed,2026-08-27 00:00:00+00:00
+"CoreWeave, Inc.   CRWV",DDTL 5.5 Facility  †,Credit facility,2600.0,SOFR +5.50%,2026-08-07,2031-09-01,secured,confirmed,2026-08-27 00:00:00+00:00
+"CoreWeave, Inc.   CRWV",Magnetar Loan (ASC 470 sale-of-future-revenue)  †,Other,281.0,12.00%,2025-02,2029-01,unsecured,confirmed,2026-08-27 00:00:00+00:00
+"CoreWeave, Inc.   CRWV",OEM financing arrangements  †,Credit facility,4700.0,Undisclosed,2024-02,2026-07 to 2030-07 (staggered),secured,confirmed,2026-08-27 00:00:00+00:00
+"CoreWeave, Inc.   CRWV",Revolving Credit Facility  †,Credit facility,2500.0,Undisclosed,2024-06-21,2029-11,secured,confirmed,2026-08-27 00:00:00+00:00
+"CoreWeave, Inc.   CRWV",Software license financings  †,Credit facility,358.0,Undisclosed,2025,<5-yr terms,secured,confirmed,2026-08-27 00:00:00+00:00
+Crucible (Crucible Compute),USD.AI onchain debt facility — Washington B300 cluster  †,Credit facility,26.8,Undisclosed,2026-04,Undisclosed,secured,confirmed,2026-08-27 00:00:00+00:00
+Crusoe Energy Systems,Abilene Phase 1 construction loan  †,Credit facility,2300.0,Undisclosed,2025-01-22,Undisclosed,other,confirmed,2026-08-27 00:00:00+00:00
+Crusoe Energy Systems,Abilene Phase 2 construction loan  †,Credit facility,7100.0,Undisclosed,2025-05-22,Undisclosed,other,confirmed,2026-08-27 00:00:00+00:00
+Crusoe Energy Systems,Brookfield credit facility  †,Credit facility,750.0,Undisclosed,2025-06-11,Undisclosed,other,confirmed,2026-08-27 00:00:00+00:00
+Crusoe Energy Systems,First GPU debt facility  †,Credit facility,200.0,Undisclosed,2023-10-23,Undisclosed,other,confirmed,2026-08-27 00:00:00+00:00
+Crusoe Energy Systems,"Goldman Sachs loan, AMD backstop  †",Credit facility,300.0,6.00%,Reported 2026-02-19/20,Undisclosed,secured,press,2026-08-27 00:00:00+00:00
+Crusoe Energy Systems,SVB Capital / Sparkfund / Generate credit facilities  †,Credit facility,155.0,Undisclosed,2022-04-21,Undisclosed,other,confirmed,2026-08-27 00:00:00+00:00
+Crusoe Energy Systems,Upper90 project financing  †,Credit facility,40.0,Undisclosed,2021-04,Undisclosed,other,confirmed,2026-08-27 00:00:00+00:00
+Crusoe Energy Systems,Upper90-led syndicated credit facility  †,Credit facility,225.0,Undisclosed,2025-03-27,Undisclosed,other,confirmed,2026-08-27 00:00:00+00:00
+Crusoe Energy Systems,Victory Park Capital facility  †,Credit facility,175.0,Undisclosed,2025-08-25,Undisclosed,other,confirmed,2026-08-27 00:00:00+00:00
+DataBank,$1.1B hyperscale master-trust securitization (green)  †,Bond,1100.0,Undisclosed,2025-09-24,Undisclosed,secured,confirmed,2026-08-27 00:00:00+00:00
+"Digital Realty Trust, Inc./L.P.   DLR",0.200% CHF notes due 2026  †,Bond,344.0,0.20%,2021-07,2026-12-15,unsecured,confirmed,2026-08-27 00:00:00+00:00
+"Digital Realty Trust, Inc./L.P.   DLR",0.550% CHF notes due 2029  †,Bond,337.8,0.55%,2021-07,2029-04-16,unsecured,confirmed,2026-08-27 00:00:00+00:00
+"Digital Realty Trust, Inc./L.P.   DLR",0.625% EUR notes due 2031  †,Bond,1155.0,0.625%,2021-01,2031-07-15,unsecured,confirmed,2026-08-27 00:00:00+00:00
+"Digital Realty Trust, Inc./L.P.   DLR",1.000% EUR notes due 2032  †,Bond,866.5,1.00%,2020-09,2032-01-15,unsecured,confirmed,2026-08-27 00:00:00+00:00
+"Digital Realty Trust, Inc./L.P.   DLR",1.125% EUR notes due 2028  †,Bond,577.7,1.125%,2019-10,2028-04-09,unsecured,confirmed,2026-08-27 00:00:00+00:00
+"Digital Realty Trust, Inc./L.P.   DLR",1.250% EUR notes due 2031  †,Bond,577.7,1.25%,2020-06,2031-02-01,unsecured,confirmed,2026-08-27 00:00:00+00:00
+"Digital Realty Trust, Inc./L.P.   DLR",1.375% EUR notes due 2032  †,Bond,866.5,1.375%,2022-01,2032-07-18,unsecured,confirmed,2026-08-27 00:00:00+00:00
+"Digital Realty Trust, Inc./L.P.   DLR",1.500% EUR notes due 2030  †,Bond,866.5,1.50%,2020-01,2030-03-15,unsecured,confirmed,2026-08-27 00:00:00+00:00
+"Digital Realty Trust, Inc./L.P.   DLR",1.700% CHF notes due 2027  †,Bond,187.6,1.70%,2022-03,2027-03-30,unsecured,confirmed,2026-08-27 00:00:00+00:00
+"Digital Realty Trust, Inc./L.P.   DLR",1.875% Exchangeable Senior Notes due 2029  †,Convertible,1150.0,1.875%,2024-11-12,2029-11-15,unsecured,confirmed,2026-08-27 00:00:00+00:00
+"Digital Realty Trust, Inc./L.P.   DLR",3.300% GBP notes due 2029  †,Bond,462.9,3.30%,2017-07,2029-07-19,unsecured,confirmed,2026-08-27 00:00:00+00:00
+"Digital Realty Trust, Inc./L.P.   DLR",3.600% USD notes due 2029  †,Bond,900.0,3.60%,2019-06,2029-07-01,unsecured,confirmed,2026-08-27 00:00:00+00:00
+"Digital Realty Trust, Inc./L.P.   DLR",3.700% USD notes due 2027  †,Bond,1000.0,3.70%,2017-08,2027-08-15,unsecured,confirmed,2026-08-27 00:00:00+00:00
+"Digital Realty Trust, Inc./L.P.   DLR",3.750% EUR notes due 2033  †,Bond,693.2,3.75%,2025-11,2033-01-15,unsecured,confirmed,2026-08-27 00:00:00+00:00
+"Digital Realty Trust, Inc./L.P.   DLR",3.750% GBP notes due 2030  †,Bond,727.5,3.75%,2018-10,2030-10-17,unsecured,confirmed,2026-08-27 00:00:00+00:00
+"Digital Realty Trust, Inc./L.P.   DLR",3.875% EUR notes due 2033  †,Bond,982.0,3.875%,2024-09,2033-09-13,unsecured,confirmed,2026-08-27 00:00:00+00:00
+"Digital Realty Trust, Inc./L.P.   DLR",3.875% EUR notes due 2034  †,Bond,982.0,3.875%,2025-06,2034-07-15,unsecured,confirmed,2026-08-27 00:00:00+00:00
+"Digital Realty Trust, Inc./L.P.   DLR",3.875% EUR notes due 2035  †,Bond,982.0,3.875%,2025-01,2035-03-15,unsecured,confirmed,2026-08-27 00:00:00+00:00
+"Digital Realty Trust, Inc./L.P.   DLR",4.250% EUR notes due 2037  †,Bond,924.2,4.25%,2025-11,2037-11-20,unsecured,confirmed,2026-08-27 00:00:00+00:00
+"Digital Realty Trust, Inc./L.P.   DLR",4.450% USD notes due 2028  †,Bond,650.0,4.45%,2018-06,2028-07-15,unsecured,confirmed,2026-08-27 00:00:00+00:00
+"Digital Realty Trust, Inc./L.P.   DLR",5.550% USD notes due 2028  †,Bond,900.0,5.55%,2022-09,2028-01-15,unsecured,confirmed,2026-08-27 00:00:00+00:00
+"Digital Realty Trust, Inc./L.P.   DLR",Euro Term Loan  †,Credit facility,433.2,EURIBOR + margin (spread not res…,2022-08-11,2026-08-11,unsecured,confirmed,2026-08-27 00:00:00+00:00
+"Digital Realty Trust, Inc./L.P.   DLR",Global Revolving Credit Facility (multicurrency)  †,Credit facility,4200.0,Benchmark + 85 bps grid + 20 bps…,2024-09-24,2029-01-24,unsecured,confirmed,2026-08-27 00:00:00+00:00
+"Digital Realty Trust, Inc./L.P.   DLR",Other unsecured loans,Credit facility,18.2,11.65–14.50%,—,Not stated,unsecured,confirmed,2026-08-27 00:00:00+00:00
+"Digital Realty Trust, Inc./L.P.   DLR",Teraco secured facilities  †,Credit facility,604.0,Undisclosed,Assumed with Teraco stake,Amortizing ~2026–2030,secured,confirmed,2026-08-27 00:00:00+00:00
+"Digital Realty Trust, Inc./L.P.   DLR",Westin Building Exchange mortgage (Seattle)  †,Credit facility,135.0,3.29%,—,Within 2026–2030 (exact year UNVERIFIED),secured,confirmed,2026-08-27 00:00:00+00:00
+"Digital Realty Trust, Inc./L.P.   DLR",Yen Revolving Facility  †,Credit facility,268.0,TIBOR + 50 bps + 10 bps unused fee,2024-09-24,2029-01-24,unsecured,confirmed,2026-08-27 00:00:00+00:00
+"Duos Edge AI, Inc. (Duos Technologies Group)   DUOT","USD.AI debt financing — 2,304 NVIDIA B300 GPU deployment  †",Credit facility,98.1,Undisclosed,2026-06-05,~2029,other,confirmed,2026-08-27 00:00:00+00:00
+EdgeCore Digital Infrastructure,AS01 + AS02 construction financing - $1.5B limited-recourse term loans  †,Credit facility,1500.0,Undisclosed,2026-04,Undisclosed,secured,confirmed,2026-08-27 00:00:00+00:00
+Fermi Inc.   FRMI,5.00% Convertible Senior Notes due 2031  †,Convertible,431.3,5.00%,2026-07-14,2031-07-15,unsecured,confirmed,2026-08-27 00:00:00+00:00
+Fermi Inc.   FRMI,High Voltage Equipment Financing (Keystone Master Loan Agreement)  †,Credit facility,120.0,Undisclosed,2026-02-19,2031,secured,confirmed,2026-08-27 00:00:00+00:00
+Fermi Inc.   FRMI,Turbine Warehouse Equipment Financing (MUFG)  †,Credit facility,500.0,SOFR +4.00%,2026-02-10,2027-08-10,secured,confirmed,2026-08-27 00:00:00+00:00
+Fermi Inc.   FRMI,"Turbine Warehouse II Equipment Financing (Beal Credit Agreement, CLMG as agent)  †",Credit facility,165.0,12.00%,2026-03-26,2028-12,secured,confirmed,2026-08-27 00:00:00+00:00
+Firmus Technologies,US$10B debt financing facility — Project Southgate  †,Credit facility,10000.0,Undisclosed,2026-02-09,Undisclosed,secured,confirmed,2026-08-27 00:00:00+00:00
+Fluidstack,Early debt raise  †,Other,37.5,Undisclosed,2024 (reported Sep 2025),Undisclosed,other,press,2026-08-27 00:00:00+00:00
+Fluidstack,Meridian Arc senior secured bonds  †,Bond,5700.0,6.25%,Priced ~2026-04-16/17,2031 (5-yr non-call 2),secured,confirmed,2026-08-27 00:00:00+00:00
+Galaxy Digital Inc.   GLXY,9.875% Senior Secured Notes due 2031 (Helios Phase II)  †,Bond,3507.0,9.875%,2026-07-28,2031-08-01,secured,confirmed,2026-08-27 00:00:00+00:00
+Galaxy Digital Inc.   GLXY,Helios Phase I project financing facility (up to $1.4B)  †,Credit facility,1400.0,Undisclosed,2025-08-15,36-month facility (availability period); terms not fully disclosed,secured,confirmed,2026-08-27 00:00:00+00:00
+General Compute,Upper90 loan collateralized by SambaNova SN50 inference ASICs  †,Credit facility,400.0,Undisclosed,2026-07-17,Undisclosed,secured,press,2026-08-27 00:00:00+00:00
+HIVE Digital Technologies Ltd.   HIVE,0% Exchangeable Senior Notes due 2031 — Tranche 1  †,Convertible,115.0,0.00%,2026-04-21,2031-04-15,unsecured,confirmed,2026-08-27 00:00:00+00:00
+HIVE Digital Technologies Ltd.   HIVE,0% Exchangeable Senior Notes due 2031 — Tranche 2  †,Convertible,130.0,0.00%,2026-06-30,2031-07-01,unsecured,confirmed,2026-08-27 00:00:00+00:00
+HIVE Digital Technologies Ltd.   HIVE,Atlantic Term Loans 1 & 2 (New Brunswick)  †,Credit facility,1.6,4.39–5.15%,Assumed 2021,2026-06-30,other,confirmed,2026-08-27 00:00:00+00:00
+HIVE Digital Technologies Ltd.   HIVE,Boden (Sweden) loan payable  †,Credit facility,11.0,Swedish government borrowing rat…,2021-03-31,2035-12-31,other,confirmed,2026-08-27 00:00:00+00:00
+HIVE Digital Technologies Ltd.   HIVE,Dell finance lease — 504 Nvidia B200 GPUs  †,Lease,29.9,9.90%,2026-03,~2029-03,other,confirmed,2026-08-27 00:00:00+00:00
+HIVE Digital Technologies Ltd.   HIVE,Vendor mortgage #2 (second property)  †,Credit facility,4.3,6.00%,2026-05-15,~2029-05-15,secured,confirmed,2026-08-27 00:00:00+00:00
+HIVE Digital Technologies Ltd.   HIVE,Vendor takeback mortgage #1 (Toronto–Waterloo land)  †,Credit facility,14.7,6.00%,2026-01-30,~2028-01-30,secured,confirmed,2026-08-27 00:00:00+00:00
+Hut 8 Corp.   HUT,"6.129% Senior Secured Notes due 2042 (Nueces County TX, 352 MW project bond)  †",Bond,4250.0,6.129%,2026-06-09,2042-11-30,secured,confirmed,2026-08-27 00:00:00+00:00
+Hut 8 Corp.   HUT,"6.192% Senior Secured Notes due 2042 (River Bend LA, 245 MW project bond)  †",Bond,3250.0,6.192%,2026-04-30,2042-11-15,secured,confirmed,2026-08-27 00:00:00+00:00
+Hut 8 Corp.   HUT,FalconX BTC-collateralized term loan  †,Credit facility,200.0,7.00%,2026-05-01,2027-04-30,secured,confirmed,2026-08-27 00:00:00+00:00
+Hut 8 Corp.   HUT,SAFE (debt-classified)  †,Other,3.5,Undisclosed,2025-02,Converts on equity financing,unsecured,confirmed,2026-08-27 00:00:00+00:00
+Hut 8 Corp.   HUT,TZRC secured promissory note (assumed with King Mountain JV)  †,Credit facility,43.3,Lesser of WSJ prime + 12.0% or 1…,2022-12-06,2027-04-08,secured,confirmed,2026-08-27 00:00:00+00:00
+Hut 8 Corp.   HUT,Two Prime revolver (undrawn)  †,Credit facility,200.0,7.99%,2025-08-25,364 days from first borrowing,other,confirmed,2026-08-27 00:00:00+00:00
+IREN Limited   IREN,0.00% Convertible Senior Notes due 2031,Convertible,1000.0,0.00%,2025-10-14,2031-07-01,unsecured,confirmed,2026-08-27 00:00:00+00:00
+IREN Limited   IREN,0.25% Convertible Senior Notes due 2032,Convertible,1150.0,0.25%,2025-12-08,2032-06-01,unsecured,confirmed,2026-08-27 00:00:00+00:00
+IREN Limited   IREN,1.00% Convertible Senior Notes due Dec 2033,Convertible,3000.0,1.00%,2026-05-14,2033-12-01,unsecured,confirmed,2026-08-27 00:00:00+00:00
+IREN Limited   IREN,1.00% Convertible Senior Notes due Jun 2033,Convertible,1150.0,1.00%,2025-12-08,2033-06-01,unsecured,confirmed,2026-08-27 00:00:00+00:00
+IREN Limited   IREN,3.25% Convertible Senior Notes due 2030  †,Convertible,212.3,3.25%,2024-12-06,2030-06-15,unsecured,confirmed,2026-08-27 00:00:00+00:00
+IREN Limited   IREN,3.50% Convertible Senior Notes due 2029  †,Convertible,233.4,3.50%,2025-06-13,2029-12-15,unsecured,confirmed,2026-08-27 00:00:00+00:00
+IREN Limited   IREN,GPU finance leases (Aug 2025 36-mo; Nov 2025 24-mo Dell Financial)  †,Lease,274.3,9.70%,2025-08-23,~2027–2028,other,confirmed,2026-08-27 00:00:00+00:00
+IREN Limited   IREN,Hardware 3 5.96% Senior Notes due 2031  †,Bond,2100.0,5.96%,2026-05-29,2031-12-31,secured,confirmed,2026-08-27 00:00:00+00:00
+IREN Limited   IREN,Hardware 3 DDTL (Microsoft-contract financing)  †,Credit facility,1550.0,SOFR +2.25%,2026-05-29,2031-12-31,secured,confirmed,2026-08-27 00:00:00+00:00
+Lambda,"$926M senior secured Term Loan B (Moody's Baa2 — first IG-rated TLB by a private neocloud, per company)  †",Credit facility,926.0,SOFR +3.00%,2026-08-12,2030-12-31,secured,confirmed,2026-08-27 00:00:00+00:00
+Lambda,GPU-backed SPV financing  †,Credit facility,500.0,Undisclosed,2024-04-02,Undisclosed,other,confirmed,2026-08-27 00:00:00+00:00
+Lambda,Syndicated senior secured credit facility  †,Credit facility,275.0,Undisclosed,2025-08-19,Undisclosed,secured,confirmed,2026-08-27 00:00:00+00:00
+Lambda,Upsized syndicated senior secured facility  †,Credit facility,1000.0,Undisclosed,2026-05-07,Undisclosed,secured,confirmed,2026-08-27 00:00:00+00:00
+"Meta / BlackRock ""Sopaipilla"" JV (El Paso, TX)",7.534% amortizing secured notes due 2048 — El Paso JV (Sopaipilla)  †,Bond,12547.0,7.534%,2026-07-27,2048-11-30,secured,confirmed,2026-08-27 00:00:00+00:00
+"Meta / Blue Owl ""Hyperion"" JV (Richland Parish, LA)",Senior secured notes — Hyperion data-center JV  †,Bond,27300.0,6.58%,Priced 2025-10-16; JV announced 2025-10-21,2049,secured,confirmed,2026-08-27 00:00:00+00:00
+Mistral AI,Seven-bank debt financing for Essonne GPU cluster  †,Credit facility,830.0,Undisclosed,2026-03-30,Undisclosed,other,confirmed,2026-08-27 00:00:00+00:00
+NVIDIA Corporation   NVDA,Residual value guaranties — PORTS-Pike leases (payment obligation capped at $105B)  †,Other,105000.0,Undisclosed,2026-08-17,Earliest of: 20th anniversary of commencement of the applicable lease; termination of the applicable lease by OpenAI per its terms; OpenAI achieving a satisfactory credit rating; other customary termination events,unsecured,confirmed,2026-08-27 00:00:00+00:00
+Nebius Group N.V.   NBIS,$775M senior secured debt facility (first secured debt in company history)  †,Credit facility,775.0,SOFR +2.50%,2026-07-17,2030-10-31,secured,confirmed,2026-08-27 00:00:00+00:00
+Nebius Group N.V.   NBIS,0.50% Convertible Senior Notes due Feb 2030 (August series)  †,Convertible,3450.0,0.50%,2026-08-24,2030-02-15,unsecured,confirmed,2026-08-27 00:00:00+00:00
+Nebius Group N.V.   NBIS,1.00% Convertible Senior Notes due 2030  †,Convertible,1581.0,1.00%,2025-09-15,2030-09-15,unsecured,confirmed,2026-08-27 00:00:00+00:00
+Nebius Group N.V.   NBIS,1.250% Convertible Senior Notes due 2031 (March series)  †,Convertible,2588.0,1.25%,2026-03-20,2031-03-15,unsecured,confirmed,2026-08-27 00:00:00+00:00
+Nebius Group N.V.   NBIS,2.00% Convertible Senior Notes due 2029  †,Convertible,487.5,2.00%,2025-06-05,2029-06-05,unsecured,confirmed,2026-08-27 00:00:00+00:00
+Nebius Group N.V.   NBIS,2.625% Convertible Senior Notes due 2033  †,Convertible,1750.0,2.625%,2026-03-20,2033-03-15,unsecured,confirmed,2026-08-27 00:00:00+00:00
+Nebius Group N.V.   NBIS,2.75% Convertible Senior Notes due 2032  †,Convertible,1581.0,2.75%,2025-09-15,2032-09-15,unsecured,confirmed,2026-08-27 00:00:00+00:00
+Nebius Group N.V.   NBIS,3.00% Convertible Senior Notes due 2031  †,Convertible,487.5,3.00%,2025-06-05,2031-06-05,unsecured,confirmed,2026-08-27 00:00:00+00:00
+Nebius Group N.V.   NBIS,4.50% Convertible Senior Notes due 2034  †,Convertible,2300.0,4.50%,2026-08-24,2034-02-15,unsecured,confirmed,2026-08-27 00:00:00+00:00
+Nebius Group N.V.   NBIS,Legacy 0.75% converts due Mar 2025 (Yandex-era residual)  †,Convertible,5.3,0.75%,2020-03-03,2025-03-03 (matured),unsecured,confirmed,2026-08-27 00:00:00+00:00
+Novva Data Centers / CIM Group,$2B financing - West Jordan UT AI campus expansion  †,Credit facility,2000.0,Undisclosed,2025-03-05,Undisclosed,other,confirmed,2026-08-27 00:00:00+00:00
+Nscale,GPU-backed delayed-draw term loan (DDTL)  †,Credit facility,1400.0,SOFR +5.00%,2026-02-12,2031-02,secured,confirmed,2026-08-27 00:00:00+00:00
+Nscale,Norway (Narvik) project financing  †,Credit facility,790.0,Undisclosed,2026-05-11,Undisclosed,other,confirmed,2026-08-27 00:00:00+00:00
+Nscale,Revolving Credit Facility  †,Credit facility,900.0,Undisclosed,2026-07-07,Undisclosed,other,confirmed,2026-08-27 00:00:00+00:00
+Nscale,"Up to $1.831B senior secured DDTL (Moody's first-time Baa1, stable — Ward County, TX GPU-as-a-service SPV)  †",Credit facility,1831.0,Undisclosed,2026-08-12,Undisclosed,secured,confirmed,2026-08-27 00:00:00+00:00
+PaleBlueDot AI,US$255M credit refinancing facility  †,Credit facility,255.0,Undisclosed,2026-07-22,Undisclosed,other,confirmed,2026-08-27 00:00:00+00:00
+Project Jupiter (Stargate NM),$18B project loan - Jupiter campus (Stargate)  †,Credit facility,18000.0,SOFR +2.50%,Reported 2025-11-10,"~2029 (4-yr + two 1-yr extensions, press)",other,press,2026-08-27 00:00:00+00:00
+"Quantum Solutions Co., Ltd.",USD.AI GPU financing facility (Japan)  †,Credit facility,200.0,Undisclosed,Reported 2026-01 (partnership dated 2025 in reporting),Undisclosed,other,press,2026-08-27 00:00:00+00:00
+QumulusAI   QMLS,USD.AI non-recourse GPU financing facility  †,Credit facility,500.0,Undisclosed,2025-09-19,Undisclosed,other,confirmed,2026-08-27 00:00:00+00:00
+"Related Digital / Blackstone (Saline Twp, MI)",Fixed-rate project debt - $16B Oracle campus (PIMCO-anchored)  †,Bond,14000.0,See note,2026-04-24,Undisclosed,other,confirmed,2026-08-27 00:00:00+00:00
+"Riot Platforms, Inc.   RIOT",$573.0M senior secured delayed-draw term loan — Rockdale interim facility  †,Credit facility,573.0,SOFR +2.75%,2026-08-10,2026-12-31,secured,confirmed,2026-08-27 00:00:00+00:00
+Sharon AI   SHAZ,4.75% Convertible Senior Notes due 2032  †,Convertible,700.0,4.75%,2026-06-29,2032-06-15,unsecured,confirmed,2026-08-27 00:00:00+00:00
+Sharon AI   SHAZ,6.00% Convertible Senior Notes due 2031  †,Convertible,350.0,6.00%,2026-05-20,2031-05-01,other,confirmed,2026-08-27 00:00:00+00:00
+"Soluna Holdings, Inc.   SLNH","""Green Cloud"" secured note (HPE AI-cloud deal)  †",Credit facility,7.32,9.00%,2024-06-20,2027-06-20,secured,confirmed,2026-08-27 00:00:00+00:00
+"Soluna Holdings, Inc.   SLNH",Equipment Loan Agreement (Spring Lane)  †,Credit facility,4.0,15.00%,2024-05-16,2027-05-16,other,confirmed,2026-08-27 00:00:00+00:00
+"Soluna Holdings, Inc.   SLNH",Galaxy Loan (Project Sophie)  †,Credit facility,4.5,15.00%,2025-03-12,2030-03-12,secured,confirmed,2026-08-27 00:00:00+00:00
+"Soluna Holdings, Inc.   SLNH",Generate Credit Agreement — Tranches A-1/A-3  †,Credit facility,15.8,SOFR +10.00%,2025-09-12,2030-09-12,secured,confirmed,2026-08-27 00:00:00+00:00
+"Soluna Holdings, Inc.   SLNH",Generate Tranche C (Briscoe wind farm) — post-Q1  †,Credit facility,12.5,SOFR +8.00%,2026-04-01,2030-09-12,secured,confirmed,2026-08-27 00:00:00+00:00
+"Soluna Holdings, Inc.   SLNH",Land Purchase Loan (Kati Phase 2)  †,Credit facility,1.08,0.00%,2025-10-01,2027-05-16,other,confirmed,2026-08-27 00:00:00+00:00
+"Soluna Holdings, Inc.   SLNH",Yorkville promissory note — post-Q1  †,Credit facility,12.0,5.00%,2026-04-15,2027-05-15,unsecured,confirmed,2026-08-27 00:00:00+00:00
+TeraWulf Inc.   WULF,0.00% Convertible Senior Notes due 2032,Convertible,1025.0,0.00%,2025-10-31,2032-05-01,unsecured,confirmed,2026-08-27 00:00:00+00:00
+TeraWulf Inc.   WULF,1.00% Convertible Senior Notes due 2031,Convertible,1000.0,1.00%,2025-08-20,2031-09-01,unsecured,confirmed,2026-08-27 00:00:00+00:00
+TeraWulf Inc.   WULF,2.75% Convertible Senior Notes due 2030  †,Convertible,500.0,2.75%,2024-10,2030-02-01,unsecured,confirmed,2026-08-27 00:00:00+00:00
+TeraWulf Inc.   WULF,7.250% Senior Secured Notes due 2030 (Flash Compute JV)  †,Bond,1300.0,7.25%,2025-12-29,2030-12-31,secured,confirmed,2026-08-27 00:00:00+00:00
+TeraWulf Inc.   WULF,7.750% Senior Secured Notes due 2030  †,Bond,3200.0,7.75%,2025-10-22,2030-10-15,secured,confirmed,2026-08-27 00:00:00+00:00
+TeraWulf Inc.   WULF,Planned ~$3.5B financing — leveraged loan + high-yield (per press)  †,Other,3500.0,Undisclosed,—,Undisclosed,other,rumored,2026-08-27 00:00:00+00:00
+TeraWulf Inc.   WULF,Senior Secured Revolving Credit Facility  †,Credit facility,250.0,SOFR +1.75%,2026-05-07,2030-05-07,secured,confirmed,2026-08-27 00:00:00+00:00
+Vantage Data Centers,Frontier campus debt package (Stargate — Oracle/OpenAI)  †,Credit facility,23250.0,Undisclosed,Underwrite reported 2025-08-20; distribution reported ~complete 2026-04-15 (both Bloomberg),Undisclosed,other,press,2026-08-27 00:00:00+00:00
+Vantage Data Centers,Lighthouse campus debt package (Stargate — Oracle/OpenAI)  †,Credit facility,14750.0,Undisclosed,Package reported 2025-09-04; “record $38B sale nears” 2025-10-23 (both Bloomberg),Undisclosed,other,press,2026-08-27 00:00:00+00:00
+"Vultr (The Constant Company, LLC)",Credit financing package  †,Credit facility,329.0,Undisclosed,2025-06-23,Undisclosed,other,confirmed,2026-08-27 00:00:00+00:00
+"WhiteFiber, Inc.   WYFI",4.500% Convertible Senior Notes due 2031  †,Convertible,31.9,4.50%,2026-01-26,2031-02-01,unsecured,confirmed,2026-08-27 00:00:00+00:00
+"WhiteFiber, Inc.   WYFI",5.00% Convertible Senior Notes due 2032  †,Convertible,310.0,5.00%,2026-08-21,2032-09-01,unsecured,confirmed,2026-08-27 00:00:00+00:00
+"WhiteFiber, Inc.   WYFI",B. Riley-assigned advance — NC-1 bridge  †,Credit facility,20.0,9.50%,2026-05-20,~2026-08-24,secured,confirmed,2026-08-27 00:00:00+00:00
+"WhiteFiber, Inc.   WYFI",Delayed Draw Term Loan Facility — NC-1 (Bit Digital Capital)  †,Credit facility,60.0,9.50%,2026-05-20,2026-08-24,secured,confirmed,2026-08-27 00:00:00+00:00
+"WhiteFiber, Inc.   WYFI",Landsbankinn term facility  †,Credit facility,18.0,SOFR +4.25%,2026-03-25,2028-03-25,secured,confirmed,2026-08-27 00:00:00+00:00
+"WhiteFiber, Inc.   WYFI",Syndicated RBC Credit Facility  †,Credit facility,80.8,Undisclosed,2026-07-06,Undisclosed,other,confirmed,2026-08-27 00:00:00+00:00
+xAI,Apollo $3.5B capital solution → Valor Compute Infrastructure LP  †,Lease,3500.0,Undisclosed,Closed; PR 2026-01-07 (funds provided ~Nov 2025 per The Information),Undisclosed,other,confirmed,2026-08-27 00:00:00+00:00
+xAI,Apollo second tranche  †,Lease,3400.0,Undisclosed,"Reported 2026-02-09, ""near final"" — no Apollo close PR found (re-checked 2026-08-09: still none)",Undisclosed,other,press,2026-08-27 00:00:00+00:00
+xAI,Morgan Stanley-led secured debt package ($3B senior secured notes + $1B fixed-rate TL + $1B TLB)  †,Bond,5000.0,12.50%,2025-07-01,Not captured,secured,confirmed,2026-08-27 00:00:00+00:00
+xAI,Valor GPU SPV program (context)  †,Lease,20000.0,Undisclosed,Reported 2025-10-16,~5-yr lease horizon,other,press,2026-08-27 00:00:00+00:00
