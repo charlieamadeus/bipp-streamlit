@@ -1650,6 +1650,7 @@ Compass Datacenters,Series 2026-2 ABS notes — $413M in three tranches  †,Bon
 "Core Scientific, Inc.   CORZ",3.00% Convertible Senior Notes due 2029,Convertible,460.0,3.00%,2024-08-19,2029-09-01,unsecured,confirmed,2026-08-28 00:00:00+00:00
 "Core Scientific, Inc.   CORZ",7.750% Senior Secured Notes due 2031  †,Bond,3300.0,7.75%,2026-05-06,2031-05-15,secured,confirmed,2026-08-28 00:00:00+00:00
 "Core Scientific, Inc.   CORZ",Finance leases  †,Lease,0.9,Undisclosed,—,Various,other,confirmed,2026-08-28 00:00:00+00:00
+"Core Scientific, Inc.   CORZ",JPMorgan Revolving Credit + Letter of Credit Facility  †,Credit facility,600.0,SOFR +1.75%,2026-08-25,2029-08-25,secured,confirmed,2026-08-28 00:00:00+00:00
 "CoreWeave, Inc.   CRWV",1.75% Convertible Senior Notes due 2031  †,Convertible,2588.0,1.75%,2025-12-11,2031-12-01,unsecured,confirmed,2026-08-28 00:00:00+00:00
 "CoreWeave, Inc.   CRWV",1.75% Convertible Senior Notes due 2032  †,Convertible,4000.0,1.75%,2026-04-14,2032-10-01,unsecured,confirmed,2026-08-28 00:00:00+00:00
 "CoreWeave, Inc.   CRWV",8.500% EUR Senior Notes due 2032  †,Bond,2300.0,8.50%,2026-06-18,2032-07-15,unsecured,confirmed,2026-08-28 00:00:00+00:00
@@ -1740,8 +1741,11 @@ IREN Limited   IREN,1.00% Convertible Senior Notes due Jun 2033,Convertible,1150
 IREN Limited   IREN,3.25% Convertible Senior Notes due 2030  †,Convertible,212.3,3.25%,2024-12-06,2030-06-15,unsecured,confirmed,2026-08-28 00:00:00+00:00
 IREN Limited   IREN,3.50% Convertible Senior Notes due 2029  †,Convertible,233.4,3.50%,2025-06-13,2029-12-15,unsecured,confirmed,2026-08-28 00:00:00+00:00
 IREN Limited   IREN,GPU finance leases (Aug 2025 36-mo; Nov 2025 24-mo Dell Financial)  †,Lease,274.3,9.70%,2025-08-23,~2027–2028,other,confirmed,2026-08-28 00:00:00+00:00
+IREN Limited   IREN,GPU leases (Aug 2025 36-mo; Nov 2025 24-mo Dell Financial)  †,Lease,274.3,9.70%,2025-08-23,~2027–2028,other,confirmed,2026-08-28 00:00:00+00:00
 IREN Limited   IREN,Hardware 3 5.96% Senior Notes due 2031  †,Bond,2100.0,5.96%,2026-05-29,2031-12-31,secured,confirmed,2026-08-28 00:00:00+00:00
 IREN Limited   IREN,Hardware 3 DDTL (Microsoft-contract financing)  †,Credit facility,1550.0,SOFR +2.25%,2026-05-29,2031-12-31,secured,confirmed,2026-08-28 00:00:00+00:00
+IREN Limited   IREN,"Mackenzie Notes (Blue Owl-led $2.4B GPU package, senior secured)  †",Bond,1200.0,9.00%,2026-08-25,—,secured,confirmed,2026-08-28 00:00:00+00:00
+IREN Limited   IREN,"Mackenzie Term Loan (Blue Owl-led $2.4B GPU package, senior secured)  †",Credit facility,1200.0,9.00%,2026-08-25,—,secured,confirmed,2026-08-28 00:00:00+00:00
 Lambda,"$926M senior secured Term Loan B (Moody's Baa2 — first IG-rated TLB by a private neocloud, per company)  †",Credit facility,926.0,SOFR +3.00%,2026-08-12,2030-12-31,secured,confirmed,2026-08-28 00:00:00+00:00
 Lambda,GPU-backed SPV financing  †,Credit facility,500.0,Undisclosed,2024-04-02,Undisclosed,other,confirmed,2026-08-28 00:00:00+00:00
 Lambda,Syndicated senior secured credit facility  †,Credit facility,275.0,Undisclosed,2025-08-19,Undisclosed,secured,confirmed,2026-08-28 00:00:00+00:00
@@ -1750,6 +1754,7 @@ Lambda,Upsized syndicated senior secured facility  †,Credit facility,1000.0,Un
 "Meta / Blue Owl ""Hyperion"" JV (Richland Parish, LA)",Senior secured notes — Hyperion data-center JV  †,Bond,27300.0,6.58%,Priced 2025-10-16; JV announced 2025-10-21,2049,secured,confirmed,2026-08-28 00:00:00+00:00
 Mistral AI,Seven-bank debt financing for Essonne GPU cluster  †,Credit facility,830.0,Undisclosed,2026-03-30,Undisclosed,other,confirmed,2026-08-28 00:00:00+00:00
 NVIDIA Corporation   NVDA,Residual value guaranties — PORTS-Pike leases (payment obligation capped at $105B)  †,Other,105000.0,Undisclosed,2026-08-17,Earliest of: 20th anniversary of commencement of the applicable lease; termination of the applicable lease by OpenAI per its terms; OpenAI achieving a satisfactory credit rating; other customary termination events,unsecured,confirmed,2026-08-28 00:00:00+00:00
+Nebius Group N.V.   NBIS,$775M Senior Secured Facility (first secured debt in company history)  †,Credit facility,775.0,SOFR +2.50%,2026-07-10,2030-10-31,secured,confirmed,2026-08-28 00:00:00+00:00
 Nebius Group N.V.   NBIS,$775M senior secured debt facility (first secured debt in company history)  †,Credit facility,775.0,SOFR +2.50%,2026-07-17,2030-10-31,secured,confirmed,2026-08-28 00:00:00+00:00
 Nebius Group N.V.   NBIS,0.50% Convertible Senior Notes due Feb 2030 (August series)  †,Convertible,3450.0,0.50%,2026-08-24,2030-02-15,unsecured,confirmed,2026-08-28 00:00:00+00:00
 Nebius Group N.V.   NBIS,1.00% Convertible Senior Notes due 2030  †,Convertible,1581.0,1.00%,2025-09-15,2030-09-15,unsecured,confirmed,2026-08-28 00:00:00+00:00
@@ -1782,6 +1787,7 @@ Sharon AI   SHAZ,6.00% Convertible Senior Notes due 2031  †,Convertible,350.0,
 "Soluna Holdings, Inc.   SLNH",Yorkville promissory note — post-Q1  †,Credit facility,12.0,5.00%,2026-04-15,2027-05-15,unsecured,confirmed,2026-08-28 00:00:00+00:00
 TeraWulf Inc.   WULF,0.00% Convertible Senior Notes due 2032,Convertible,1025.0,0.00%,2025-10-31,2032-05-01,unsecured,confirmed,2026-08-28 00:00:00+00:00
 TeraWulf Inc.   WULF,1.00% Convertible Senior Notes due 2031,Convertible,1000.0,1.00%,2025-08-20,2031-09-01,unsecured,confirmed,2026-08-28 00:00:00+00:00
+TeraWulf Inc.   WULF,1.00% Convertible Senior Notes due 2031  †,Convertible,1000.0,1.00%,2025-08-20,2031-09-01,unsecured,confirmed,2026-08-28 00:00:00+00:00
 TeraWulf Inc.   WULF,2.75% Convertible Senior Notes due 2030  †,Convertible,500.0,2.75%,2024-10,2030-02-01,unsecured,confirmed,2026-08-28 00:00:00+00:00
 TeraWulf Inc.   WULF,7.250% Senior Secured Notes due 2030 (Flash Compute JV)  †,Bond,1300.0,7.25%,2025-12-29,2030-12-31,secured,confirmed,2026-08-28 00:00:00+00:00
 TeraWulf Inc.   WULF,7.750% Senior Secured Notes due 2030  †,Bond,3200.0,7.75%,2025-10-22,2030-10-15,secured,confirmed,2026-08-28 00:00:00+00:00
