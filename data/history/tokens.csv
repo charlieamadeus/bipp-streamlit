@@ -811,7 +811,7 @@ DeepSeek V3.1,0.41,,1.32,,,cross_provider_median,4.0,$0.95 – $4.50,2026-08-29 
 DeepSeek V4-Flash,0.14,,0.28,,,cross_provider_median,5.0,$0.18 – $1.32,2026-08-29 00:00:00+00:00,XI  Xiaomi overseas price list
 DeepSeek V4-Flash-0731,0.17,,0.47,,,cross_provider_median,4.0,$0.18 – $1.32,2026-08-29 00:00:00+00:00,XI  Xiaomi overseas price list
 DeepSeek V4-Pro,1.32,,3.2,,,cross_provider_median,5.0,$2.55 – $3.96,2026-08-29 00:00:00+00:00,XI  Xiaomi overseas price list
-DeepSeek V4-Pro-0813,1.31,,3.96,,,cross_provider_median,4,$2.60 – $3.96,2026-08-29 00:00:00+00:00,XI  Xiaomi overseas price list
+DeepSeek V4-Pro-0813,1.31,,3.96,,,cross_provider_median,4.0,$2.60 – $3.96,2026-08-29 00:00:00+00:00,XI  Xiaomi overseas price list
 DeepSeek-V3.2,0.27,,0.4,,,cross_provider_median,3.0,$0.38 – $4.50,2026-08-29 00:00:00+00:00,XI  Xiaomi overseas price list
 GLM-4-32B-0414-128K,0.1,,0.1,,none in record,first_party_posted,,,2026-08-29 00:00:00+00:00,ZA  Z.AI model table
 GLM-4.5-Air,0.2,0.03,1.1,,none in record,first_party_posted,,,2026-08-29 00:00:00+00:00,ZA  Z.AI model table
@@ -883,3 +883,8 @@ qwen3.7-max Currently equivalent to qwen3.7-max-2026-05-20 context caching disco
 qwen3.7-max-preview,2.5,,7.5,,none in record,first_party_posted,,,2026-08-29 00:00:00+00:00,AL  Alibaba international storefront
 qwen3.7-plus,0.4,,1.6,,none in record,first_party_posted,,,2026-08-29 00:00:00+00:00,AL  Alibaba international storefront
 qwen3.8-max,2.0,,6.0,,none in record,first_party_posted,,,2026-08-29 00:00:00+00:00,AL  Alibaba international storefront
+step-1o-audio,3.72,0.74,8.93,—,none in record,first_party_posted,,,2026-08-29 00:00:00+00:00,ST  stepfun
+step-1o-turbo-vision,0.37,0.07,1.19,—,none in record,first_party_posted,,,2026-08-29 00:00:00+00:00,ST  stepfun
+step-3.7-flash,0.2,0.04,1.21,—,none in record,first_party_posted,,,2026-08-29 00:00:00+00:00,ST  stepfun
+step-audio-2,1.49,0.3,10.42,—,none in record,first_party_posted,,,2026-08-29 00:00:00+00:00,ST  stepfun
+step-audio-r1.5,1.49,0.3,15.62,—,none in record,first_party_posted,,,2026-08-29 00:00:00+00:00,ST  stepfun
