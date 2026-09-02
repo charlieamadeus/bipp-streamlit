@@ -90,6 +90,15 @@ CSS = f"""<style>
     background: var(--raised); border: 1px solid var(--rule) !important;
     border-radius: 3px !important; padding: 1.15rem 1.25rem 1.05rem !important;
   }}
+  /* Cards declare the selectbox before the headline so Streamlit binds the
+     choice reliably; order puts the number back above the menu. */
+  [data-testid="stVerticalBlockBorderWrapper"] > div[data-testid="stVerticalBlock"] {{
+    display: flex; flex-direction: column;
+  }}
+  [data-testid="stVerticalBlockBorderWrapper"] .stSelectbox {{ order: 2; }}
+  [data-testid="stVerticalBlockBorderWrapper"] [data-testid="stMarkdownContainer"]:has(.num) {{
+    order: 1;
+  }}
   /* Selectboxes: a quiet control, not the loudest thing in the card. */
   .stSelectbox div[data-baseweb="select"] > div {{
     background: transparent !important; border: none !important;

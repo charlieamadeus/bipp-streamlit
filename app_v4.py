@@ -88,20 +88,18 @@ def load_credit() -> pd.DataFrame:
     return ccir_pages.fetch_credit()
 
 
-def remember(key: str, options: list[str], default: int = 0) -> str:
-    """Read a selection before its widget exists.
+def picker(key: str, options: list[str], help_text: str, default: int = 0) -> str:
+    """Card dropdown. Widget first, headline second, CSS flips the visual order.
 
-    Streamlit renders in source order, so declaring a widget above its number
-    would put the dropdown where the number belongs. Seeding session_state lets
-    the value be known first and the control be drawn underneath it.
+    Reading session_state before the selectbox exists worked on some Streamlit
+    builds and failed silently on others: the menu moved, the headline stayed
+    on the default. Declaring the widget first binds the user's choice; CSS
+    order in theme.py keeps the number above the menu.
     """
     if key not in st.session_state or st.session_state[key] not in options:
         st.session_state[key] = options[min(default, len(options) - 1)]
-    return st.session_state[key]
-
-
-def control(key: str, options: list[str], help_text: str) -> None:
     st.selectbox(key, options, key=key, label_visibility="collapsed", help=help_text)
+    return st.session_state[key]
 
 
 # -------------------------------------------------------------------- cards
@@ -150,12 +148,25 @@ def _band(compute):
 
 
 def _two_figures(value: float) -> str:
-    """16,979 -> "17,000". The panel's quartiles span nearly two to one, so five
-    significant figures assert a precision the data cannot carry."""
+    """16,979 -> "17,000". For panel bands only: providers disagree by ~40%,
+    so two figures is enough for a range label."""
     if value <= 0:
         return "0"
     step = 10 ** (math.floor(math.log10(value)) - 1)
     return f"{round(value / step) * step:,.0f}"
+
+
+def _headline_hours(value: float) -> str:
+    """Whole GPU-hours for the card headline.
+
+    Two-sig-fig rounding made every day since late August read 17,000 even
+    while BTC and the basket moved daily between roughly 16,900 and 17,500.
+    Cross-provider disagreement belongs in the footer band, not in collapsing
+    the time series to one digit every two weeks.
+    """
+    if value <= 0:
+        return "0"
+    return f"{round(value):,}"
 
 
 def card_rent(panel, series, latest_btc) -> None:
@@ -167,7 +178,14 @@ def card_rent(panel, series, latest_btc) -> None:
         if answer:
             priced.append((label, answer[0], answer[2], answer[3], answer[1]))
     options = ["The 50/30/20 basket"] + [label for label, _, _, _, _ in priced]
-    choice = remember("rent", options)
+    help_text = (
+        "Hours of one chip that a Bitcoin rents. Data centre parts price on the "
+        "neocloud SXM market; consumer cards are only listed by marketplaces, so "
+        "those are used where nothing better exists. Same chips as the card beside "
+        "this one wherever both markets carry them."
+    )
+    choice = picker("rent", options, help_text)
+    as_of = series["as_of_date"].iloc[-1]
     if choice == "The 50/30/20 basket":
         hours, foot = series["compute_per_btc"].iloc[-1], "three chips, blended"
         band = _band(lambda: ccir.basket_band(ccir.select_surface(panel, **SURFACE), BASKET))
@@ -181,18 +199,14 @@ def card_rent(panel, series, latest_btc) -> None:
                 if sources < ccir.INDICATIVE_BELOW
                 else f"${rate:.2f} an hour, {market.lower()}")
         band = _band(lambda: ccir.price_band(panel, series_id))
+    foot = f"as of {_day(as_of)} · {foot}"
     # The panel's own middle half, beside the headline. CCIR publishes p25 and
     # p75 next to every price because the headline alone hides how far providers
     # disagree; on the basket that is roughly 15,000 to 21,000 hours.
     if band:
         foot += f" · {_two_figures(latest_btc / band[1])} to {_two_figures(latest_btc / band[0])} across the panel"
-    st.markdown(fact(_two_figures(hours), "GPU-hours per Bitcoin", foot),
+    st.markdown(fact(_headline_hours(hours), "GPU-hours per Bitcoin", foot),
                 unsafe_allow_html=True)
-    control("rent", options,
-            "Hours of one chip that a Bitcoin rents. Data centre parts price on the "
-            "neocloud SXM market; consumer cards are only listed by marketplaces, so "
-            "those are used where nothing better exists. Same chips as the card beside "
-            "this one wherever both markets carry them.")
 
 
 def card_own(hardware, latest_btc) -> None:
@@ -206,19 +220,20 @@ def card_own(hardware, latest_btc) -> None:
                     unsafe_allow_html=True)
         return
     default = options.index("H100") if "H100" in options else 0
-    choice = remember("own", options, default)
+    help_text = (
+        "Whole chips a Bitcoin buys outright, at prices actually transacted second "
+        "hand. Fewer choices than renting, and deliberately: this table values used "
+        "data centre hardware as loan collateral, so it carries no consumer cards. "
+        "A 5090 can be rented here and not bought here for that reason, and a B200 "
+        "is too new to have a second-hand price at all."
+    )
+    choice = picker("own", options, help_text, default)
     row = hardware[hardware["model"].astype(str) == ccir_pages.OWN_KEYS[choice]].iloc[0]
     st.markdown(
         fact(f"{latest_btc / float(row['executed_median_usd']):,.1f}", "Cards per Bitcoin",
              f"${row['executed_median_usd']:,.0f} used, {row['age_years']:.1f} years old"),
         unsafe_allow_html=True,
     )
-    control("own", options,
-            "Whole chips a Bitcoin buys outright, at prices actually transacted second "
-            "hand. Fewer choices than renting, and deliberately: this table values used "
-            "data centre hardware as loan collateral, so it carries no consumer cards. "
-            "A 5090 can be rented here and not bought here for that reason, and a B200 "
-            "is too new to have a second-hand price at all.")
 
 
 def card_produce(tokens, latest_btc) -> None:
@@ -234,7 +249,11 @@ def card_produce(tokens, latest_btc) -> None:
     # The lab goes in the footer, not the label: the card is too narrow to show
     # "Claude Fable 5 - Anthropic" without truncating it mid-word.
     labels = [str(r.model) for r in flagships.itertuples()]
-    choice = remember("produce", labels)
+    help_text = (
+        "Words out of an AI model that a Bitcoin pays for. One flagship from each "
+        "frontier lab. This is what output costs, not what it is worth."
+    )
+    choice = picker("produce", labels, help_text)
     row = flagships.iloc[labels.index(choice)]
     price = float(row["output_usd_per_mtok"])
     billions = latest_btc / price / 1000
@@ -242,9 +261,6 @@ def card_produce(tokens, latest_btc) -> None:
     st.markdown(fact(shown, "Output tokens per Bitcoin",
                      f"${price:,.2f} a million · {row['lab']}"),
                 unsafe_allow_html=True)
-    control("produce", labels,
-            "Words out of an AI model that a Bitcoin pays for. One flagship from each "
-            "frontier lab. This is what output costs, not what it is worth.")
 
 
 def card_borrow(credit, stack) -> None:
@@ -253,7 +269,12 @@ def card_borrow(credit, stack) -> None:
                     unsafe_allow_html=True)
         return
     views = ["Everything borrowed", "Secured only", "Contingent guarantees"]
-    choice = remember("borrow", views)
+    help_text = (
+        "Money raised against AI computing since 2023. Each deal is measured against "
+        "Bitcoin's whole market capitalisation on the day it was signed, and those shares "
+        "are added up, so a deal's contribution never changes once it is struck."
+    )
+    choice = picker("borrow", views, help_text)
     if choice == "Contingent guarantees":
         _, contingent = btc_history.split_contingent(credit)
         subset = btc_history.debt_in_btc(contingent, load_btc_long(), exclude_contingent=False)
@@ -268,10 +289,6 @@ def card_borrow(credit, stack) -> None:
         foot = f"{stack['cumulative_btc'].iloc[-1] / 1e6:.2f}M BTC, {len(stack)} deals"
     st.markdown(fact(f"{share * 100:,.1f}%", "Of Bitcoin's market cap", foot),
                 unsafe_allow_html=True)
-    control("borrow", views,
-            "Money raised against AI computing since 2023. Each deal is measured against "
-            "Bitcoin's whole market capitalisation on the day it was signed, and those shares "
-            "are added up, so a deal's contribution never changes once it is struck.")
 
 
 # ------------------------------------------------------------------- charts

@@ -62,3 +62,13 @@ def test_deployment_check_names_what_is_missing():
         assert all(m.startswith("bipp.ccir.") for m in missing)
     finally:
         app_v4.REQUIRED["bipp.ccir"] = (module, names)
+
+
+def test_headline_hours_keeps_daily_moves_visible():
+    """Two-sig-fig rounding collapsed a week of real variation into one label."""
+    import app_v4
+
+    assert app_v4._two_figures(17_043) == "17,000"
+    assert app_v4._two_figures(17_467) == "17,000"
+    assert app_v4._headline_hours(17_043) == "17,043"
+    assert app_v4._headline_hours(17_467) == "17,467"
