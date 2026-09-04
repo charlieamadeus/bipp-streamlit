@@ -1310,35 +1310,35 @@ Claude Haiku 4.5,1.0,0.1,5.0,,none in record,first_party_posted,,,2026-09-04 00:
 Claude Mythos 5.1,10.0,0.25,50.0,,none in record,first_party_posted,,,2026-09-04 00:00:00+00:00,AN  Anthropic model table
 Claude Opus 5,5.0,0.5,25.0,,none in record,first_party_posted,,,2026-09-04 00:00:00+00:00,AN  Anthropic model table
 Claude Sonnet 5,2.0,0.2,10.0,,none in record,first_party_posted,,,2026-09-04 00:00:00+00:00,AN  Anthropic model table
-DeepSeek V3.1,0.57,,1.68,,,cross_provider_median,6,$0.95 – $4.94,2026-09-04 00:00:00+00:00,ST  stepfun
-DeepSeek V4-Flash,0.14,,0.28,,,cross_provider_median,6,$0.18 – $1.32,2026-09-04 00:00:00+00:00,ST  stepfun
-DeepSeek V4-Flash-0731,0.22,,0.66,,,cross_provider_median,5,$0.18 – $1.32,2026-09-04 00:00:00+00:00,ST  stepfun
-DeepSeek V4-Pro,1.31,,2.9,,,cross_provider_median,6,$1.20 – $3.96,2026-09-04 00:00:00+00:00,ST  stepfun
-DeepSeek-V3.2,0.57,,1.68,,,cross_provider_median,6,$0.38 – $4.50,2026-09-04 00:00:00+00:00,ST  stepfun
-Deepseek R1,1.35,,5.4,,,cross_provider_median,5,$2.40 – $5.40,2026-09-04 00:00:00+00:00,ST  stepfun
+DeepSeek V3.1,0.57,,1.68,,,cross_provider_median,6.0,$0.95 – $4.94,2026-09-04 00:00:00+00:00,ST  stepfun
+DeepSeek V4-Flash,0.14,,0.28,,,cross_provider_median,6.0,$0.18 – $1.32,2026-09-04 00:00:00+00:00,ST  stepfun
+DeepSeek V4-Flash-0731,0.22,,0.66,,,cross_provider_median,5.0,$0.18 – $1.32,2026-09-04 00:00:00+00:00,ST  stepfun
+DeepSeek V4-Pro,1.31,,2.9,,,cross_provider_median,6.0,$1.20 – $3.96,2026-09-04 00:00:00+00:00,ST  stepfun
+DeepSeek-V3.2,0.57,,1.68,,,cross_provider_median,6.0,$0.38 – $4.50,2026-09-04 00:00:00+00:00,ST  stepfun
+Deepseek R1,1.35,,5.4,,,cross_provider_median,5.0,$2.40 – $5.40,2026-09-04 00:00:00+00:00,ST  stepfun
 GLM-4-32B-0414-128K,0.1,,0.1,,none in record,first_party_posted,,,2026-09-04 00:00:00+00:00,ZA  Z.AI model table
 GLM-4.5-Air,0.2,0.03,1.1,,none in record,first_party_posted,,,2026-09-04 00:00:00+00:00,ZA  Z.AI model table
 GLM-4.5-AirX,1.1,0.22,4.5,,none in record,first_party_posted,,,2026-09-04 00:00:00+00:00,ZA  Z.AI model table
 GLM-4.5-X,2.2,0.45,8.9,,none in record,first_party_posted,,,2026-09-04 00:00:00+00:00,ZA  Z.AI model table
 GLM-4.6V,0.3,0.05,0.9,,none in record,first_party_posted,,,2026-09-04 00:00:00+00:00,ZA  Z.AI model table
 GLM-4.6V-FlashX,0.04,0.0,0.4,,none in record,first_party_posted,,,2026-09-04 00:00:00+00:00,ZA  Z.AI model table
-GLM-4.7,0.6,,2.2,,,cross_provider_median,5,$1.75 – $2.20,2026-09-04 00:00:00+00:00,ST  stepfun
+GLM-4.7,0.6,,2.2,,,cross_provider_median,5.0,$1.75 – $2.20,2026-09-04 00:00:00+00:00,ST  stepfun
 GLM-4.7-FlashX,0.07,0.01,0.4,,none in record,first_party_posted,,,2026-09-04 00:00:00+00:00,ZA  Z.AI model table
-GLM-5,1.0,,3.2,,,cross_provider_median,6,$2.08 – $3.20,2026-09-04 00:00:00+00:00,ST  stepfun
+GLM-5,1.0,,3.2,,,cross_provider_median,6.0,$2.08 – $3.20,2026-09-04 00:00:00+00:00,ST  stepfun
 GLM-5.3,1.4,0.26,4.4,,none in record,first_party_posted,,,2026-09-04 00:00:00+00:00,ZA  Z.AI model table
 GLM-5.3-Flash,0.07,0.01,0.25,,2026-09-03 (-50%),first_party_posted,,,2026-09-04 00:00:00+00:00,ZA  Z.AI model table
 GLM-OCR,0.03,,0.03,,none in record,first_party_posted,,,2026-09-04 00:00:00+00:00,ZA  Z.AI model table
 Inkling,1.0,0.17,4.05,,none in record,first_party_posted,,,2026-09-04 00:00:00+00:00,TM  Thinking Machines serverless inference
 Inkling-Small,0.3,0.06,1.2,,none in record,first_party_posted,,,2026-09-04 00:00:00+00:00,TM  Thinking Machines serverless inference
-Kimi K2 Thinking,0.6,,2.5,,,cross_provider_median,6,$2.00 – $2.50,2026-09-04 00:00:00+00:00,ST  stepfun
-Llama3.3 70B,0.71,,0.71,,,cross_provider_median,5,$0.40 – $0.72,2026-09-04 00:00:00+00:00,ST  stepfun
-MiniMax M2.5,0.3,,1.2,,,cross_provider_median,5,$1.15 – $1.20,2026-09-04 00:00:00+00:00,ST  stepfun
-MiniMax M3,0.3,,1.2,,,cross_provider_median,6,$0.96 – $2.40,2026-09-04 00:00:00+00:00,ST  stepfun
-MiniMax-M2,0.3,,1.2,,,cross_provider_median,6,$1.02 – $1.20,2026-09-04 00:00:00+00:00,ST  stepfun
+Kimi K2 Thinking,0.6,,2.5,,,cross_provider_median,6.0,$2.00 – $2.50,2026-09-04 00:00:00+00:00,ST  stepfun
+Llama3.3 70B,0.71,,0.71,,,cross_provider_median,5.0,$0.40 – $0.72,2026-09-04 00:00:00+00:00,ST  stepfun
+MiniMax M2.5,0.3,,1.2,,,cross_provider_median,5.0,$1.15 – $1.20,2026-09-04 00:00:00+00:00,ST  stepfun
+MiniMax M3,0.3,,1.2,,,cross_provider_median,6.0,$0.96 – $2.40,2026-09-04 00:00:00+00:00,ST  stepfun
+MiniMax-M2,0.3,,1.2,,,cross_provider_median,6.0,$1.02 – $1.20,2026-09-04 00:00:00+00:00,ST  stepfun
 MiniMax-M2.7-highspeed,0.6,0.06,2.4,,none in record,first_party_posted,,,2026-09-04 00:00:00+00:00,MM  MiniMax standard tier
 MiniMax-M3,0.3,0.06,1.2,,none in record,first_party_posted,,,2026-09-04 00:00:00+00:00,MM  MiniMax standard tier
-OpenAI gpt-oss-20b,0.07,,0.25,,,cross_provider_median,5,$0.14 – $0.50,2026-09-04 00:00:00+00:00,ST  stepfun
-Qwen3 coder-480b-a35b-instruct,0.39,,1.7,,,cross_provider_median,4,$1.55 – $1.80,2026-09-04 00:00:00+00:00,ST  stepfun
+OpenAI gpt-oss-20b,0.07,,0.25,,,cross_provider_median,5.0,$0.14 – $0.50,2026-09-04 00:00:00+00:00,ST  stepfun
+Qwen3 coder-480b-a35b-instruct,0.39,,1.7,,,cross_provider_median,4.0,$1.55 – $1.80,2026-09-04 00:00:00+00:00,ST  stepfun
 deepseek-v4-flash,0.44,0.01,1.32,,2026-08-17 (371%),first_party_posted,,,2026-09-04 00:00:00+00:00,DS  DeepSeek standard price
 deepseek-v4-flash-vision-exp,0.44,0.01,1.32,,none in record,first_party_posted,,,2026-09-04 00:00:00+00:00,DS  DeepSeek standard price
 deepseek-v4-pro,1.32,0.04,3.96,,2026-08-17 (355%),first_party_posted,,,2026-09-04 00:00:00+00:00,DS  DeepSeek standard price
@@ -1364,7 +1364,7 @@ gpt-5.6-luna,0.2,0.02,1.2,,2026-07-30 (-80%),first_party_posted,,,2026-09-04 00:
 gpt-5.6-sol,4.0,0.4,20.0,,2026-08-22 (-33%),first_party_posted,,,2026-09-04 00:00:00+00:00,OA  OpenAI standard tier
 gpt-5.6-terra,2.0,0.2,12.0,,2026-07-30 (-20%),first_party_posted,,,2026-09-04 00:00:00+00:00,OA  OpenAI standard tier
 gpt-6-astra,10.0,1.0,50.0,,none in record,first_party_posted,,,2026-09-04 00:00:00+00:00,OA  OpenAI standard tier
-gpt-oss-120b,0.15,,0.59,,,cross_provider_median,7,$0.17 – $0.60,2026-09-04 00:00:00+00:00,ST  stepfun
+gpt-oss-120b,0.15,,0.59,,,cross_provider_median,7.0,$0.17 – $0.60,2026-09-04 00:00:00+00:00,ST  stepfun
 grok-4.20-0309-non-reasoning,1.25,0.2,2.5,,none in record,first_party_posted,,,2026-09-04 00:00:00+00:00,XA  xAI model catalog
 grok-4.20-0309-reasoning,1.25,0.2,2.5,,none in record,first_party_posted,,,2026-09-04 00:00:00+00:00,XA  xAI model catalog
 grok-4.20-multi-agent-0309,1.25,0.2,2.5,,none in record,first_party_posted,,,2026-09-04 00:00:00+00:00,XA  xAI model catalog
