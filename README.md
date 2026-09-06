@@ -130,10 +130,13 @@ BTC. Built for spotting trend changes and divergences.
 py -3 -m streamlit run app_v4.py --server.port 8504
 ```
 
-Four facts and two charts:
+Four facts, a Spark card, and three charts:
 
 - **What one BTC buys right now**: GPU-hours, H100 cards, frontier output tokens,
   and the share of all Bitcoin borrowed against compute.
+- **Local inference box**: NVIDIA DGX Spark (ASIN B0FWJ16CCH) as Sparks per
+  Bitcoin. Second row under the four datacentre cards. MSRP stub in code plus
+  Amazon Buy Box New forward.
 - **Is it buying more or less.** CCIR's posted-ask series and Ornn's marketplace
   index layered on one indexed axis, both rebased to the day CCIR's record starts
   so the Ornn line carries the two months of history CCIR does not have. BTC/USD
@@ -292,8 +295,9 @@ is another 8.1% on its own.
 ### Our own history
 
 CCIR retains about 30 days of rental history and publishes residuals, tokens and
-debt as snapshots with no history at all. `scripts/snapshot.py` appends each pull
-to `data/history/*.csv`, append-only, so a row already on record is never
+debt as snapshots with no history at all. Ornn's public compute index keeps a
+trailing three months. `scripts/snapshot.py` appends each pull to
+`data/history/*.csv`, append-only, so a row already on record is never
 rewritten and a re-run the same day is a no-op. Run it daily and commit:
 
 ```powershell
@@ -301,10 +305,20 @@ py -3 scripts/snapshot.py
 ```
 
 The app merges the store over the live pull with stored rows winning, so an
-upstream restatement cannot rewrite history already captured. The first capture
-took the whole 30-day CCIR window plus first snapshots of the other three
-surfaces. Once this has run for a while the record is longer than CCIR's, and the
-three snapshot-only surfaces become series.
+upstream restatement cannot rewrite history already captured. The first CCIR
+capture took the whole 30-day window plus first snapshots of the other three
+surfaces. The first Ornn capture took the live free window (from 2026-06-03).
+Once this has run for a while the record is longer than either publisher's, and
+the snapshot-only surfaces become series.
+
+**DGX Spark** is a separate soft channel in the same script. Amazon Buy Box New
+for ASIN `B0FWJ16CCH` appends to `data/history/dgx_spark.csv`. Fetch/parse/
+identity failures go to `soft_failures` (printed as `SOFT ...`) and **do not**
+set a non-zero exit; rates/ornn/hardware/tokens/credit still do. If the gap
+from the last `available=true` row to today reaches 7 days, the script prints
+`dgx_spark: blocked`. When Actions cannot see a real Buy Box, run the same
+command from a desktop session that can, then commit `data/history/dgx_spark.csv`.
+MSRP backfill lives in code (`MSRP_STEPS`), not in the store.
 
 ### What still cannot be charted
 
@@ -326,11 +340,13 @@ it needs no supply oracle and cannot drift with a third-party figure.
 
 | Axis | Source | Feed | History |
 |---|---|---|---|
-| Rent | CCIR rates | CSV | ~30 days |
+| Rent | CCIR rates | CSV | ~30 days live, then our store |
+| Marketplace | Ornn OCPI | JSON | ~3 months live, then our store |
 | Own | CCIR hardware | scraped HTML | snapshot |
 | Produce | CCIR tokens | scraped HTML | snapshot |
 | Borrow | CCIR credit | scraped HTML | snapshot |
-| BTC/USD | Coinbase | JSON | 300-candle cap |
+| DGX Spark | Amazon Buy Box New + NVIDIA MSRP stub | scraped HTML + code constant | store + soft_failures |
+| BTC/USD | Coinbase | JSON | 300-candle cap, chunked |
 
 - `https://ccir.io/data/rates_history.csv` is not linked anywhere on the site.
   It resolves and robots.txt permits it, but it is undocumented and can vanish.
@@ -341,7 +357,9 @@ it needs no supply oracle and cannot drift with a third-party figure.
 
 ## Data boundaries
 
-- Do not commit raw Ornn API responses, CCIR CSVs, or scraped pages.
+- Do not commit raw Ornn API responses, CCIR CSVs, or scraped pages. Derived
+  daily series in `data/history/` are the exception: that is the accumulating
+  record, same as CCIR rates.
 - Do not publish derived BIPP values unless Ornn permission scope is preserved.
 - Attribute CCIR data as `CCIR (ccir.io)` with series identifier and publication
   date. Their terms permit non-commercial quotation and citation with

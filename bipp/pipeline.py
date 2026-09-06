@@ -37,6 +37,20 @@ def fetch_ornn_series(gpu_name: str) -> pd.DataFrame:
     return df[["date", "index_value"]].rename(columns={"index_value": _gpu_column(gpu_name)})
 
 
+def fetch_ornn_panel() -> pd.DataFrame:
+    """Daily H100/H200/B200 index values, one row per date.
+
+    Ornn's public feed is a trailing three-month window. Snapshot this into
+    the store so days that roll off the free tier stay on record.
+    """
+    h100 = fetch_ornn_series("H100 SXM")
+    h200 = fetch_ornn_series("H200")
+    b200 = fetch_ornn_series("B200")
+    df = h100.merge(h200, on="date").merge(b200, on="date")
+    df["as_of_date"] = pd.to_datetime(df["date"], utc=True)
+    return df[["as_of_date", "h100", "h200", "b200"]].sort_values("as_of_date").reset_index(drop=True)
+
+
 def fetch_coinbase_btc_usd(start_date: str, end_date: str) -> pd.DataFrame:
     url = f"{COINBASE_CANDLES_URL}?granularity=86400&start={start_date}T00:00:00Z&end={end_date}T00:00:00Z"
     rows = fetch_json(url)

@@ -1,9 +1,10 @@
 """Our own accumulating history.
 
 CCIR keeps roughly 30 days of rental history and publishes residuals, token
-prices and debt as snapshots with no history at all. Everything older than that
-window is gone once it rolls off. This module appends a dated copy of each pull
-to CSVs in the repo, so the record grows past what CCIR retains and the three
+prices and debt as snapshots with no history at all. Ornn's public compute
+index keeps a trailing three months. Everything older than those windows is
+gone once it rolls off. This module appends a dated copy of each pull to CSVs
+in the repo, so the record grows past what the publishers retain and the
 snapshot-only surfaces eventually become series.
 
 Append-only by construction: a row already recorded for a given key and date is
@@ -26,6 +27,8 @@ SERIES: dict[str, list[str]] = {
     "hardware": ["as_of_date", "model"],
     "tokens": ["as_of_date", "model", "pricing_basis"],
     "credit": ["as_of_date", "issuer", "instrument"],
+    "ornn": ["as_of_date"],
+    "dgx_spark": ["as_of_date"],
 }
 
 
@@ -115,11 +118,31 @@ def merge_rates(live: pd.DataFrame) -> pd.DataFrame:
     Preferring the stored copy means a later restatement upstream cannot quietly
     rewrite history we already captured.
     """
-    stored = read("rates")
+    return _merge_live("rates", live, ["as_of_date", "series_id"],
+                       ["series_id", "as_of_date"])
+
+
+def merge_ornn(live: pd.DataFrame) -> pd.DataFrame:
+    """Stored Ornn index plus today's live pull, stored rows winning.
+
+    The overlap is genuine: Ornn republishes the trailing three months every
+    day. Preferring the stored copy means a later restatement cannot quietly
+    rewrite a day we already captured, and days that have rolled off the free
+    window stay on the chart.
+    """
+    return _merge_live("ornn", live, ["as_of_date"], ["as_of_date"])
+
+
+def _merge_live(name: str, live: pd.DataFrame, keys: list[str],
+                sort_by: list[str]) -> pd.DataFrame:
+    stored = read(name)
     if stored.empty:
         return live
     if live.empty:
         return stored
-    combined = pd.concat([stored, live], ignore_index=True)
-    combined = combined.drop_duplicates(subset=["as_of_date", "series_id"], keep="first")
-    return combined.sort_values(["series_id", "as_of_date"]).reset_index(drop=True)
+    incoming = live.copy()
+    if "as_of_date" in incoming.columns:
+        incoming["as_of_date"] = pd.to_datetime(incoming["as_of_date"], utc=True)
+    combined = pd.concat([stored, incoming], ignore_index=True)
+    combined = combined.drop_duplicates(subset=keys, keep="first")
+    return combined.sort_values(sort_by).reset_index(drop=True)

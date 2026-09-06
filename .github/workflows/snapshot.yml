@@ -1,10 +1,11 @@
-# Capture CCIR's published rates into our own history and commit them.
+# Capture CCIR and Ornn published series into our own history and commit them.
 #
 # CCIR retains about 30 days of rental history and publishes residuals, token
-# prices and debt with no history at all. A day this does not run is a day that
-# eventually cannot be recovered, so it runs twice: once early, once late. The
-# store dedupes on (series_id, as_of_date), so a second run that sees the same
-# data is free and writes nothing.
+# prices and debt with no history at all. Ornn's public compute index keeps a
+# trailing three months. A day this does not run is a day that eventually
+# cannot be recovered, so it runs twice: once early, once late. The store
+# dedupes on each series' key, so a second run that sees the same data is free
+# and writes nothing.
 name: snapshot
 
 on:
