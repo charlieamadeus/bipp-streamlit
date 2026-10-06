@@ -21,7 +21,7 @@ import plotly.graph_objects as go
 import streamlit as st
 
 from bipp import btc as btc_history
-from bipp import ccir, ccir_pages, dgx_spark, store, theme
+from bipp import ccir, ccir_pages, store, theme
 from bipp.pipeline import fetch_coinbase_btc_usd, fetch_ornn_panel
 from bipp.theme import MONEY, PLOT_CONFIG, POWER, fact
 
@@ -103,15 +103,6 @@ def load_credit() -> pd.DataFrame:
     return ccir_pages.fetch_credit()
 
 
-@st.cache_data(ttl=3600, show_spinner=False)
-def load_dgx_spark() -> pd.DataFrame:
-    """Amazon Buy Box history only. Never touches load_hardware / Own."""
-    try:
-        return store.read("dgx_spark")
-    except Exception:  # noqa: BLE001
-        return pd.DataFrame()
-
-
 def picker(key: str, options: list[str], help_text: str, default: int = 0) -> str:
     """Card dropdown. Widget first, headline second, CSS flips the visual order.
 
@@ -143,9 +134,6 @@ REQUIRED = {
     "bipp.ccir_pages": (ccir_pages, ["CHIPS", "OWN_KEYS", "fetch_credit",
                                      "fetch_hardware", "frontier_models"]),
     "bipp.store": (store, ["merge_rates", "merge_ornn", "read"]),
-    "bipp.dgx_spark": (dgx_spark, ["MSRP_STEPS", "ASIN", "headline_state",
-                                   "expand_msrp_trace", "amazon_trace",
-                                   "msrp_price_on", "current_msrp"]),
 }
 
 
@@ -319,37 +307,6 @@ def card_borrow(credit, stack) -> None:
                 unsafe_allow_html=True)
 
 
-def card_spark(spark_store, latest_btc) -> None:
-    """Personal local-inference desktop. Reads dgx_spark store + MSRP only."""
-    help_text = (
-        "NVIDIA DGX Spark units one Bitcoin buys at retail New. Personal local-"
-        "inference desktop, not datacentre rent and not used collateral. Pinned "
-        f"to ASIN {dgx_spark.ASIN}."
-    )
-    # Keep a quiet control so the help tooltip has a home without a fake picker.
-    st.selectbox("spark_help", ["DGX Spark"], key="spark_help",
-                 label_visibility="collapsed", help=help_text)
-
-    state = dgx_spark.headline_state(spark_store)
-    if not state["available"]:
-        foot = f"unavailable · as of {_day(pd.Timestamp(state['as_of_date']))}"
-        if state.get("secondary"):
-            sec = state["secondary"]
-            foot += (f" · last Buy Box ${sec['price_usd']:,.2f} on "
-                     f"{_day(pd.Timestamp(sec['as_of_date']))}")
-        st.markdown(fact("n/a", "Sparks per Bitcoin", foot), unsafe_allow_html=True)
-        return
-
-    price = float(state["price_usd"])
-    sparks = latest_btc / price
-    seller = state.get("seller")
-    seller_bit = f", {seller}" if seller else ""
-    foot = (f"${price:,.2f} · {state['label']}{seller_bit} · "
-            f"as of {_day(pd.Timestamp(state['as_of_date']))}")
-    st.markdown(fact(f"{sparks:,.1f}", "Sparks per Bitcoin", foot),
-                unsafe_allow_html=True)
-
-
 # ------------------------------------------------------------------- charts
 
 def chart_power(series, ornn) -> go.Figure:
@@ -418,60 +375,6 @@ def chart_stack(shares) -> go.Figure:
     return figure
 
 
-def chart_spark(spark_store, btc) -> go.Figure:
-    """Absolute Sparks-per-BTC: MSRP backfill (dashed) + Amazon Buy Box (solid).
-
-    Two separate traces. No shared polyline, no carry-forward across unavailable
-    Amazon days. Handoff annotation at the first available=true Amazon date.
-    """
-    figure = go.Figure()
-    first_amazon = None
-    if not spark_store.empty and "available" in spark_store.columns:
-        flags = spark_store["available"]
-        if flags.dtype != bool:
-            flags = flags.map(lambda v: str(v).strip().lower() in {"1", "true", "t", "yes"})
-        good = spark_store.loc[flags]
-        if not good.empty:
-            first_amazon = pd.to_datetime(good["as_of_date"], utc=True).dt.date.min()
-
-    msrp = dgx_spark.expand_msrp_trace(btc, first_amazon)
-    market = dgx_spark.amazon_trace(spark_store, btc)
-
-    if not msrp.empty:
-        figure.add_trace(go.Scatter(
-            x=msrp["as_of_date"], y=msrp["sparks_per_btc"],
-            name="NVIDIA MSRP", mode="lines",
-            line=dict(width=1.6, color=MONEY, dash="dash"),
-        ))
-    if not market.empty:
-        figure.add_trace(go.Scatter(
-            x=market["as_of_date"], y=market["sparks_per_btc"],
-            name="Amazon Buy Box", mode="lines+markers",
-            line=dict(width=2.4, color=POWER),
-            marker=dict(size=6, color=POWER),
-            connectgaps=False,
-        ))
-        last = market.iloc[-1]
-        figure.add_trace(go.Scatter(
-            x=[last["as_of_date"]], y=[last["sparks_per_btc"]],
-            mode="markers+text", marker=dict(size=7, color=POWER),
-            text=[f"  {last['sparks_per_btc']:.1f}"],
-            textposition="middle right",
-            textfont=dict(color=POWER, size=12, family="JetBrains Mono, monospace"),
-            showlegend=False, hoverinfo="skip", cliponaxis=False,
-        ))
-    if first_amazon is not None:
-        figure.add_vline(
-            x=pd.Timestamp(first_amazon), line_dash="dot",
-            line_color="rgba(150,148,140,0.35)",
-            annotation_text="Amazon capture begins",
-            annotation_position="top left",
-            annotation_font=dict(size=11, color="#9a978f"),
-        )
-    figure.update_yaxes(title_text="Sparks per Bitcoin")
-    return figure
-
-
 # --------------------------------------------------------------------- page
 
 def main() -> None:
@@ -517,7 +420,6 @@ def main() -> None:
 
     latest_btc = float(series["btc_usd"].iloc[-1])
     hardware, tokens, credit = load_hardware(), load_tokens(), load_credit()
-    spark_store = load_dgx_spark()
     stack = btc_history.debt_in_btc(credit, load_btc_long()) if not credit.empty else pd.DataFrame()
 
     slots = st.columns(4, gap="medium")
@@ -533,9 +435,6 @@ def main() -> None:
     with slots[3]:
         with st.container(border=True):
             card_borrow(credit, stack)
-
-    with st.container(border=True):
-        card_spark(spark_store, latest_btc)
 
     # -------------------------------------------------------- purchasing power
     st.subheader("Is it buying more, or less")
@@ -563,31 +462,6 @@ def main() -> None:
 
     with st.expander("Why 50/30/20, and what that basket hides"):
         st.markdown(BASKET_NOTE)
-
-    # ----------------------------------------------------------- local desktop
-    st.subheader("Local inference box, in Bitcoin")
-    amazon_started = not spark_store.empty
-    if amazon_started:
-        spark_dek = (
-            "How many NVIDIA DGX Spark units one Bitcoin buys at retail New. "
-            "The dashed line is NVIDIA list price (MSRP stub), not market. "
-            "The solid line is the Amazon Buy Box New offer for the pinned ASIN. "
-            "Own covers used datacentre cards; Rent covers GPU-hours. "
-            "A Buy Box winner change is a regime change in what is measured, "
-            "and the recorded offer can sit above MSRP."
-        )
-    else:
-        spark_dek = (
-            "How many NVIDIA DGX Spark units one Bitcoin buys at retail New. "
-            "The dashed line is NVIDIA list price (MSRP stub), not market. "
-            "The backfill segment moves only because Bitcoin moves, because the "
-            "denominator is a fixed list price that changed twice. "
-            "Own covers used datacentre cards; Rent covers GPU-hours."
-        )
-    st.markdown(f'<p class="dek">{spark_dek}</p>', unsafe_allow_html=True)
-    btc_long = load_btc_long()
-    st.plotly_chart(theme.chart(chart_spark(spark_store, btc_long), 340, right=62),
-                    use_container_width=True, config=PLOT_CONFIG)
 
     # ------------------------------------------------------------------ stack
     if not stack.empty:
@@ -750,15 +624,6 @@ not survive being measured and has been replaced by the one above.
 
 Compute data: CCIR (ccir.io). Marketplace index: Ornn OCPI. Bitcoin price:
 Coinbase. Supply: computed from block height. Not investment advice.
-
-**DGX Spark** is NVIDIA's personal local-inference desktop, pinned to Amazon
-ASIN B0FWJ16CCH. Forward prices are the Amazon Buy Box New offer (not
-Amazon-1P-only); the MSRP stub in code is NVIDIA list price from 2025-10-15
-($3,999) and 2026-02-23 ($4,699), not market. Buy Box can vary by session and
-location; a winner change is a regime change in the measurement. Sources:
-NVIDIA Newsroom (orderable 2025-10-15), NVIDIA Developer Forums price-change
-announcement (2026-02-23 title date), and
-https://www.amazon.com/dp/B0FWJ16CCH.
 """
 
 

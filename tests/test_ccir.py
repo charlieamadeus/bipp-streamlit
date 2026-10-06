@@ -319,3 +319,38 @@ def test_basket_band_brackets_the_headline():
 
 def test_price_band_returns_none_for_an_unknown_series():
     assert ccir.price_band(make_ladder_panel(), "CRI-NOPE-000") is None
+
+
+def _credit_page(headers, row):
+    head = "".join(f"<th>{h}</th>" for h in headers)
+    body = "".join(f"<td>{c}</td>" for c in row)
+    grades = "<table><tr><th>Grade</th><th>On record</th><th>Issuer</th></tr>" \
+             "<tr><td>A</td><td>2026-06-01</td><td>IREN</td></tr></table>"
+    return grades + f"<table><tr>{head}</tr><tr>{body}</tr></table>"
+
+
+def test_credit_reads_the_september_2026_layout():
+    """CCIR added lenders and source and split size into committed and
+    outstanding. A positional parser returned nothing and blanked the chart."""
+    page = _credit_page(
+        ["Issuer", "Lenders / Agents", "Instrument", "Source", "Type", "Committed $M",
+         "Outstanding $M", "Rate", "Issued", "Maturity", "Seniority", "Status"],
+        ["CoreWeave, Inc.", "Blackstone", "DDTL 1.0", "424B4", "Credit facility", "2,300",
+         "1,300  Jun '26", "SOFR +9.62%", "2023-07-30", "2028-03-28", "secured", "confirmed"])
+    frame = ccir_pages.fetch_credit(page)
+    row = frame.iloc[0]
+    assert len(frame) == 1
+    assert row["instrument"] == "DDTL 1.0"
+    assert row["size_musd"] == 2300.0
+    assert (row["type"], row["issued"], row["seniority"], row["status"]) == (
+        "Credit facility", "2023-07-30", "secured", "confirmed")
+
+
+def test_credit_still_reads_the_old_layout():
+    page = _credit_page(
+        ["Issuer", "Instrument", "Type", "Size $M", "Rate", "Issued", "Maturity",
+         "Seniority", "Collateral", "Status"],
+        ["xAI", "Notes", "Bond", "3,000", "12.5%", "2025-07-01", "2030-07", "secured",
+         "GPUs", "confirmed"])
+    row = ccir_pages.fetch_credit(page).iloc[0]
+    assert (row["size_musd"], row["issued"], row["status"]) == (3000.0, "2025-07-01", "confirmed")

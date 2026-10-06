@@ -30,6 +30,8 @@ TOKEN_HEADER = ["Model", "Input", "Cached", "Output", "30d", "Last reprice"]
 TOKEN_MEDIAN_HEADER = ["Model", "Providers", "Input median", "Output median", "Output range"]
 HARDWARE_HEADER_START = ["Model", "Intro", "Age"]
 CREDIT_HEADER_START = ["Issuer", "Instrument", "Type", "Size $M"]
+# Committed is the facility size, the same quantity the old "Size $M" column held.
+CREDIT_SIZE_HEADERS = ["Committed $M", "Size $M"]
 
 
 def _fetch_html(url: str) -> str:
@@ -291,22 +293,34 @@ def fetch_credit(page: str | None = None) -> pd.DataFrame:
     """
     page = page or _fetch_html(CREDIT_URL)
     for header, rows in _tables(page):
-        if header[:4] != CREDIT_HEADER_START:
+        names = [h.strip() for h in header]
+        # Columns are found by name. CCIR reshuffled this table in September
+        # 2026 (added lenders and source, split size into committed and
+        # outstanding) and a positional parser returned nothing, which blanked
+        # the debt chart with no error.
+        size_col = next((c for c in CREDIT_SIZE_HEADERS if c in names), None)
+        if "Issuer" not in names or "Instrument" not in names or size_col is None:
             continue
+        col = {name: i for i, name in enumerate(names)}
+
+        def cell(cells, name):
+            i = col.get(name)
+            return cells[i] if i is not None and i < len(cells) else ""
+
         records = []
         for cells in rows:
-            if len(cells) < 6:
+            if len(cells) < len(names) // 2:
                 continue
             records.append({
-                "issuer": cells[0],
-                "instrument": cells[1],
-                "type": cells[2],
-                "size_musd": _money(cells[3]),
-                "rate": cells[4],
-                "issued": cells[5],
-                "maturity": cells[6] if len(cells) > 6 else "",
-                "seniority": cells[7] if len(cells) > 7 else "",
-                "status": cells[9] if len(cells) > 9 else "",
+                "issuer": cell(cells, "Issuer"),
+                "instrument": cell(cells, "Instrument"),
+                "type": cell(cells, "Type"),
+                "size_musd": _money(cell(cells, size_col)),
+                "rate": cell(cells, "Rate"),
+                "issued": cell(cells, "Issued"),
+                "maturity": cell(cells, "Maturity"),
+                "seniority": cell(cells, "Seniority"),
+                "status": cell(cells, "Status"),
             })
         frame = pd.DataFrame(records)
         if frame.empty:
