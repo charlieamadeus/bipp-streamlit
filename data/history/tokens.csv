@@ -5492,7 +5492,7 @@ gpt-6-astra,10.0,1.0,50.0,,none in record,first_party_posted,,,2026-10-20 00:00:
 gpt-6-luna,0.1,0.01,0.5,,none in record,first_party_posted,,,2026-10-20 00:00:00+00:00,OA  OpenAI standard tier
 gpt-6.1-sol,2.0,0.1,10.0,,none in record,first_party_posted,,,2026-10-20 00:00:00+00:00,OA  OpenAI standard tier
 gpt-oss-120b,0.1,,0.59,,,cross_provider_median,9.0,$0.17 – $0.75,2026-10-20 00:00:00+00:00,ST  stepfun
-gpt-oss-20b,0.04,,0.2,,,cross_provider_median,5,$0.14 – $0.30,2026-10-20 00:00:00+00:00,ST  stepfun
+gpt-oss-20b,0.04,,0.2,,,cross_provider_median,5.0,$0.14 – $0.30,2026-10-20 00:00:00+00:00,ST  stepfun
 gpt-rosalind-discovery,5.0,0.5,25.0,,none in record,first_party_posted,,,2026-10-20 00:00:00+00:00,OA  OpenAI standard tier
 gpt-rosalind-research,5.0,0.5,25.0,,none in record,first_party_posted,,,2026-10-20 00:00:00+00:00,OA  OpenAI standard tier
 grok-4.20-0309-non-reasoning,1.25,0.2,2.5,,none in record,first_party_posted,,,2026-10-20 00:00:00+00:00,XA  xAI model catalog
