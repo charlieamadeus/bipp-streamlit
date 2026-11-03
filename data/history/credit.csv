@@ -11122,6 +11122,7 @@ ChronoScale Holdings Corporation   CHRN,Parker Hannifin Promissory Note  †,Cre
 "CoreWeave, Inc.   CRWV",Revolving Credit Facility  †,Credit facility,2500.0,SOFR +1.75%,2024-06-21,2029-11-10,secured,confirmed,2026-11-03 00:00:00+00:00
 "CoreWeave, Inc.   CRWV",Software license financings  †,Credit facility,347.0,Undisclosed,2025,<5-yr terms,secured,confirmed,2026-11-03 00:00:00+00:00
 Corvex,"GPU Loan Agreement with GPU Finance Ltd. (USD.AI), Series A  †",Credit facility,7.5,10.00%,2026-08-03,2029-09-01,secured,confirmed,2026-11-03 00:00:00+00:00
+Crucible (Crucible Compute),USD.AI onchain debt facility — B300 cluster  †,Credit facility,26.8,Undisclosed,2026-04,Undisclosed,secured,confirmed,2026-11-03 00:00:00+00:00
 Crucible (Crucible Compute),USD.AI onchain debt facility — Washington B300 cluster  †,Credit facility,26.8,Undisclosed,2026-04,Undisclosed,secured,confirmed,2026-11-03 00:00:00+00:00
 Crusoe Energy Systems,Abilene Phase 1 construction loan  †,Credit facility,2300.0,Undisclosed,2025-01-22,Undisclosed,other,confirmed,2026-11-03 00:00:00+00:00
 Crusoe Energy Systems,Abilene Phase 2 construction loan  †,Credit facility,7100.0,Undisclosed,2025-05-22,Undisclosed,other,confirmed,2026-11-03 00:00:00+00:00
@@ -11181,9 +11182,11 @@ Nscale,"Macquarie Senior Facility ($105M, Glomfjord GPU cluster)  †",Credit fa
 Nscale,Norway (Narvik) project financing: Kvandal South DC Facility  †,Credit facility,790.0,SOFR +3.00–3.75%,2026-07-07,2033-04,other,confirmed,2026-11-03 00:00:00+00:00
 Nscale,Revolving Credit Facility  †,Credit facility,900.0,SOFR +1.75%,2026-05-08,2029,other,confirmed,2026-11-03 00:00:00+00:00
 Nscale,"Up to $1.2B senior secured DDTL (investment-grade rated per S-1 — Madison County, NC colocation site)  †",Credit facility,1200.0,SOFR +2.38%,2026-08-27,2031-12-27,secured,confirmed,2026-11-03 00:00:00+00:00
+Nscale,"Up to $1.2B senior secured DDTL (investment-grade rated per S-1 — Madison, NC colocation site)  †",Credit facility,1200.0,SOFR +2.38%,2026-08-27,2031-12-27,secured,confirmed,2026-11-03 00:00:00+00:00
 Nscale,"Up to $1.85B senior secured DDTL (Moody's first-time Baa1, stable — Ward County, TX GPU-as-a-service SPV; closed per issuer release 2026-08-31)  †",Credit facility,1850.0,SOFR +2.38%,2026-08-27,2033-02-27,secured,confirmed,2026-11-03 00:00:00+00:00
 QumulusAI   QMLS,"7% Senior Secured Convertible Notes (March 2026 facility, up to $45M)  †",Convertible,45.0,7.00%,2026-03-26,2028-07-16,secured,confirmed,2026-11-03 00:00:00+00:00
 QumulusAI   QMLS,USD.AI non-recourse GPU financing facility  †,Credit facility,36.0,Undisclosed,2025-09-19,Undisclosed,other,confirmed,2026-11-03 00:00:00+00:00
+QumulusAI   QMLS,USD.AI non-recourse GPU financings (non-binding $500M capacity)  †,Credit facility,36.0,Undisclosed,2025-09-19,Undisclosed,other,confirmed,2026-11-03 00:00:00+00:00
 Sharon AI   SHAZ,4.75% Convertible Senior Notes due 2032  †,Convertible,700.0,4.75%,2026-06-22,2032-06-15,unsecured,confirmed,2026-11-03 00:00:00+00:00
 Sharon AI   SHAZ,6.00% Convertible Senior Notes due 2031  †,Convertible,350.0,6.00%,2026-05-18,2031-05-01,other,confirmed,2026-11-03 00:00:00+00:00
 Sharon AI   SHAZ,"US$206M Facility B, Senior Secured GPU SPV Term Loan (Australia)  †",Credit facility,206.0,9.95%,2026-09-28,—,secured,confirmed,2026-11-03 00:00:00+00:00
