@@ -11538,7 +11538,15 @@ xAI,"Valor compute lease II (CTC Property LLC, failed sale-leaseback)  †",Leas
 xAI,"Valor compute lease III (CTC Property LLC, five-year lease, failed sale-leaseback)  †",Lease,4288.0,Undisclosed,2026-04-24,2031-04-24,other,confirmed,2026-11-06 00:00:00+00:00
 xAI   SPCX,"Apollo GPU master finance lease (binding commitment letter, not yet closed)  †",Lease,40000.0,Undisclosed,Commitment letter 2026-10-24; expected to close before 2026-12-31,Undisclosed,other,confirmed,2026-11-06 00:00:00+00:00
 Alpha Compute Corp.   ALP,$31.9M non-recourse GPU loan facility (B300 collateral; binding term sheet)  †,Credit facility,31.9,Undisclosed,2026-04-22,—,secured,press,2026-11-07 00:00:00+00:00
+"Amazon.com, Inc.   AMZN","Secured supplier Loan Facility, up to about $80B (undrawn)  †",Credit facility,80000.0,Undisclosed,Disclosed 2026-10-30,Five years from each borrowing,secured,confirmed,2026-11-07 00:00:00+00:00
 Axe Compute Inc.   AGPU,Deferred purchase price to Duos for the Georgia B300 cluster  †,Other,42.9,Undisclosed,2026-09-30,2027-09-30,secured,confirmed,2026-11-07 00:00:00+00:00
+"Bit Digital, Inc.   BTBT",4.00% Convertible Senior Notes due 2030  †,Convertible,150.0,4.00%,2025-10-02,2030-10-01,unsecured,confirmed,2026-11-07 00:00:00+00:00
+"Bit Digital, Inc.   BTBT",Galaxy Master Loan Agreement — initial draw  †,Credit facility,50.0,5.45%,2026-05-20,Master 1-yr auto-renew (from 3/27/26),other,confirmed,2026-11-07 00:00:00+00:00
+Bitdeer Technologies Group   BTDR,4.00% Convertible Senior Notes due 2031 (November series)  †,Convertible,400.0,4.00%,2025-11-17,2031-11-15,unsecured,confirmed,2026-11-07 00:00:00+00:00
+Bitdeer Technologies Group   BTDR,4.875% Convertible Senior Notes due 2031 (July series)  †,Convertible,375.0,4.875%,2025-06-23,2031-07-01,unsecured,confirmed,2026-11-07 00:00:00+00:00
+Bitdeer Technologies Group   BTDR,5.00% Convertible Senior Notes due 2032  †,Convertible,375.0,5.00%,2026-02-24,2032-03-01,unsecured,confirmed,2026-11-07 00:00:00+00:00
+Bitdeer Technologies Group   BTDR,5.25% Convertible Senior Notes due 2029  †,Convertible,400.0,5.25%,2024-11-26,2029-12-01,unsecured,confirmed,2026-11-07 00:00:00+00:00
+Bitdeer Technologies Group   BTDR,BIT Assets Collateralized Loan and additional facilities (related party)  †,Credit facility,805.0,9.0% plus a market-based referen…,2025-04,24-month term,secured,confirmed,2026-11-07 00:00:00+00:00
 Boost Run Inc.   BRUN,GPU-server finance leases  †,Lease,305.4,Undisclosed,2026-06-30,2029,other,confirmed,2026-11-07 00:00:00+00:00
 ChronoScale Holdings Corporation   CHRN,B. Riley Secured Promissory Note  †,Credit facility,2.0,10.00%,2025-09-12,2026-11-12,secured,confirmed,2026-11-07 00:00:00+00:00
 ChronoScale Holdings Corporation   CHRN,Computing-equipment finance leases  †,Lease,291.1,Undisclosed,2026-05-31,2028,other,confirmed,2026-11-07 00:00:00+00:00
@@ -11581,6 +11589,8 @@ Crusoe Energy Systems,Upper90 project financing  †,Credit facility,40.0,Undisc
 Crusoe Energy Systems,Upper90-led syndicated credit facility  †,Credit facility,225.0,Undisclosed,2025-03-27,Undisclosed,other,confirmed,2026-11-07 00:00:00+00:00
 Crusoe Energy Systems,Victory Park Capital facility  †,Credit facility,175.0,Undisclosed,2025-08-25,Undisclosed,other,confirmed,2026-11-07 00:00:00+00:00
 "Duos Edge AI, Inc. (Duos Technologies Group)   DUOT","USD.AI debt financing — 2,304 NVIDIA B300 GPU deployment  †",Credit facility,98.1,Undisclosed,2026-06-05,~2029,other,confirmed,2026-11-07 00:00:00+00:00
+Firmus Technologies,US$10B debt financing facility — Project Southgate  †,Credit facility,10000.0,Undisclosed,2026-02-09,Undisclosed,secured,confirmed,2026-11-07 00:00:00+00:00
+GMI Cloud,NT$14.05B (~US$445M) syndicated credit facility led by CTBC  †,Credit facility,445.0,Undisclosed,2026-10-01,—,other,confirmed,2026-11-07 00:00:00+00:00
 Goodwill Labs Inc. (borrower); lender PDN Intelligence (Professional Diversity Network)   IPDN,$0.59M secured term loan on one NVIDIA B300 eight-GPU system  †,Credit facility,0.59,Profit share: 75% of positive bi…,2026-10-05,"2029-01-15 (initial term, latest start; auto-renews)",secured,confirmed,2026-11-07 00:00:00+00:00
 HIVE Digital Technologies Ltd.   HIVE,0% Exchangeable Senior Notes due 2031 — Tranche 1  †,Convertible,115.0,0.00%,2026-04-21,2031-04-15,unsecured,confirmed,2026-11-07 00:00:00+00:00
 HIVE Digital Technologies Ltd.   HIVE,0% Exchangeable Senior Notes due 2031 — Tranche 2  †,Convertible,130.0,0.00%,2026-06-30,2031-07-01,unsecured,confirmed,2026-11-07 00:00:00+00:00
@@ -11598,6 +11608,7 @@ IREN Limited   IREN,1.00% Convertible Senior Notes due Dec 2033,Convertible,3000
 IREN Limited   IREN,1.00% Convertible Senior Notes due Jun 2033,Convertible,1150.0,1.00%,2025-12-08,2033-06-01,unsecured,confirmed,2026-11-07 00:00:00+00:00
 IREN Limited   IREN,3.25% Convertible Senior Notes due 2030  †,Convertible,440.0,3.25%,2024-12-06,2030-06-15,unsecured,confirmed,2026-11-07 00:00:00+00:00
 IREN Limited   IREN,3.50% Convertible Senior Notes due 2029  †,Convertible,550.0,3.50%,2025-06-13,2029-12-15,unsecured,confirmed,2026-11-07 00:00:00+00:00
+IREN Limited   IREN,"Equipment finance agreements, Prince George GPUs (GPU Financing 3.0; Wingspire-led)  †",Credit facility,363.0,9.51%,2026-08-26,2029-08-31,secured,confirmed,2026-11-07 00:00:00+00:00
 IREN Limited   IREN,GPU leases (Aug-23 2025 36-mo; Aug-28 2025 24-mo; Nov 2025 24-mo Dell Financial)  †,Lease,397.8,Undisclosed,2025-08-23,FY2027 to FY2029,other,confirmed,2026-11-07 00:00:00+00:00
 IREN Limited   IREN,Hardware 3 5.96% Senior Notes due 2031  †,Bond,2100.0,5.96%,2026-05-29,2031-12-31,secured,confirmed,2026-11-07 00:00:00+00:00
 IREN Limited   IREN,Hardware 3 DDTL (Microsoft-contract financing)  †,Credit facility,1545.0,SOFR +2.25%,2026-05-29,2031-12-31,secured,confirmed,2026-11-07 00:00:00+00:00
@@ -11610,6 +11621,8 @@ Lambda,"$926M senior secured Term Loan B (Moody's Baa2 — first IG-rated TLB by
 Lambda,GPU-backed SPV financing  †,Credit facility,500.0,Undisclosed,2024-04-04,Undisclosed,other,confirmed,2026-11-07 00:00:00+00:00
 Lambda,Syndicated senior secured credit facility  †,Credit facility,275.0,Undisclosed,2025-08-19,Undisclosed,secured,confirmed,2026-11-07 00:00:00+00:00
 Lambda,Upsized syndicated senior secured facility  †,Credit facility,1000.0,Undisclosed,2026-05-07,Undisclosed,secured,confirmed,2026-11-07 00:00:00+00:00
+Mistral AI,Seven-bank debt financing for Essonne GPU cluster  †,Credit facility,830.0,Undisclosed,2026-03-30,Undisclosed,other,confirmed,2026-11-07 00:00:00+00:00
+NVIDIA Corporation   NVDA,Residual value guaranties — PORTS-Pike leases (payment obligation capped at $105B)  †,Other,105000.0,Undisclosed,2026-08-17,Earliest of: 20th anniversary of commencement of the applicable lease; termination of the applicable lease by OpenAI per its terms; OpenAI achieving a satisfactory credit rating; other customary termination events,unsecured,confirmed,2026-11-07 00:00:00+00:00
 Nebius Group N.V.   NBIS,"$3.5B Senior Secured Bridge Facility (364-day, Citi)  †",Credit facility,3500.0,SOFR +2.75%,2026-10-17,2027-10-16,secured,confirmed,2026-11-07 00:00:00+00:00
 Nebius Group N.V.   NBIS,$775M Senior Secured Facility (first secured debt in company history)  †,Credit facility,775.0,SOFR +2.50%,2026-07-10,2030-10-31,secured,confirmed,2026-11-07 00:00:00+00:00
 Nebius Group N.V.   NBIS,0.50% Convertible Senior Notes due Feb 2030 (August series)  †,Convertible,3450.0,0.50%,2026-08-24,2030-02-15,unsecured,confirmed,2026-11-07 00:00:00+00:00
@@ -11629,6 +11642,8 @@ Nscale,Norway (Narvik) project financing: Kvandal South DC Facility  †,Credit 
 Nscale,Revolving Credit Facility  †,Credit facility,900.0,SOFR +1.75%,2026-05-08,2029,other,confirmed,2026-11-07 00:00:00+00:00
 Nscale,"Up to $1.2B senior secured DDTL (investment-grade rated per S-1 — Madison, NC colocation site)  †",Credit facility,1200.0,SOFR +2.38%,2026-08-27,2031-12-27,secured,confirmed,2026-11-07 00:00:00+00:00
 Nscale,"Up to $1.85B senior secured DDTL (Moody's first-time Baa1, stable — Ward County, TX GPU-as-a-service SPV; closed per issuer release 2026-08-31)  †",Credit facility,1850.0,SOFR +2.38%,2026-08-27,2033-02-27,secured,confirmed,2026-11-07 00:00:00+00:00
+PaleBlueDot AI,US$255M credit refinancing facility  †,Credit facility,255.0,Undisclosed,2026-07-22,Undisclosed,other,confirmed,2026-11-07 00:00:00+00:00
+"Quantum Solutions Co., Ltd.",USD.AI GPU financing facility (Japan)  †,Credit facility,200.0,Undisclosed,Reported 2026-01 (partnership dated 2025 in reporting),Undisclosed,other,press,2026-11-07 00:00:00+00:00
 QumulusAI   QMLS,"7% Senior Secured Convertible Notes (March 2026 facility, up to $45M)  †",Convertible,45.0,7.00%,2026-03-26,2028-07-16,secured,confirmed,2026-11-07 00:00:00+00:00
 QumulusAI   QMLS,USD.AI non-recourse GPU financings (non-binding $500M capacity)  †,Credit facility,36.0,Undisclosed,2025-09-19,Undisclosed,other,confirmed,2026-11-07 00:00:00+00:00
 Sharon AI   SHAZ,4.75% Convertible Senior Notes due 2032  †,Convertible,700.0,4.75%,2026-06-22,2032-06-15,unsecured,confirmed,2026-11-07 00:00:00+00:00
@@ -11636,6 +11651,7 @@ Sharon AI   SHAZ,6.00% Convertible Senior Notes due 2031  †,Convertible,350.0,
 Sharon AI   SHAZ,"US$206M Facility B, Senior Secured GPU SPV Term Loan (Australia)  †",Credit facility,206.0,9.95%,2026-09-28,—,secured,confirmed,2026-11-07 00:00:00+00:00
 Volta Infrastructure,$1.3B first-lien term loan C (lease letter of credit)  †,Credit facility,1300.0,SOFR +6.50%,"Launched 2026-10-09; priced 2026-10-15 (Bloomberg, TokenPost; press)","~2032 (six-year, press)",secured,press,2026-11-07 00:00:00+00:00
 Volta Infrastructure,$3.712B GPU term loan  †,Credit facility,3712.0,SOFR +6.50%,"Launched 2026-10-09; priced 2026-10-15 (Bloomberg, TokenPost; press)","~2032 (six-year, press)",secured,press,2026-11-07 00:00:00+00:00
+"Vultr (The Constant Company, LLC)",Credit financing package  †,Credit facility,294.0,Undisclosed,2025-06-23,Undisclosed,other,confirmed,2026-11-07 00:00:00+00:00
 "WhiteFiber, Inc.   WYFI",4.500% Convertible Senior Notes due 2031  †,Convertible,230.0,4.50%,2026-01-26,2031-02-01,unsecured,confirmed,2026-11-07 00:00:00+00:00
 "WhiteFiber, Inc.   WYFI",5.00% Convertible Senior Notes due 2032  †,Convertible,310.0,5.00%,2026-08-21,2032-09-01,unsecured,confirmed,2026-11-07 00:00:00+00:00
 "WhiteFiber, Inc.   WYFI",B. Riley-assigned advance — NC-1 bridge  †,Credit facility,20.0,9.50%,2026-05-26,2026-08-24,secured,confirmed,2026-11-07 00:00:00+00:00
@@ -11643,6 +11659,7 @@ Volta Infrastructure,$3.712B GPU term loan  †,Credit facility,3712.0,SOFR +6.5
 "WhiteFiber, Inc.   WYFI",Landsbankinn term facility  †,Credit facility,20.0,SOFR +4.25%,2026-03-25,2028-03-25,secured,confirmed,2026-11-07 00:00:00+00:00
 "WhiteFiber, Inc.   WYFI",RBC Amended Credit Agreement (MTL-3 acquisition bridge)  †,Credit facility,20.0,Daily Simple CORRA + 2.75% or Ro…,2026-04-27,2026-11-08,other,confirmed,2026-11-07 00:00:00+00:00
 "WhiteFiber, Inc.   WYFI",Syndicated RBC Credit Facility  †,Credit facility,80.8,CORRA + 2.45% or RBC Prime + 1.00%,2026-07-06,2029-07-13,secured,confirmed,2026-11-07 00:00:00+00:00
+Zankore,$3.1B senior term loan to buy NVIDIA GPUs (Indonesia and Southeast Asia)  †,Credit facility,3100.0,Undisclosed,2026-09-09,—,other,confirmed,2026-11-07 00:00:00+00:00
 xAI,Morgan Stanley-led secured debt package ($3B senior secured notes + $1B fixed-rate TL + $1B TLB)  †,Bond,5000.0,12.50%,2025-07-01,2030-06-30,secured,confirmed,2026-11-07 00:00:00+00:00
 xAI,"Valor compute lease I (CTC Property LLC, failed sale-leaseback)  †",Lease,4507.0,Undisclosed,2025-11-10,Undisclosed,other,confirmed,2026-11-07 00:00:00+00:00
 xAI,"Valor compute lease II (CTC Property LLC, failed sale-leaseback)  †",Lease,5365.0,Undisclosed,2026-02-18,Undisclosed,other,confirmed,2026-11-07 00:00:00+00:00
