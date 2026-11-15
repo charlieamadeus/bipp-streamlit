@@ -19,7 +19,7 @@ import plotly.graph_objects as go
 import streamlit as st
 from plotly.subplots import make_subplots
 
-from bipp import ccir, ccir_pages
+from bipp import ccir, ccir_pages, display_rates
 from bipp.metrics import normalize_index
 from bipp.pipeline import fetch_coinbase_btc_usd, fetch_live_dataset
 
@@ -46,8 +46,16 @@ SENSITIVITY_SURFACES = [
 # ---------------------------------------------------------------------------
 
 @st.cache_data(ttl=3600, show_spinner=False)
-def load_ccir_panel() -> pd.DataFrame:
-    return ccir.load_panel(ccir.fetch_catalog(), ccir.fetch_history())
+def load_ccir_panel() -> tuple[pd.DataFrame, bool]:
+    panel, archived = display_rates.load_panel(include_history=False)
+    # CCIR assigns the same GPU family to its base and NVL series. The v2
+    # basket names the base parts. Preserve the separately identified variants.
+    panel = panel.copy()
+    for chip in ("H100", "H200"):
+        nvl = panel["gpu_model"].eq(chip) & panel["series_id"].str.match(
+            rf"^CRI-[^-]+-{chip}-NVL-", na=False)
+        panel.loc[nvl, "gpu_model"] = f"{chip}-NVL"
+    return panel, archived
 
 
 @st.cache_data(ttl=3600, show_spinner=False)
@@ -286,8 +294,9 @@ def tab_axes(panel: pd.DataFrame, btc: pd.DataFrame, surface: dict[str, str]) ->
         "from CCIR pages, which have no published data contract and can break on a redesign."
     )
 
-    btc_usd = float(btc.sort_values("date")["btc_usd"].iloc[-1])
-    st.metric("BTC/USD used for every figure below", f"${btc_usd:,.0f}")
+    quote = btc.sort_values("date").iloc[-1]
+    btc_usd = float(quote["btc_usd"])
+    st.metric(f"BTC/USD used below ({quote['date']:%Y-%m-%d})", f"${btc_usd:,.0f}")
 
     selected = ccir.select_surface(panel, **surface)
     latest_rentals = {}
@@ -460,13 +469,15 @@ def main() -> None:
 
     with st.spinner("Loading CCIR rate panel..."):
         try:
-            panel = load_ccir_panel()
+            panel, archived = load_ccir_panel()
         except Exception as exc:  # noqa: BLE001
             st.error(f"Could not load CCIR rates: {exc}")
             st.stop()
 
     first = panel["as_of_date"].min().date()
     last = panel["as_of_date"].max().date()
+    if archived:
+        st.warning(f"Live CCIR rental rates are unavailable. Showing archived rates through {last:%Y-%m-%d}.")
     btc = load_btc((first - timedelta(days=2)).isoformat(), (last + timedelta(days=1)).isoformat())
 
     st.sidebar.header("Price surface")

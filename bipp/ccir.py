@@ -47,6 +47,8 @@ INDICATIVE_BELOW = 5
 def _fetch_csv(url: str) -> pd.DataFrame:
     request = Request(url, headers={"User-Agent": "bipp-streamlit/2.0 (research)"})
     with urlopen(request, timeout=60) as response:
+        if response.headers.get_content_type() == "text/html":
+            raise ValueError("CCIR returned a web page instead of the requested rates CSV.")
         return pd.read_csv(io.BytesIO(response.read()))
 
 

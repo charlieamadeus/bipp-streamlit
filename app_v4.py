@@ -21,7 +21,7 @@ import plotly.graph_objects as go
 import streamlit as st
 
 from bipp import btc as btc_history
-from bipp import ccir, ccir_pages, store, theme
+from bipp import ccir, ccir_pages, display_rates, store, theme
 from bipp.pipeline import fetch_coinbase_btc_usd, fetch_ornn_panel
 from bipp.theme import MONEY, PLOT_CONFIG, POWER, fact
 
@@ -40,13 +40,8 @@ SURFACE = dict(operator_tier="T2", form_factor="SXM", interruptibility="GTD",
 # --------------------------------------------------------------------- data
 
 @st.cache_data(ttl=3600, show_spinner=False)
-def load_rates() -> pd.DataFrame:
-    """Live CCIR merged over our own store, stored rows winning."""
-    live = ccir.load_panel(ccir.fetch_catalog(), ccir.fetch_history())
-    try:
-        return store.merge_rates(live)
-    except Exception:  # noqa: BLE001 - a missing store is not fatal
-        return live
+def load_rates() -> tuple[pd.DataFrame, bool]:
+    return display_rates.load_panel(include_history=True)
 
 
 @st.cache_data(ttl=3600, show_spinner=False)
@@ -225,7 +220,7 @@ def card_rent(panel, series, latest_btc) -> None:
                 unsafe_allow_html=True)
 
 
-def card_own(hardware, latest_btc) -> None:
+def card_own(hardware, latest_btc, btc_date) -> None:
     if hardware.empty:
         st.markdown(fact("n/a", "Cards per Bitcoin", "table unavailable"), unsafe_allow_html=True)
         return
@@ -247,12 +242,12 @@ def card_own(hardware, latest_btc) -> None:
     row = hardware[hardware["model"].astype(str) == ccir_pages.OWN_KEYS[choice]].iloc[0]
     st.markdown(
         fact(f"{latest_btc / float(row['executed_median_usd']):,.1f}", "Cards per Bitcoin",
-             f"${row['executed_median_usd']:,.0f} used, {row['age_years']:.1f} years old"),
+             f"${row['executed_median_usd']:,.0f} used, {row['age_years']:.1f} years old · BTC/USD {btc_date:%Y-%m-%d}"),
         unsafe_allow_html=True,
     )
 
 
-def card_produce(tokens, latest_btc) -> None:
+def card_produce(tokens, latest_btc, btc_date) -> None:
     if tokens.empty:
         st.markdown(fact("n/a", "Tokens per Bitcoin", "table unavailable"), unsafe_allow_html=True)
         return
@@ -275,7 +270,7 @@ def card_produce(tokens, latest_btc) -> None:
     billions = latest_btc / price / 1000
     shown = f"{billions:,.1f}B" if billions < 1000 else f"{billions / 1000:,.1f}T"
     st.markdown(fact(shown, "Output tokens per Bitcoin",
-                     f"${price:,.2f} a million · {row['lab']}"),
+                     f"${price:,.2f} a million · {row['lab']} · BTC/USD {btc_date:%Y-%m-%d}"),
                 unsafe_allow_html=True)
 
 
@@ -403,12 +398,14 @@ def main() -> None:
 
     with st.spinner(""):
         try:
-            panel = load_rates()
+            panel, archive_only = load_rates()
         except Exception as exc:  # noqa: BLE001
             st.error(f"Could not load compute rates: {exc}")
             st.stop()
 
     first, last = panel["as_of_date"].min().date(), panel["as_of_date"].max().date()
+    if archive_only:
+        st.warning(f"Live CCIR compute rates are unavailable. Showing archived rates through {last:%Y-%m-%d}.")
     window = load_btc_window((first - timedelta(days=2)).isoformat(),
                              (last + timedelta(days=1)).isoformat())
     try:
@@ -419,6 +416,7 @@ def main() -> None:
         st.stop()
 
     latest_btc = float(series["btc_usd"].iloc[-1])
+    btc_date = series["as_of_date"].iloc[-1].date()
     hardware, tokens, credit = load_hardware(), load_tokens(), load_credit()
     stack = btc_history.debt_in_btc(credit, load_btc_long()) if not credit.empty else pd.DataFrame()
 
@@ -428,10 +426,10 @@ def main() -> None:
             card_rent(panel, series, latest_btc)
     with slots[1]:
         with st.container(border=True):
-            card_own(hardware, latest_btc)
+            card_own(hardware, latest_btc, btc_date)
     with slots[2]:
         with st.container(border=True):
-            card_produce(tokens, latest_btc)
+            card_produce(tokens, latest_btc, btc_date)
     with slots[3]:
         with st.container(border=True):
             card_borrow(credit, stack)
